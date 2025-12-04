@@ -41,15 +41,15 @@ export const enigmaSlice = createSlice({
         state.activeSetupStep = state.activeSetupStep - 1;
       }
     },
-    setNumberOfRotors: (state, action: PayloadAction<number>) => {
+    modelChanged: (state, action: PayloadAction<number>) => {
       state.numberOfRotors = action.payload;
       state.reflector = null;
       state.rotorTypes = new Array(state.numberOfRotors).fill(null);
     },
-    setReflector: (state, action: PayloadAction<ReflectorType>) => {
+    reflectorChanged: (state, action: PayloadAction<ReflectorType>) => {
       state.reflector = action.payload;
     },
-    setRotorType: (state, action: PayloadAction<SetRotorPayload>) => {
+    rotorTypeChanged: (state, action: PayloadAction<SetRotorPayload>) => {
       const newRotorType = action.payload.rotorType;
 
       const rotorTypes = new Array(state.numberOfRotors);
@@ -69,9 +69,9 @@ export const {
   setupStepChanged,
   setupStepAdvanced,
   setupStepReversed,
-  setNumberOfRotors,
-  setReflector,
-  setRotorType,
+  modelChanged,
+  reflectorChanged,
+  rotorTypeChanged,
 } = enigmaSlice.actions;
 
 // Selectors

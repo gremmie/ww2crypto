@@ -9,7 +9,7 @@ import {
   selectRotorTypeChoicesForRotor,
   selectRotorTypeForRotor,
   type SetRotorPayload,
-  setRotorType,
+  rotorTypeChanged,
 } from "./enigmaSlice.ts";
 import { FormHelperText } from "@mui/material";
 
@@ -34,7 +34,7 @@ export default function RotorSelect(props: RotorSelectProps) {
       rotorType: event.target.value,
       position: rotorNumber,
     };
-    dispatch(setRotorType(payload));
+    dispatch(rotorTypeChanged(payload));
   };
 
   const labelId = `enigma-rotor-${rotorNumber}-select-label`;

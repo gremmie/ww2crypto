@@ -7,7 +7,7 @@ import {
   type ReflectorType,
   selectReflector,
   selectReflectorChoices,
-  setReflector,
+  reflectorChanged,
 } from "./enigmaSlice.ts";
 
 export default function ReflectorSelect() {
@@ -16,7 +16,7 @@ export default function ReflectorSelect() {
   const reflectors = useAppSelector(selectReflectorChoices);
 
   const handleChange = (event: SelectChangeEvent<ReflectorType>) => {
-    dispatch(setReflector(event.target.value as ReflectorType));
+    dispatch(reflectorChanged(event.target.value as ReflectorType));
   };
 
   return (

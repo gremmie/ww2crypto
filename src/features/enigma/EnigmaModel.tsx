@@ -6,7 +6,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-import { selectNumberOfRotors, setNumberOfRotors } from "./enigmaSlice.ts";
+import { selectNumberOfRotors, modelChanged } from "./enigmaSlice.ts";
 
 export default function EnigmaModel() {
   const dispatch = useAppDispatch();
@@ -14,7 +14,7 @@ export default function EnigmaModel() {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const n = parseInt(event.target.value);
-    dispatch(setNumberOfRotors(n));
+    dispatch(modelChanged(n));
   };
 
   return (
