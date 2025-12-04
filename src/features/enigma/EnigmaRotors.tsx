@@ -30,8 +30,8 @@ export default function EnigmaRotors() {
         {selects}
       </Stack>
       <Alert variant="outlined" severity="info">
-        There is only one instance of each type of rotor. If you pick a rotor
-        twice it will be removed from the previously installed position.
+        There is only one instance of each type of rotor. If you pick a rotor a
+        second time it will be removed from the previously installed position.
       </Alert>
     </Stack>
   );
