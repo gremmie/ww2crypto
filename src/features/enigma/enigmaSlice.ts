@@ -5,6 +5,7 @@ import type { RootState } from "../../app/store";
 export type ReflectorType = "B" | "C" | "B-Thin" | "C-Thin" | null;
 
 interface EnigmaState {
+  activeSetupStep: number;
   numberOfRotors: number;
   reflector: ReflectorType;
   rotorTypes: string[];
@@ -12,6 +13,7 @@ interface EnigmaState {
 
 // Define the initial state using that type
 const initialState: EnigmaState = {
+  activeSetupStep: 0,
   numberOfRotors: 3,
   reflector: null,
   rotorTypes: new Array(3).fill(null),
@@ -26,6 +28,19 @@ export const enigmaSlice = createSlice({
   name: "enigma",
   initialState,
   reducers: {
+    setupStepChanged: (state, action: PayloadAction<number>) => {
+      state.activeSetupStep = action.payload;
+    },
+    setupStepAdvanced: (state) => {
+      if (state.activeSetupStep < setupStepNames.length - 1) {
+        state.activeSetupStep = state.activeSetupStep + 1;
+      }
+    },
+    setupStepReversed: (state) => {
+      if (state.activeSetupStep > 0) {
+        state.activeSetupStep = state.activeSetupStep - 1;
+      }
+    },
     setNumberOfRotors: (state, action: PayloadAction<number>) => {
       state.numberOfRotors = action.payload;
       state.reflector = null;
@@ -50,10 +65,19 @@ export const enigmaSlice = createSlice({
 });
 
 // Actions
-export const { setNumberOfRotors, setReflector, setRotorType } =
-  enigmaSlice.actions;
+export const {
+  setupStepChanged,
+  setupStepAdvanced,
+  setupStepReversed,
+  setNumberOfRotors,
+  setReflector,
+  setRotorType,
+} = enigmaSlice.actions;
 
 // Selectors
+
+export const selectActiveSetupStep = (state: RootState) =>
+  state.enigma.activeSetupStep;
 
 export const selectStep1Complete = (state: RootState) =>
   state.enigma.numberOfRotors !== null;
@@ -91,8 +115,6 @@ export const selectReflectorChoices = createSelector(
   },
 );
 
-export const selectRotorTypes = (state: RootState) => state.enigma.rotorTypes;
-
 export const selectRotorTypeForRotor = (state: RootState, rotor: number) =>
   state.enigma.rotorTypes[rotor];
 
@@ -107,6 +129,13 @@ export const selectRotorTypeChoicesForRotor = (
 };
 
 export default enigmaSlice.reducer;
+
+export const setupStepNames = [
+  "Model",
+  "Reflector & Rotors",
+  "Ring Settings",
+  "Plugboard",
+];
 
 const threeRotorChoices = [
   ["I", "II", "III", "IV", "V"],

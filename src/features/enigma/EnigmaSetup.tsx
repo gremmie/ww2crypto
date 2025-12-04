@@ -1,30 +1,36 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+
 import EnigmaModel from "./EnigmaModel.tsx";
 import EnigmaRotors from "./EnigmaRotors.tsx";
-import Stack from "@mui/material/Stack";
 import { SetupStepper } from "./SetupStepper.tsx";
-
-const steps = ["Model", "Reflector & Rotors", "Ring Settings", "Plugboard"];
+import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import {
+  selectActiveSetupStep,
+  setupStepAdvanced,
+  setupStepNames,
+  setupStepReversed,
+} from "./enigmaSlice.ts";
 
 export default function EnigmaSetup() {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const dispatch = useAppDispatch();
+  const activeStep = useAppSelector(selectActiveSetupStep);
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    dispatch(setupStepAdvanced());
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    dispatch(setupStepReversed());
   };
 
   return (
     <Box sx={{ width: "100%" }}>
       <Stack spacing={2}>
-        <SetupStepper activeStep={activeStep} steps={steps} />
+        <SetupStepper steps={setupStepNames} />
         <Box
           width="100%"
           sx={{ pt: 4, pb: 2 }}
@@ -47,7 +53,7 @@ export default function EnigmaSetup() {
           <Button
             variant="outlined"
             endIcon={<ChevronRightIcon />}
-            disabled={activeStep === steps.length - 1}
+            disabled={activeStep === setupStepNames.length - 1}
             onClick={handleNext}
           >
             Next
@@ -67,7 +73,7 @@ function renderStep(step: number) {
       return <EnigmaRotors />;
     }
     default: {
-      return steps[step];
+      return setupStepNames[step];
     }
   }
 }
