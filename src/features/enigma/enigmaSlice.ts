@@ -14,7 +14,7 @@ interface EnigmaState {
 const initialState: EnigmaState = {
   numberOfRotors: 3,
   reflector: null,
-  rotorTypes: new Array(3).fill(""),
+  rotorTypes: new Array(3).fill(null),
 };
 
 export type SetRotorPayload = {
@@ -35,9 +35,13 @@ export const enigmaSlice = createSlice({
       state.reflector = action.payload;
     },
     setRotorType: (state, action: PayloadAction<SetRotorPayload>) => {
+      const newRotorType = action.payload.rotorType;
+
       const rotorTypes = new Array(state.numberOfRotors);
       for (let i = 0; i < state.numberOfRotors; i++) {
-        rotorTypes[i] = state.rotorTypes[i];
+        // We can't reuse rotors, there is only 1 of each type in the box.
+        rotorTypes[i] =
+          newRotorType != state.rotorTypes[i] ? state.rotorTypes[i] : null;
       }
       rotorTypes[action.payload.position] = action.payload.rotorType;
       state.rotorTypes = rotorTypes;
@@ -74,11 +78,17 @@ export const selectReflectorChoices = createSelector(
 
 export const selectRotorTypes = (state: RootState) => state.enigma.rotorTypes;
 
-export const selectRotorTypeChoices = (state: RootState) => {
+export const selectRotorTypeForRotor = (state: RootState, rotor: number) =>
+  state.enigma.rotorTypes[rotor];
+
+export const selectRotorTypeChoicesForRotor = (
+  state: RootState,
+  rotor: number,
+) => {
   if (state.enigma.numberOfRotors === 3) {
-    return threeRotorChoices;
+    return threeRotorChoices[rotor];
   }
-  return fourRotorChoices;
+  return fourRotorChoices[rotor];
 };
 
 export default enigmaSlice.reducer;

@@ -6,8 +6,8 @@ import MenuItem from "@mui/material/MenuItem";
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import {
   selectNumberOfRotors,
-  selectRotorTypeChoices,
-  selectRotorTypes,
+  selectRotorTypeChoicesForRotor,
+  selectRotorTypeForRotor,
   type SetRotorPayload,
   setRotorType,
 } from "./enigmaSlice.ts";
@@ -19,11 +19,15 @@ interface RotorSelectProps {
 
 export default function RotorSelect(props: RotorSelectProps) {
   const dispatch = useAppDispatch();
-  const rotorTypes = useAppSelector(selectRotorTypes);
-  const rotorTypeChoices = useAppSelector(selectRotorTypeChoices);
   const numberOfRotors = useAppSelector(selectNumberOfRotors);
-
   const rotorNumber = props.rotorNumber;
+
+  const rotorType = useAppSelector((state) =>
+    selectRotorTypeForRotor(state, rotorNumber),
+  );
+  const rotorTypeChoices = useAppSelector((state) =>
+    selectRotorTypeChoicesForRotor(state, rotorNumber),
+  );
 
   const handleChange = (event: SelectChangeEvent) => {
     const payload: SetRotorPayload = {
@@ -35,7 +39,6 @@ export default function RotorSelect(props: RotorSelectProps) {
 
   const labelId = `enigma-rotor-${rotorNumber}-select-label`;
   const label = `Rotor ${rotorNumber + 1}`;
-  const choices = rotorTypeChoices[rotorNumber];
   const showLeftHelperText = rotorNumber === 0;
   const showRightHelperText = numberOfRotors - 1 === rotorNumber;
 
@@ -44,11 +47,11 @@ export default function RotorSelect(props: RotorSelectProps) {
       <InputLabel id={labelId}>{label}</InputLabel>
       <Select
         labelId={labelId}
-        value={rotorTypes[rotorNumber] ?? ""}
+        value={rotorType ?? ""}
         label={label}
         onChange={handleChange}
       >
-        {choices.map((r) => {
+        {rotorTypeChoices.map((r) => {
           return (
             <MenuItem key={r} value={r}>
               {r}
