@@ -27,7 +27,24 @@ export const SetupStepper = (props: SetupStepperProps) => {
       {props.steps.map((label, index) => {
         return (
           <Step key={index} completed={status[index]}>
-            <StepButton color="inherit" onClick={() => handleChangeStep(index)}>
+            <StepButton
+              color="inherit"
+              onClick={() => handleChangeStep(index)}
+              sx={{
+                // Active completed steps are shown in primary so we don't lose our place.
+                "& .MuiStepLabel-iconContainer.Mui-active.Mui-completed": {
+                  "& .MuiStepIcon-root": {
+                    color: "primary.main",
+                  },
+                },
+                // Completed, non-active steps are shown in success color.
+                "& .MuiStepLabel-iconContainer.Mui-completed": {
+                  "& .MuiStepIcon-root": {
+                    color: "success.light",
+                  },
+                },
+              }}
+            >
               {label}
             </StepButton>
           </Step>
