@@ -54,6 +54,21 @@ export const { setNumberOfRotors, setReflector, setRotorType } =
   enigmaSlice.actions;
 
 // Selectors
+
+export const selectStep1Complete = (state: RootState) =>
+  state.enigma.numberOfRotors !== null;
+
+export const selectStep2Complete = (state: RootState) =>
+  state.enigma.rotorTypes.every((r) => r !== null);
+
+export const selectStepCompletionStatus = createSelector(
+  selectStep1Complete,
+  selectStep2Complete,
+  (step1, step2) => {
+    return [step1, step2, false, false];
+  },
+);
+
 export const selectNumberOfRotors = (state: RootState) =>
   state.enigma.numberOfRotors;
 
