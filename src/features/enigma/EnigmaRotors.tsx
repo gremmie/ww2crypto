@@ -36,9 +36,12 @@ export default function EnigmaRotors() {
           a second time it will be removed from the previously installed
           position.
         </Alert>
-        <Alert variant="outlined" severity="info" sx={{ mt: 2 }}>
-          Note that rotors VI - VIII were only available on the Naval M3 model.
-        </Alert>
+        {numberOfRotors == 3 && (
+          <Alert variant="outlined" severity="info" sx={{ mt: 2 }}>
+            Note that rotors VI - VIII were only available on the Naval M3
+            model.
+          </Alert>
+        )}
       </Box>
     </Stack>
   );
