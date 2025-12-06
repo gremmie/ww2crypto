@@ -138,9 +138,9 @@ export const setupStepNames = [
 ];
 
 const threeRotorChoices = [
-  ["I", "II", "III", "IV", "V"],
-  ["I", "II", "III", "IV", "V"],
-  ["I", "II", "III", "IV", "V"],
+  ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"],
+  ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"],
+  ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"],
 ];
 
 const fourRotorChoices = [
