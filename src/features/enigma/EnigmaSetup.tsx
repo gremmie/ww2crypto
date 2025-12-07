@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 
 import EnigmaModel from "./EnigmaModel.tsx";
+import EnigmaPlugboard from "./EnigmaPlugboard.tsx";
 import EnigmaRingSettings from "./EnigmaRingSettings.tsx";
 import EnigmaRotors from "./EnigmaRotors.tsx";
 import { SetupStepper } from "./SetupStepper.tsx";
@@ -32,12 +33,7 @@ export default function EnigmaSetup() {
     <Box sx={{ width: "100%" }}>
       <Stack spacing={2}>
         <SetupStepper steps={setupStepNames} />
-        <Box
-          width="100%"
-          sx={{ pt: 4, pb: 2 }}
-          display="flex"
-          justifyContent="center"
-        >
+        <Box width="100%" sx={{ pt: 4 }} display="flex" justifyContent="center">
           <Box width="80%" display="flex" justifyContent="center">
             {renderStep(activeStep)}
           </Box>
@@ -75,6 +71,9 @@ function renderStep(step: number) {
     }
     case 2: {
       return <EnigmaRingSettings />;
+    }
+    case 3: {
+      return <EnigmaPlugboard />;
     }
     default: {
       return setupStepNames[step];

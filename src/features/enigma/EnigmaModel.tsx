@@ -1,12 +1,13 @@
 import * as React from "react";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import FormLabel from "@mui/material/FormLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
+import Stack from "@mui/material/Stack";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import { selectNumberOfRotors, modelChanged } from "./enigmaSlice.ts";
+import Typography from "@mui/material/Typography";
 
 export default function EnigmaModel() {
   const dispatch = useAppDispatch();
@@ -18,25 +19,26 @@ export default function EnigmaModel() {
   };
 
   return (
-    <FormControl>
-      <FormLabel id="enigma-model-group">Select Model</FormLabel>
-      <RadioGroup
-        aria-labelledby="enigma-model-group"
-        name="controlled-radio-buttons-group"
-        value={numberOfRotors.toString()}
-        onChange={handleChange}
-      >
-        <FormControlLabel
-          value="3"
-          control={<Radio />}
-          label="Three Rotor (Army, Air Force, Navy M3)"
-        />
-        <FormControlLabel
-          value="4"
-          control={<Radio />}
-          label="Four Rotor (Navy M4)"
-        />
-      </RadioGroup>
-    </FormControl>
+    <Stack spacing={2} alignItems="center">
+      <Typography variant="h6">Select Model</Typography>
+      <FormControl>
+        <RadioGroup
+          name="enigma-model-radio-group"
+          value={numberOfRotors.toString()}
+          onChange={handleChange}
+        >
+          <FormControlLabel
+            value="3"
+            control={<Radio />}
+            label="Three Rotor (Army, Air Force, Navy M3)"
+          />
+          <FormControlLabel
+            value="4"
+            control={<Radio />}
+            label="Four Rotor (Navy M4)"
+          />
+        </RadioGroup>
+      </FormControl>
+    </Stack>
   );
 }

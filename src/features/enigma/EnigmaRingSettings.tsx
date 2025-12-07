@@ -26,7 +26,7 @@ export default function EnigmaRingSettings() {
 
   return (
     <Stack spacing={4} alignItems="center">
-      <Typography variant="body1">Establish ring settings</Typography>
+      <Typography variant="h6">Establish ring settings</Typography>
       <NotationSelector
         currentNotation={notation}
         onChange={handleNotationChange}
