@@ -1,13 +1,13 @@
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
-import Select, { type SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import Select, { type SelectChangeEvent } from "@mui/material/Select";
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import {
+  reflectorChanged,
   type ReflectorType,
   selectReflector,
   selectReflectorChoices,
-  reflectorChanged,
 } from "./enigmaSlice.ts";
 
 export default function ReflectorSelect() {

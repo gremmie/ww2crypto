@@ -1,8 +1,8 @@
-import type { ReactElement } from "react";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import type { ReactElement } from "react";
 
 import { useAppSelector } from "../../app/hooks.ts";
 import { selectNumberOfRotors } from "./enigmaSlice.ts";

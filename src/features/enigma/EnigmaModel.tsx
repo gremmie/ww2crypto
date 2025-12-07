@@ -1,13 +1,13 @@
-import * as React from "react";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-import { selectNumberOfRotors, modelChanged } from "./enigmaSlice.ts";
-import Typography from "@mui/material/Typography";
+import { modelChanged, selectNumberOfRotors } from "./enigmaSlice.ts";
 
 export default function EnigmaModel() {
   const dispatch = useAppDispatch();

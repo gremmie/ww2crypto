@@ -1,8 +1,5 @@
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-
-import NotationSelector from "./NotationSelector.tsx";
-import RingSelect from "./RingSelect.tsx";
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import {
   type NotationType,
@@ -10,6 +7,9 @@ import {
   selectNumberOfRotors,
   selectRingSettingsNotation,
 } from "./enigmaSlice.ts";
+
+import NotationSelector from "./NotationSelector.tsx";
+import RingSelect from "./RingSelect.tsx";
 
 export default function EnigmaRingSettings() {
   const dispatch = useAppDispatch();

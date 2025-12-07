@@ -1,12 +1,12 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
 import KeyboardIcon from "@mui/icons-material/Keyboard";
 import SettingsIcon from "@mui/icons-material/Settings";
-import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
+import * as React from "react";
 import EnigmaSetup from "./EnigmaSetup.tsx";
 
 export default function EnigmaMain() {

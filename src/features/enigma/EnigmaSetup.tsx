@@ -1,21 +1,21 @@
-import Box from "@mui/material/Box";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 
 import EnigmaModel from "./EnigmaModel.tsx";
 import EnigmaPlugboard from "./EnigmaPlugboard.tsx";
 import EnigmaRingSettings from "./EnigmaRingSettings.tsx";
 import EnigmaRotors from "./EnigmaRotors.tsx";
-import { SetupStepper } from "./SetupStepper.tsx";
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import {
   selectActiveSetupStep,
   setupStepAdvanced,
   setupStepNames,
   setupStepReversed,
 } from "./enigmaSlice.ts";
+import { SetupStepper } from "./SetupStepper.tsx";
 
 export default function EnigmaSetup() {
   const dispatch = useAppDispatch();
