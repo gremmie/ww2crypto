@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 
 import EnigmaModel from "./EnigmaModel.tsx";
+import EnigmaRingSettings from "./EnigmaRingSettings.tsx";
 import EnigmaRotors from "./EnigmaRotors.tsx";
 import { SetupStepper } from "./SetupStepper.tsx";
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
@@ -71,6 +72,9 @@ function renderStep(step: number) {
     }
     case 1: {
       return <EnigmaRotors />;
+    }
+    case 2: {
+      return <EnigmaRingSettings />;
     }
     default: {
       return setupStepNames[step];

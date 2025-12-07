@@ -18,7 +18,7 @@ export default function EnigmaRotors() {
   }
 
   return (
-    <Stack spacing={4} display="flex" alignItems="center">
+    <Stack spacing={4} alignItems="center">
       <Typography variant="body1">
         Select reflector, rotors, and rotor order
       </Typography>

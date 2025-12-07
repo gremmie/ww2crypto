@@ -6,35 +6,34 @@ import MenuItem from "@mui/material/MenuItem";
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import {
   selectNumberOfRotors,
-  selectRotorTypeChoicesForRotor,
-  selectRotorTypeForRotor,
-  type RotorTypeChangedPayload,
-  rotorTypeChanged,
+  selectRingSettingForRotor,
+  ringSettingChanged,
+  type RingSettingChangedPayload,
+  selectRingSettingsNotation,
 } from "./enigmaSlice.ts";
 import { FormHelperText } from "@mui/material";
 
-interface RotorSelectProps {
+interface RingSelectProps {
   rotorNumber: number;
 }
 
-export default function RotorSelect(props: RotorSelectProps) {
+export default function RingSelect(props: RingSelectProps) {
   const dispatch = useAppDispatch();
   const numberOfRotors = useAppSelector(selectNumberOfRotors);
   const rotorNumber = props.rotorNumber;
 
-  const rotorType = useAppSelector((state) =>
-    selectRotorTypeForRotor(state, rotorNumber),
+  const ringSetting = useAppSelector((state) =>
+    selectRingSettingForRotor(state, rotorNumber),
   );
-  const rotorTypeChoices = useAppSelector((state) =>
-    selectRotorTypeChoicesForRotor(state, rotorNumber),
-  );
+  const notation = useAppSelector(selectRingSettingsNotation);
+  const choices = Array.from({ length: 26 }, (_, i) => i);
 
-  const handleChange = (event: SelectChangeEvent) => {
-    const payload: RotorTypeChangedPayload = {
-      rotorType: event.target.value,
+  const handleChange = (event: SelectChangeEvent<number>) => {
+    const payload: RingSettingChangedPayload = {
+      ringSetting: event.target.value as number,
       position: rotorNumber,
     };
-    dispatch(rotorTypeChanged(payload));
+    dispatch(ringSettingChanged(payload));
   };
 
   const labelId = `enigma-rotor-${rotorNumber}-select-label`;
@@ -47,14 +46,15 @@ export default function RotorSelect(props: RotorSelectProps) {
       <InputLabel id={labelId}>{label}</InputLabel>
       <Select
         labelId={labelId}
-        value={rotorType ?? ""}
+        value={ringSetting ?? ""}
         label={label}
         onChange={handleChange}
       >
-        {rotorTypeChoices.map((r) => {
+        {choices.map((n) => {
+          const aCode = "A".charCodeAt(0);
           return (
-            <MenuItem key={r} value={r}>
-              {r}
+            <MenuItem key={n} value={n}>
+              {notation === "number" ? n + 1 : String.fromCharCode(aCode + n)}
             </MenuItem>
           );
         })}
