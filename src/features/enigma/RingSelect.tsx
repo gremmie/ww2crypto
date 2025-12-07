@@ -1,17 +1,17 @@
-import Select, { type SelectChangeEvent } from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
+import FormHelperText from "@mui/material/FormHelperText";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
+import Select, { type SelectChangeEvent } from "@mui/material/Select";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import {
-  selectNumberOfRotors,
-  selectRingSettingForRotor,
   ringSettingChanged,
   type RingSettingChangedPayload,
+  selectNumberOfRotors,
+  selectRingSettingForRotor,
   selectRingSettingsNotation,
 } from "./enigmaSlice.ts";
-import { FormHelperText } from "@mui/material";
 
 interface RingSelectProps {
   rotorNumber: number;
