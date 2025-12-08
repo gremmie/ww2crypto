@@ -2,18 +2,26 @@ import CableIcon from "@mui/icons-material/Cable";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-import { plugboardConnected, selectPlugboard } from "./enigmaSlice.ts";
+import {
+  type NotationType,
+  plugboardConnected,
+  plugboardNotationChanged,
+  selectPlugboard,
+  selectPlugboardNotation,
+} from "./enigmaSlice.ts";
+import NotationSelector from "./NotationSelector.tsx";
 import PlugboardConnections from "./PlugboardConnections.tsx";
 import PlugboardSelect from "./PlugboardSelect.tsx";
+import PlugboardSummary from "./PlugboardSummary.tsx";
 
 export default function EnigmaPlugboard() {
   const dispatch = useAppDispatch();
   const plugboard = useAppSelector(selectPlugboard);
+  const notation = useAppSelector(selectPlugboardNotation);
   const [first, setFirst] = React.useState<string | null>(null);
   const [second, setSecond] = React.useState<string | null>(null);
 
@@ -37,6 +45,10 @@ export default function EnigmaPlugboard() {
     setSecond(null);
   };
 
+  const handleNotationChange = (choice: NotationType) => {
+    dispatch(plugboardNotationChanged(choice));
+  };
+
   return (
     <Stack spacing={2} alignItems="center">
       <Typography variant="h6">Configure the plugboard</Typography>
@@ -44,19 +56,11 @@ export default function EnigmaPlugboard() {
         During the war, procedure required that 10 patch cables were used. For
         simulation purposes you can use anywhere from 0 to 13.
       </Alert>
-      <Stack spacing={2} direction="row" justifyContent="center">
-        <TextField
-          label={`Plugboard Settings (${numberOfConnections})`}
-          value={plugboard}
-          variant="standard"
-          sx={{ width: 350 }}
-          slotProps={{
-            input: {
-              readOnly: true,
-            },
-          }}
-        />
-      </Stack>
+      <NotationSelector
+        currentNotation={notation}
+        onChange={handleNotationChange}
+      />
+      <PlugboardSummary />
       <Stack
         spacing={2}
         direction="row"
@@ -65,7 +69,7 @@ export default function EnigmaPlugboard() {
       >
         <PlugboardSelect
           label="Plug 1"
-          notation="letter"
+          notation={notation}
           disabled={choices1.length === 0}
           value={first}
           choices={choices1}
@@ -74,7 +78,7 @@ export default function EnigmaPlugboard() {
         <CableIcon />
         <PlugboardSelect
           label="Plug 2"
-          notation="letter"
+          notation={notation}
           disabled={first === null}
           value={second}
           choices={choices2}

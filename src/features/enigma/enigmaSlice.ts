@@ -14,6 +14,7 @@ interface EnigmaState {
   ringSettings: number[];
   ringSettingsNotation: NotationType;
   plugboard: string;
+  plugboardNotation: NotationType;
 }
 
 // Define the initial state using that type
@@ -25,6 +26,7 @@ const initialState: EnigmaState = {
   ringSettings: new Array(3).fill(null),
   ringSettingsNotation: "number",
   plugboard: "",
+  plugboardNotation: "letter",
 };
 
 export type RotorTypeChangedPayload = {
@@ -62,6 +64,7 @@ export const enigmaSlice = createSlice({
       state.ringSettingsNotation =
         state.numberOfRotors === 3 ? "number" : "letter";
       state.plugboard = "";
+      state.plugboardNotation = state.numberOfRotors == 3 ? "number" : "letter";
     },
     reflectorChanged: (state, action: PayloadAction<ReflectorType>) => {
       state.reflector = action.payload;
@@ -129,6 +132,9 @@ export const enigmaSlice = createSlice({
           .join(" ");
       }
     },
+    plugboardNotationChanged: (state, action: PayloadAction<NotationType>) => {
+      state.plugboardNotation = action.payload;
+    },
   },
 });
 
@@ -144,6 +150,7 @@ export const {
   ringSettingsNotationChanged,
   plugboardConnected,
   plugboardDisconnected,
+  plugboardNotationChanged,
 } = enigmaSlice.actions;
 
 // Selectors
@@ -160,13 +167,18 @@ export const selectStep2Complete = (state: RootState) =>
 export const selectStep3Complete = (state: RootState) =>
   state.enigma.ringSettings.every((r) => r !== null);
 
+export const selectStep4Complete = (state: RootState) => {
+  const connections =
+    state.enigma.plugboard === "" ? [] : state.enigma.plugboard.split(" ");
+  return connections.length === 10;
+};
+
 export const selectStepCompletionStatus = createSelector(
   selectStep1Complete,
   selectStep2Complete,
   selectStep3Complete,
-  (step1, step2, step3) => {
-    return [step1, step2, step3, false];
-  },
+  selectStep4Complete,
+  (step1, step2, step3, step4) => [step1, step2, step3, step4],
 );
 
 export const selectNumberOfRotors = (state: RootState) =>
@@ -211,6 +223,9 @@ export const selectRingSettingsNotation = (state: RootState) =>
   state.enigma.ringSettingsNotation;
 
 export const selectPlugboard = (state: RootState) => state.enigma.plugboard;
+
+export const selectPlugboardNotation = (state: RootState) =>
+  state.enigma.plugboardNotation;
 
 export default enigmaSlice.reducer;
 

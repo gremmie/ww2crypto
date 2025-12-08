@@ -3,6 +3,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { type SelectChangeEvent } from "@mui/material/Select";
 import type { NotationType } from "./enigmaSlice.ts";
+import { toNumericPlug } from "./utils.ts";
 
 interface PlugboardSelectProps {
   label: string;
@@ -33,7 +34,7 @@ export default function PlugboardSelect(props: PlugboardSelectProps) {
         {props.choices.map((n) => {
           return (
             <MenuItem key={n} value={n}>
-              {n}
+              {props.notation == "letter" ? n : toNumericPlug(n)}
             </MenuItem>
           );
         })}
