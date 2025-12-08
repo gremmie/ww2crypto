@@ -13,6 +13,7 @@ interface EnigmaState {
   rotorTypes: string[];
   ringSettings: number[];
   ringSettingsNotation: NotationType;
+  plugboard: string;
 }
 
 // Define the initial state using that type
@@ -23,6 +24,7 @@ const initialState: EnigmaState = {
   rotorTypes: new Array(3).fill(null),
   ringSettings: new Array(3).fill(null),
   ringSettingsNotation: "number",
+  plugboard: "",
 };
 
 export type RotorTypeChangedPayload = {
@@ -59,6 +61,7 @@ export const enigmaSlice = createSlice({
       state.ringSettings = new Array(state.numberOfRotors).fill(null);
       state.ringSettingsNotation =
         state.numberOfRotors === 3 ? "number" : "letter";
+      state.plugboard = "";
     },
     reflectorChanged: (state, action: PayloadAction<ReflectorType>) => {
       state.reflector = action.payload;
@@ -96,6 +99,36 @@ export const enigmaSlice = createSlice({
     ) => {
       state.ringSettingsNotation = action.payload;
     },
+    plugboardConnected: (state, action: PayloadAction<string>) => {
+      if (!isConnection(action.payload)) return;
+
+      const newConnection = action.payload.toUpperCase().split("").sort();
+      const connections =
+        state.plugboard === "" ? [] : state.plugboard.split(" ");
+      if (
+        connections.every(
+          (c) => !c.includes(newConnection[0]) && !c.includes(newConnection[1]),
+        )
+      ) {
+        connections.push(newConnection.join(""));
+        state.plugboard = connections.sort().join(" ");
+      }
+    },
+    plugboardDisconnected: (state, action: PayloadAction<string>) => {
+      if (!isConnection(action.payload)) return;
+
+      const oldConnection = action.payload
+        .toUpperCase()
+        .split("")
+        .sort()
+        .join("");
+      const connections = state.plugboard.split(" ");
+      if (connections.includes(oldConnection)) {
+        state.plugboard = connections
+          .filter((c) => c !== oldConnection)
+          .join(" ");
+      }
+    },
   },
 });
 
@@ -109,6 +142,8 @@ export const {
   rotorTypeChanged,
   ringSettingChanged,
   ringSettingsNotationChanged,
+  plugboardConnected,
+  plugboardDisconnected,
 } = enigmaSlice.actions;
 
 // Selectors
@@ -175,6 +210,8 @@ export const selectRingSettingForRotor = (state: RootState, rotor: number) =>
 export const selectRingSettingsNotation = (state: RootState) =>
   state.enigma.ringSettingsNotation;
 
+export const selectPlugboard = (state: RootState) => state.enigma.plugboard;
+
 export default enigmaSlice.reducer;
 
 export const setupStepNames = [
@@ -183,6 +220,8 @@ export const setupStepNames = [
   "Ring Settings",
   "Plugboard",
 ];
+
+const isConnection = (s: string) => /[a-zA-Z]{2}/.test(s);
 
 const threeRotorChoices = [
   ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"],
