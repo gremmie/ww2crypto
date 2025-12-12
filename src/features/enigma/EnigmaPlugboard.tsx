@@ -11,17 +11,21 @@ import {
   plugboardConnected,
   plugboardNotationChanged,
   selectPlugboard,
+  selectPlugboardCableCount,
   selectPlugboardNotation,
 } from "./enigmaSlice.ts";
 import NotationSelector from "./NotationSelector.tsx";
+import PlugboardCableCountSelect from "./PlugboardCableCountSelect.tsx";
 import PlugboardConnections from "./PlugboardConnections.tsx";
 import PlugboardSelect from "./PlugboardSelect.tsx";
-import PlugboardSummary from "./PlugboardSummary.tsx";
+import PlugboardTextInput from "./PlugboardTextInput.tsx";
 
 export default function EnigmaPlugboard() {
   const dispatch = useAppDispatch();
   const plugboard = useAppSelector(selectPlugboard);
   const notation = useAppSelector(selectPlugboardNotation);
+  const cableCount = useAppSelector(selectPlugboardCableCount);
+
   const [first, setFirst] = React.useState<string | null>(null);
   const [second, setSecond] = React.useState<string | null>(null);
 
@@ -52,15 +56,22 @@ export default function EnigmaPlugboard() {
   return (
     <Stack spacing={2} alignItems="center">
       <Typography variant="h6">Configure the plugboard</Typography>
+      <Stack direction="row" spacing={4} alignItems={"center"}>
+        <PlugboardCableCountSelect />
+        <NotationSelector
+          currentNotation={notation}
+          onChange={handleNotationChange}
+        />
+      </Stack>
       <Alert variant="outlined" severity="info" sx={{ maxWidth: 0.7 }}>
         During the war, procedure required that 10 patch cables were used. For
         simulation purposes you can use anywhere from 0 to 13.
       </Alert>
-      <NotationSelector
-        currentNotation={notation}
-        onChange={handleNotationChange}
-      />
-      <PlugboardSummary />
+      <PlugboardConnections />
+      <Alert variant="outlined" severity="info" sx={{ maxWidth: 0.7 }}>
+        You may enter the plugboard settings by manually connecting cables or by
+        typing a connection string.
+      </Alert>
       <Stack
         spacing={2}
         direction="row"
@@ -70,7 +81,7 @@ export default function EnigmaPlugboard() {
         <PlugboardSelect
           label="Plug 1"
           notation={notation}
-          disabled={choices1.length === 0}
+          disabled={cableCount === connections.length || choices1.length === 0}
           value={first}
           choices={choices1}
           onChange={setFirst}
@@ -92,7 +103,10 @@ export default function EnigmaPlugboard() {
           Connect
         </Button>
       </Stack>
-      <PlugboardConnections />
+      <Typography variant="h6" component="span">
+        Or
+      </Typography>
+      <PlugboardTextInput />
     </Stack>
   );
 }

@@ -1,6 +1,7 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store";
+import { isValidPlugboardString, normalizePlugboardString } from "./utils.ts";
 
 export type ReflectorType = "B" | "C" | "B-Thin" | "C-Thin" | null;
 
@@ -15,6 +16,7 @@ interface EnigmaState {
   ringSettingsNotation: NotationType;
   plugboard: string;
   plugboardNotation: NotationType;
+  plugboardCableCount: number;
 }
 
 // Define the initial state using that type
@@ -27,6 +29,7 @@ const initialState: EnigmaState = {
   ringSettingsNotation: "number",
   plugboard: "",
   plugboardNotation: "letter",
+  plugboardCableCount: 10,
 };
 
 export type RotorTypeChangedPayload = {
@@ -65,6 +68,7 @@ export const enigmaSlice = createSlice({
         state.numberOfRotors === 3 ? "number" : "letter";
       state.plugboard = "";
       state.plugboardNotation = state.numberOfRotors == 3 ? "number" : "letter";
+      state.plugboardCableCount = 10;
     },
     reflectorChanged: (state, action: PayloadAction<ReflectorType>) => {
       state.reflector = action.payload;
@@ -102,6 +106,12 @@ export const enigmaSlice = createSlice({
     ) => {
       state.ringSettingsNotation = action.payload;
     },
+    plugboardBulkSet: (state, action: PayloadAction<string>) => {
+      const s = action.payload;
+      if (s === "" || isValidPlugboardString(s, state.plugboardCableCount)) {
+        state.plugboard = normalizePlugboardString(s);
+      }
+    },
     plugboardConnected: (state, action: PayloadAction<string>) => {
       if (!isConnection(action.payload)) return;
 
@@ -135,6 +145,18 @@ export const enigmaSlice = createSlice({
     plugboardNotationChanged: (state, action: PayloadAction<NotationType>) => {
       state.plugboardNotation = action.payload;
     },
+    plugboardCableCountChanged: (state, action: PayloadAction<number>) => {
+      const newCount = action.payload;
+      if (newCount < 0 || newCount > 13) return;
+
+      state.plugboardCableCount = newCount;
+      const connections =
+        state.plugboard === "" ? [] : state.plugboard.split(" ");
+      if (connections.length > newCount) {
+        connections.length = newCount;
+        state.plugboard = connections.join(" ");
+      }
+    },
   },
 });
 
@@ -148,9 +170,11 @@ export const {
   rotorTypeChanged,
   ringSettingChanged,
   ringSettingsNotationChanged,
+  plugboardBulkSet,
   plugboardConnected,
   plugboardDisconnected,
   plugboardNotationChanged,
+  plugboardCableCountChanged,
 } = enigmaSlice.actions;
 
 // Selectors
@@ -170,7 +194,7 @@ export const selectStep3Complete = (state: RootState) =>
 export const selectStep4Complete = (state: RootState) => {
   const connections =
     state.enigma.plugboard === "" ? [] : state.enigma.plugboard.split(" ");
-  return connections.length === 10;
+  return connections.length === state.enigma.plugboardCableCount;
 };
 
 export const selectStepCompletionStatus = createSelector(
@@ -226,6 +250,9 @@ export const selectPlugboard = (state: RootState) => state.enigma.plugboard;
 
 export const selectPlugboardNotation = (state: RootState) =>
   state.enigma.plugboardNotation;
+
+export const selectPlugboardCableCount = (state: RootState) =>
+  state.enigma.plugboardCableCount;
 
 export default enigmaSlice.reducer;
 

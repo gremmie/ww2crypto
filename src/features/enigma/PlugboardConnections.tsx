@@ -1,8 +1,12 @@
+import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import {
+  plugboardBulkSet,
   plugboardDisconnected,
   selectPlugboard,
   selectPlugboardNotation,
@@ -19,6 +23,7 @@ export default function PlugboardConnections() {
   const notation = useAppSelector(selectPlugboardNotation);
 
   const connections = plugboard === "" ? [] : plugboard.split(" ");
+  const connectionCount = connections.length;
 
   const makeChip = (c: string) => {
     return (
@@ -32,18 +37,35 @@ export default function PlugboardConnections() {
   };
 
   return (
-    <Paper
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        flexWrap: "wrap",
-        listStyle: "none",
-        p: 0.5,
-        m: 0,
-      }}
-      component="ul"
-    >
-      {connections.map(makeChip)}
-    </Paper>
+    <div>
+      <Stack spacing={1} alignItems="center">
+        <Typography variant="subtitle1">{`Connections (${connectionCount}):`}</Typography>
+        {connectionCount > 0 && (
+          <Paper
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              flexWrap: "wrap",
+              listStyle: "none",
+              p: 0.5,
+              m: 0,
+            }}
+            component="ul"
+          >
+            {connections.map(makeChip)}
+          </Paper>
+        )}
+        {connectionCount == 0 && (
+          <Typography sx={{ fontWeight: "lighter", fontStyle: "italic" }}>
+            No connections
+          </Typography>
+        )}
+        {connectionCount > 0 && (
+          <Button variant="text" onClick={() => dispatch(plugboardBulkSet(""))}>
+            Clear all
+          </Button>
+        )}
+      </Stack>
+    </div>
   );
 }

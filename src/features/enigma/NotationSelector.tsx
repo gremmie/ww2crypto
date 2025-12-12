@@ -18,7 +18,7 @@ export default function NotationSelector(props: NotationSelectorProps) {
   };
 
   return (
-    <FormControl>
+    <FormControl required>
       <FormLabel id="enigma-notation-select-label">Notation</FormLabel>
       <RadioGroup
         row
