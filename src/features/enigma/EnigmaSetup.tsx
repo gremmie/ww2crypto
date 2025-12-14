@@ -40,7 +40,7 @@ export default function EnigmaSetup() {
         </Box>
         <Box display="flex" justifyContent="space-around" sx={{ pt: 2 }}>
           <Button
-            variant="outlined"
+            variant="text"
             startIcon={<ChevronLeftIcon />}
             disabled={activeStep === 0}
             onClick={handleBack}
@@ -48,7 +48,7 @@ export default function EnigmaSetup() {
             Back
           </Button>
           <Button
-            variant="outlined"
+            variant="text"
             endIcon={<ChevronRightIcon />}
             disabled={activeStep === setupStepNames.length - 1}
             onClick={handleNext}

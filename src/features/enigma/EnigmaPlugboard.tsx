@@ -1,6 +1,7 @@
 import CableIcon from "@mui/icons-material/Cable";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
@@ -54,59 +55,63 @@ export default function EnigmaPlugboard() {
   };
 
   return (
-    <Stack spacing={2} alignItems="center">
-      <Typography variant="h6">Configure the plugboard</Typography>
-      <Stack direction="row" spacing={4} alignItems={"center"}>
-        <PlugboardCableCountSelect />
-        <NotationSelector
-          currentNotation={notation}
-          onChange={handleNotationChange}
-        />
-      </Stack>
-      <Alert variant="outlined" severity="info" sx={{ maxWidth: 0.7 }}>
-        During the war, procedure required that 10 patch cables were used. For
-        simulation purposes you can use anywhere from 0 to 13.
-      </Alert>
-      <PlugboardConnections />
-      <Alert variant="outlined" severity="info" sx={{ maxWidth: 0.7 }}>
-        You may enter the plugboard settings by manually connecting cables or by
-        typing a connection string.
-      </Alert>
-      <Stack
-        spacing={2}
-        direction="row"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <PlugboardSelect
-          label="Plug 1"
-          notation={notation}
-          disabled={cableCount === connections.length || choices1.length === 0}
-          value={first}
-          choices={choices1}
-          onChange={setFirst}
-        />
-        <CableIcon />
-        <PlugboardSelect
-          label="Plug 2"
-          notation={notation}
-          disabled={first === null}
-          value={second}
-          choices={choices2}
-          onChange={setSecond}
-        />
-        <Button
-          variant="contained"
-          disabled={first === null || second === null}
-          onClick={handleConnect}
+    <Paper elevation={2} sx={{ px: 4, py: 2 }}>
+      <Stack spacing={2} alignItems="center">
+        <Typography variant="h6">Configure the plugboard</Typography>
+        <Stack direction="row" spacing={4} alignItems={"center"}>
+          <PlugboardCableCountSelect />
+          <NotationSelector
+            currentNotation={notation}
+            onChange={handleNotationChange}
+          />
+        </Stack>
+        <Alert severity="info" sx={{ maxWidth: 0.7 }}>
+          During the war, procedure required that 10 patch cables were used. For
+          simulation purposes you can use anywhere from 0 to 13.
+        </Alert>
+        <PlugboardConnections />
+        <Alert severity="info" sx={{ maxWidth: 0.7 }}>
+          You may enter the plugboard settings by manually connecting cables or
+          by typing a connection string.
+        </Alert>
+        <Stack
+          spacing={2}
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
         >
-          Connect
-        </Button>
+          <PlugboardSelect
+            label="Plug 1"
+            notation={notation}
+            disabled={
+              cableCount === connections.length || choices1.length === 0
+            }
+            value={first}
+            choices={choices1}
+            onChange={setFirst}
+          />
+          <CableIcon />
+          <PlugboardSelect
+            label="Plug 2"
+            notation={notation}
+            disabled={first === null}
+            value={second}
+            choices={choices2}
+            onChange={setSecond}
+          />
+          <Button
+            variant="contained"
+            disabled={first === null || second === null}
+            onClick={handleConnect}
+          >
+            Connect
+          </Button>
+        </Stack>
+        <Typography variant="h6" component="span">
+          Or
+        </Typography>
+        <PlugboardTextInput />
       </Stack>
-      <Typography variant="h6" component="span">
-        Or
-      </Typography>
-      <PlugboardTextInput />
-    </Stack>
+    </Paper>
   );
 }
