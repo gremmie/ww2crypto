@@ -8,16 +8,18 @@ export function toNumericConnection(c: string) {
   return `${toNumericPlug(c[0])}-${toNumericPlug(c[1])}`;
 }
 
-export function isValidPlugboardString(s: string, n: number) {
-  const regexStr = Array.from({ length: n }, () => "[a-zA-Z]{2}").join("\\s+");
+export function isValidPlugboardString(s: string, cableCount: number) {
+  const regexStr = Array.from({ length: cableCount }, () => "[a-zA-Z]{2}").join(
+    "\\s+",
+  );
   const regex = new RegExp(`^${regexStr}$`);
   if (!regex.test(s)) return false;
 
   // Every plug has to appear exactly once.
-  const noSpaces = s.replaceAll(/\s/g, "");
+  const noSpaces = s.replaceAll(/\s/g, "").toUpperCase();
   const plugByCount = new Map<string, number>();
-  for (let i = 1; i < noSpaces.length; ++i) {
-    const c = noSpaces[i].toUpperCase();
+  for (let i = 0; i < noSpaces.length; ++i) {
+    const c = noSpaces[i];
     const count = plugByCount.get(c) ?? 0;
     plugByCount.set(c, count + 1);
   }
@@ -25,17 +27,18 @@ export function isValidPlugboardString(s: string, n: number) {
   return values.every((c) => c === 1);
 }
 
-export function isValidNumericPlugboardString(s: string, n: number) {
-  const regexStr = Array.from({ length: n }, () => "\\d{1,2}-\\d{1,2}").join(
-    "\\s+",
-  );
+export function isValidNumericPlugboardString(s: string, cableCount: number) {
+  const regexStr = Array.from(
+    { length: cableCount },
+    () => "\\d{1,2}-\\d{1,2}",
+  ).join("\\s+");
   const regex = new RegExp(`^${regexStr}$`);
   if (!regex.test(s)) return false;
 
   // Every plug has to appear exactly once.
   const numbers = s.replaceAll(/\s/g, "-").split("-");
   const plugByCount = new Map<string, number>();
-  for (let i = 1; i < numbers.length; ++i) {
+  for (let i = 0; i < numbers.length; ++i) {
     const count = plugByCount.get(numbers[i]) ?? 0;
     plugByCount.set(numbers[i], count + 1);
   }
@@ -43,6 +46,10 @@ export function isValidNumericPlugboardString(s: string, n: number) {
   return values.every((c) => c === 1);
 }
 
+/**
+ * Normalizes a plugboard string by converting to uppercase and sorting each plug pair.
+ * @param {string} s - the plugboard string, which must be valid in letter notation.
+ */
 export function normalizePlugboardString(s: string) {
   let connections =
     s === "" ? [] : s.replaceAll(/\s+/g, " ").toUpperCase().split(" ");
