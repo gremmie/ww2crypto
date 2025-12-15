@@ -3,8 +3,10 @@ import {
   isValidNumericPlugboardString,
   isValidPlugboardString,
   normalizePlugboardString,
+  toAlphaPlugboardString,
   toNumericConnection,
   toNumericPlug,
+  toNumericPlugboardString,
 } from "../../../src/features/enigma/utils";
 
 describe("toNumericPlug", () => {
@@ -183,5 +185,35 @@ describe("normalizePlugboardString", () => {
 
   test("should sort plugs", () => {
     expect(normalizePlugboardString("ba Dc Yz")).toEqual("AB CD YZ");
+  });
+});
+
+describe("toNumericPlugboardString", () => {
+  test("no cable case", () => {
+    expect(toNumericPlugboardString("")).toEqual("");
+  });
+
+  test("base cases", () => {
+    expect(toNumericPlugboardString("AB")).toEqual("1-2");
+    expect(toNumericPlugboardString("AB YZ")).toEqual("1-2 25-26");
+    expect(toNumericPlugboardString("AV BS CG DL FU HZ IN KM OW RX")).toEqual(
+      "1-22 2-19 3-7 4-12 6-21 8-26 9-14 11-13 15-23 18-24",
+    );
+  });
+});
+
+describe("toAlphaPlugboardString", () => {
+  test("no cable case", () => {
+    expect(toAlphaPlugboardString("")).toEqual("");
+  });
+
+  test("base cases", () => {
+    expect(toAlphaPlugboardString("1-2")).toEqual("AB");
+    expect(toAlphaPlugboardString("1-2 25-26")).toEqual("AB YZ");
+    expect(
+      toAlphaPlugboardString(
+        "1-22 2-19 3-7 4-12 6-21 8-26 9-14 11-13 15-23 18-24",
+      ),
+    ).toEqual("AV BS CG DL FU HZ IN KM OW RX");
   });
 });
