@@ -5,7 +5,7 @@ export function toNumericPlug(c: string) {
 }
 
 export function toNumericConnection(c: string) {
-  return `${toNumericPlug(c[0])}-${toNumericPlug(c[1])}`;
+  return `${toNumericPlug(c[0])}/${toNumericPlug(c[1])}`;
 }
 
 export function isValidPlugboardString(s: string, cableCount: number) {
@@ -30,13 +30,13 @@ export function isValidPlugboardString(s: string, cableCount: number) {
 export function isValidNumericPlugboardString(s: string, cableCount: number) {
   const regexStr = Array.from(
     { length: cableCount },
-    () => "\\d{1,2}-\\d{1,2}",
+    () => "\\d{1,2}/\\d{1,2}",
   ).join("\\s+");
   const regex = new RegExp(`^${regexStr}$`);
   if (!regex.test(s)) return false;
 
   // Every plug has to appear exactly once.
-  const numbers = s.replaceAll(/\s/g, "-").split("-");
+  const numbers = s.replaceAll(/\s/g, "/").split("/");
   const plugByCount = new Map<string, number>();
   for (let i = 0; i < numbers.length; ++i) {
     const count = plugByCount.get(numbers[i]) ?? 0;
@@ -70,7 +70,7 @@ export function toNumericPlugboardString(s: string) {
 
   const numeric = alpha.map((c) => {
     const [a, b] = c.split("");
-    return `${toNumericPlug(a)}-${toNumericPlug(b)}`;
+    return `${toNumericPlug(a)}/${toNumericPlug(b)}`;
   });
   return numeric.join(" ");
 }
@@ -84,7 +84,7 @@ export function toAlphaPlugboardString(s: string) {
   if (s === "") return "";
   const connections = s.replaceAll(/\s+/g, " ").split(" ");
   const alpha = connections.map((pair) => {
-    const [a, b] = pair.split("-");
+    const [a, b] = pair.split("/");
     const m = String.fromCharCode(aCode + parseInt(a) - 1);
     const n = String.fromCharCode(aCode + parseInt(b) - 1);
     return m + n;
