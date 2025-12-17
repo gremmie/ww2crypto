@@ -9,7 +9,7 @@ import {
 } from "../../../src/features/enigma/enigmaSlice.ts";
 import { renderWithProviders } from "../../utils/test-utils.tsx";
 
-describe("EnigmaRingSettings", () => {
+describe("EnigmaRotors", () => {
   const expectedReflectors = new Map<number, string[]>([
     [3, ["B", "C"]],
     [4, ["B-Thin", "C-Thin"]],
