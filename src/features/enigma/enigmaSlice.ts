@@ -67,7 +67,7 @@ export const enigmaSlice = createSlice({
       state.ringSettingsNotation =
         state.numberOfRotors === 3 ? "number" : "letter";
       state.plugboard = "";
-      state.plugboardNotation = state.numberOfRotors == 3 ? "number" : "letter";
+      state.plugboardNotation = state.numberOfRotors == 3 ? "letter" : "number";
       state.plugboardCableCount = 10;
     },
     reflectorChanged: (state, action: PayloadAction<ReflectorType>) => {
