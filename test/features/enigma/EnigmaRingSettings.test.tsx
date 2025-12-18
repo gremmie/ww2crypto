@@ -73,7 +73,7 @@ describe("EnigmaRingSettings", () => {
     await testRingSettings(3, "letter");
   });
 
-  test.only("Four rotor test - numbers", async () => {
+  test("Four rotor test - numbers", async () => {
     await testRingSettings(4, "number");
   });
 
