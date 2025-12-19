@@ -7,14 +7,21 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import { EnigmaOperateTab } from "./EnigmaOperateTab.tsx";
 import EnigmaSetup from "./EnigmaSetup.tsx";
+import {
+  currentTabChanged,
+  selectCurrentTab,
+  type TabType,
+} from "./enigmaSlice.ts";
 
 export default function EnigmaMain() {
-  type TabType = "setup" | "operate";
-  const [value, setValue] = React.useState<TabType>("setup");
+  const dispatch = useAppDispatch();
+  const currentTab = useAppSelector(selectCurrentTab);
 
-  const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue as TabType);
+  const handleChange = (_event: React.SyntheticEvent, newValue: TabType) => {
+    dispatch(currentTabChanged(newValue));
   };
 
   return (
@@ -23,7 +30,7 @@ export default function EnigmaMain() {
         Enigma Online
       </Typography>
       <Box sx={{ width: "100%", typography: "body1" }}>
-        <TabContext value={value}>
+        <TabContext value={currentTab}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <TabList onChange={handleChange} aria-label="Enigma Tabs">
               <Tab
@@ -43,7 +50,9 @@ export default function EnigmaMain() {
           <TabPanel value="setup">
             <EnigmaSetup />
           </TabPanel>
-          <TabPanel value="operate">Operate stuff goes here.</TabPanel>
+          <TabPanel value="operate">
+            <EnigmaOperateTab />
+          </TabPanel>
         </TabContext>
       </Box>
     </>

@@ -3,11 +3,14 @@ import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store";
 import { isValidPlugboardString, normalizePlugboardString } from "./utils.ts";
 
+export type TabType = "setup" | "operate";
+
 export type ReflectorType = "B" | "C" | "B-Thin" | "C-Thin" | null;
 
 export type NotationType = "letter" | "number";
 
 interface EnigmaState {
+  currentTab: TabType;
   activeSetupStep: number;
   numberOfRotors: number;
   reflector: ReflectorType;
@@ -21,6 +24,7 @@ interface EnigmaState {
 
 // Define the initial state using that type
 const initialState: EnigmaState = {
+  currentTab: "setup",
   activeSetupStep: 0,
   numberOfRotors: 3,
   reflector: null,
@@ -46,6 +50,9 @@ export const enigmaSlice = createSlice({
   name: "enigma",
   initialState,
   reducers: {
+    currentTabChanged: (state, action: PayloadAction<TabType>) => {
+      state.currentTab = action.payload;
+    },
     setupStepChanged: (state, action: PayloadAction<number>) => {
       state.activeSetupStep = action.payload;
     },
@@ -162,6 +169,7 @@ export const enigmaSlice = createSlice({
 
 // Actions
 export const {
+  currentTabChanged,
   setupStepChanged,
   setupStepAdvanced,
   setupStepReversed,
@@ -178,6 +186,8 @@ export const {
 } = enigmaSlice.actions;
 
 // Selectors
+
+export const selectCurrentTab = (state: RootState) => state.enigma.currentTab;
 
 export const selectActiveSetupStep = (state: RootState) =>
   state.enigma.activeSetupStep;
@@ -204,6 +214,12 @@ export const selectStepCompletionStatus = createSelector(
   selectStep4Complete,
   (step1, step2, step3, step4) => [step1, step2, step3, step4],
 );
+
+export const selectIsSetupComplete = (state: RootState) =>
+  selectStep1Complete(state) &&
+  selectStep2Complete(state) &&
+  selectStep3Complete(state) &&
+  selectStep4Complete(state);
 
 export const selectNumberOfRotors = (state: RootState) =>
   state.enigma.numberOfRotors;
