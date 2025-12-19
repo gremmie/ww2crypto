@@ -186,5 +186,50 @@ describe("EnigmaPlugboard", () => {
       expect(screen.getByText("Connections (0):")).toBeInTheDocument();
       expect(screen.getByText("No connections")).toBeInTheDocument();
     });
+
+    test("Connection string test - letters", async () => {
+      const { user } = setup(3);
+      const connectionStrInput = screen.getByLabelText("Connection String");
+      await user.type(connectionStrInput, "AV BS CG DL FU HZ IN KM OW RX");
+
+      const setButton = screen.getByRole("button", { name: "Set" });
+      expect(setButton).toBeEnabled();
+      await user.click(setButton);
+
+      expect(screen.getByRole("button", { name: "AV" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "BS" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "CG" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "DL" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "FU" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "HZ" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "IN" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "KM" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "OW" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "RX" })).toBeInTheDocument();
+    });
+
+    test("Connection string test - numbers", async () => {
+      const { user } = setup(4);
+      const connectionStrInput = screen.getByLabelText("Connection String");
+      await user.type(
+        connectionStrInput,
+        "1/22 2/19 3/7 4/12 6/21 8/26 9/14 11/13 15/23 18/24",
+      );
+
+      const setButton = screen.getByRole("button", { name: "Set" });
+      expect(setButton).toBeEnabled();
+      await user.click(setButton);
+
+      expect(screen.getByRole("button", { name: "1/22" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "2/19" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "3/7" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "4/12" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "6/21" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "8/26" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "9/14" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "11/13" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "15/23" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "18/24" })).toBeInTheDocument();
+    });
   });
 });
