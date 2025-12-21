@@ -1,13 +1,13 @@
 import { screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, test } from "vitest";
-import EnigmaSetup from "../../../src/features/enigma/EnigmaSetup.tsx";
+import EnigmaSetupTab from "../../../src/features/enigma/EnigmaSetupTab.tsx";
 import { renderWithProviders } from "../../utils/test-utils.tsx";
 
 describe("EnigmaModel", () => {
   test("Radio buttons change the model", async () => {
     const user = userEvent.setup();
-    renderWithProviders(<EnigmaSetup />);
+    renderWithProviders(<EnigmaSetupTab />);
 
     expect(screen.getByText("Select Model")).toBeInTheDocument();
 

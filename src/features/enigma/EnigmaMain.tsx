@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import { EnigmaOperateTab } from "./EnigmaOperateTab.tsx";
-import EnigmaSetup from "./EnigmaSetup.tsx";
+import EnigmaSetupTab from "./EnigmaSetupTab.tsx";
 import {
   currentTabChanged,
   selectCurrentTab,
@@ -48,7 +48,7 @@ export default function EnigmaMain() {
             </TabList>
           </Box>
           <TabPanel value="setup">
-            <EnigmaSetup />
+            <EnigmaSetupTab />
           </TabPanel>
           <TabPanel value="operate">
             <EnigmaOperateTab />

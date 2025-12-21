@@ -1,14 +1,14 @@
 import { screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, test } from "vitest";
-import EnigmaSetup from "../../../src/features/enigma/EnigmaSetup.tsx";
+import EnigmaSetupTab from "../../../src/features/enigma/EnigmaSetupTab.tsx";
 import type { EnigmaState } from "../../../src/features/enigma/enigmaSlice.ts";
 import { renderWithProviders } from "../../utils/test-utils.tsx";
 
-describe("EnigmaSetup", () => {
+describe("EnigmaSetupTab", () => {
   test("Next and Back buttons", async () => {
     const user = userEvent.setup();
-    renderWithProviders(<EnigmaSetup />);
+    renderWithProviders(<EnigmaSetupTab />);
 
     expect(screen.getByText("Select Model")).toBeInTheDocument();
 
@@ -61,7 +61,7 @@ describe("EnigmaSetup", () => {
 
   test("Stepper", async () => {
     const user = userEvent.setup();
-    renderWithProviders(<EnigmaSetup />);
+    renderWithProviders(<EnigmaSetupTab />);
 
     expect(screen.getByText("Select Model")).toBeInTheDocument();
 
@@ -109,7 +109,7 @@ describe("EnigmaSetup", () => {
       plugboardNotation: "letter",
       plugboardCableCount: 2,
     };
-    const { user, store } = renderWithProviders(<EnigmaSetup />, {
+    const { user, store } = renderWithProviders(<EnigmaSetupTab />, {
       preloadedState: { enigma: initialState },
     });
     const alertElement = screen.getByRole("alert");

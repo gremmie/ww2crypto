@@ -20,7 +20,7 @@ import {
 import SetupCompleteAlert from "./SetupCompleteAlert.tsx";
 import { SetupStepper } from "./SetupStepper.tsx";
 
-export default function EnigmaSetup() {
+export default function EnigmaSetupTab() {
   const dispatch = useAppDispatch();
   const activeStep = useAppSelector(selectActiveSetupStep);
   const isSetupComplete = useAppSelector(selectIsSetupComplete);
