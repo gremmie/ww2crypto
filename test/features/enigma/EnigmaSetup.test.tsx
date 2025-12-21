@@ -2,6 +2,7 @@ import { screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, test } from "vitest";
 import EnigmaSetup from "../../../src/features/enigma/EnigmaSetup.tsx";
+import type { EnigmaState } from "../../../src/features/enigma/enigmaSlice.ts";
 import { renderWithProviders } from "../../utils/test-utils.tsx";
 
 describe("EnigmaSetup", () => {
@@ -93,5 +94,31 @@ describe("EnigmaSetup", () => {
 
     await user.click(step1Button);
     expect(screen.getByText("Select Model")).toBeInTheDocument();
+  });
+
+  test("Shows alert when setup is complete", async () => {
+    const initialState: EnigmaState = {
+      currentTab: "setup",
+      activeSetupStep: 0,
+      numberOfRotors: 3,
+      reflector: "B",
+      rotorTypes: ["I", "II", "III"],
+      ringSettings: [0, 1, 2],
+      ringSettingsNotation: "number",
+      plugboard: "IX MO",
+      plugboardNotation: "letter",
+      plugboardCableCount: 2,
+    };
+    const { user, store } = renderWithProviders(<EnigmaSetup />, {
+      preloadedState: { enigma: initialState },
+    });
+    const alertElement = screen.getByRole("alert");
+    expect(alertElement).toHaveTextContent(
+      "Setup complete. You may now operate your Enigma machine!",
+    );
+    const operateButton = screen.getByRole("button", { name: "operate" });
+    await user.click(operateButton);
+
+    expect(store.getState().enigma.currentTab).toEqual("operate");
   });
 });

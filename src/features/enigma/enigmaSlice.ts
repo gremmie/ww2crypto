@@ -9,7 +9,7 @@ export type ReflectorType = "B" | "C" | "B-Thin" | "C-Thin" | null;
 
 export type NotationType = "letter" | "number";
 
-interface EnigmaState {
+export interface EnigmaState {
   currentTab: TabType;
   activeSetupStep: number;
   numberOfRotors: number;

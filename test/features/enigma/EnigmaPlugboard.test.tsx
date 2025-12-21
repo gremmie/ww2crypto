@@ -1,5 +1,5 @@
 import { screen, within } from "@testing-library/react";
-import { type UserEvent, userEvent } from "@testing-library/user-event";
+import { type UserEvent } from "@testing-library/user-event";
 import { beforeEach, describe, expect, test } from "vitest";
 import { setupStore } from "../../../src/app/store.ts";
 import EnigmaPlugboard from "../../../src/features/enigma/EnigmaPlugboard.tsx";
@@ -71,7 +71,6 @@ describe("EnigmaPlugboard", () => {
       store.dispatch(modelChanged(numRotors));
       store.dispatch(setupStepChanged(3));
       return {
-        user: userEvent.setup(),
         ...renderWithProviders(<EnigmaPlugboard />, { store }),
       };
     }

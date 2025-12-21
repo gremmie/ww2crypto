@@ -1,10 +1,11 @@
-import React, { type JSX, type PropsWithChildren } from "react";
-import { render } from "@testing-library/react";
 import type { RenderOptions } from "@testing-library/react";
+import { render } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
+import React, { type JSX, type PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 
-import { setupStore } from "../../src/app/store";
 import type { AppStore, RootState } from "../../src/app/store";
+import { setupStore } from "../../src/app/store";
 
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.
@@ -25,5 +26,9 @@ export function renderWithProviders(
   function Wrapper({ children }: PropsWithChildren<object>): JSX.Element {
     return <Provider store={store}>{children}</Provider>;
   }
-  return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
+  return {
+    user: userEvent.setup(),
+    store: store,
+    ...render(ui, { wrapper: Wrapper, ...renderOptions }),
+  };
 }
