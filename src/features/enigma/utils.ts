@@ -91,3 +91,27 @@ export function toAlphaPlugboardString(s: string) {
   });
   return normalizePlugboardString(alpha.join(" "));
 }
+
+export function isValidRotorWiring(wiring: string) {
+  if (!/^[A-Z]{26}$/.test(wiring)) return false;
+
+  // Every letter must appear once.
+  const countsByLetter = new Map<string, number>();
+  for (const c of wiring) {
+    const count = countsByLetter.get(c) ?? 0;
+    countsByLetter.set(c, count + 1);
+  }
+  const counts = Array.from(countsByLetter.values());
+  return counts.every((c) => c === 1);
+}
+
+/**
+ * A mathematical modulo function (always returns a non-negative result if the
+ * divisor is positive).
+ *
+ * @param n {number} - dividend
+ * @param d {number} - divisor
+ */
+export function modulo(n: number, d: number): number {
+  return ((n % d) + d) % d;
+}

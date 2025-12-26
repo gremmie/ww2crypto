@@ -32,3 +32,28 @@ export function renderWithProviders(
     ...render(ui, { wrapper: Wrapper, ...renderOptions }),
   };
 }
+
+/**
+ * Rotates a string to the left or right by a specified number of positions.
+ *
+ * @param str {string} - The original string.
+ * @param k {number} - The number of positions to rotate. Positive for left, negative for right.
+ * @returns {string} -The rotated string.
+ */
+export function rotateString(str: string, k: number): string {
+  const n = str.length;
+
+  // Handle cases where k is larger than the string length, ensuring efficient rotation
+  // and handling both positive and negative values correctly.
+  const rotationIndex = ((k % n) + n) % n;
+
+  if (n === 0) {
+    return str;
+  }
+
+  // Slice the string into two parts and concatenate them in the rotated order.
+  const part1 = str.slice(rotationIndex);
+  const part2 = str.slice(0, rotationIndex);
+
+  return part1 + part2;
+}

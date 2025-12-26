@@ -2,6 +2,8 @@ import { describe, expect, test } from "vitest";
 import {
   isValidNumericPlugboardString,
   isValidPlugboardString,
+  isValidRotorWiring,
+  modulo,
   normalizePlugboardString,
   toAlphaPlugboardString,
   toNumericConnection,
@@ -215,5 +217,40 @@ describe("toAlphaPlugboardString", () => {
         "1/22 2/19 3/7 4/12 6/21 8/26 9/14 11/13 15/23 18/24",
       ),
     ).toEqual("AV BS CG DL FU HZ IN KM OW RX");
+  });
+});
+
+describe("isValidRotorWiring", () => {
+  test("invalid cases", () => {
+    expect(isValidRotorWiring("")).toBe(false);
+    expect(isValidRotorWiring("ab")).toBe(false);
+    expect(isValidRotorWiring("abcdefghijklmnopqrstuvwxyz")).toBe(false);
+    expect(isValidRotorWiring("123")).toBe(false);
+    expect(isValidRotorWiring("01234567890123456789123456")).toBe(false);
+    expect(isValidRotorWiring("ABCDEFGHIJKLMNOPQRSTUVWXYZG")).toBe(false);
+    expect(isValidRotorWiring("-!ABCDEFGHIJKLMNOPQRSTUVWXYZ<>")).toBe(false);
+  });
+
+  test("valid cases", () => {
+    expect(isValidRotorWiring("ABCDEFGHIJKLMNOPQRSTUVWXYZ")).toBe(true);
+    expect(isValidRotorWiring("FKQHTLXOCBJSPDZRAMEWNIUYGV")).toBe(true);
+  });
+});
+
+describe("modulo", () => {
+  test("both dividend and divisor are positive", () => {
+    expect(modulo(5, 1)).toEqual(0);
+    expect(modulo(5, 7)).toEqual(5);
+    expect(modulo(6, 7)).toEqual(6);
+    expect(modulo(7, 7)).toEqual(0);
+    expect(modulo(1, 7)).toEqual(1);
+  });
+
+  test("dividend is negative, divisor is positive", () => {
+    expect(modulo(-5, 1)).toEqual(0);
+    expect(modulo(-5, 7)).toEqual(2);
+    expect(modulo(-6, 7)).toEqual(1);
+    expect(modulo(-7, 7)).toEqual(0);
+    expect(modulo(-1, 7)).toEqual(6);
   });
 });
