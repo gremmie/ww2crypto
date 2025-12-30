@@ -196,7 +196,7 @@ describe("EnigmaMachine", () => {
       expect(m.getDisplay(), "VJWY");
     });
 
-    test("M3 decrypt example", () => {
+    test("M3 Scharnhorst decrypt", () => {
       // This is the Scharnhorst message taken from
       // https://www.bytereef.org/m4-project-scharnhorst-break.html
       const stecker = "AN EZ HK IJ LR MQ OT PV SW UX";
@@ -218,6 +218,63 @@ describe("EnigmaMachine", () => {
 
       const truthData =
         "steuerejtanafjordjanstandortquaaacccvierneunneunzwofahrtzwonulsmxxscharnhorsthco".toUpperCase();
+
+      expect(plaintext).toEqual(truthData);
+    });
+
+    test("M4 Project second break", () => {
+      // https://www.bytereef.org/m4-project-second-break.html
+      const reflector = reflectorFactory("B-Thin")!;
+      const rotors = [
+        rotorFactory("Beta", "A")!,
+        rotorFactory("II", "A")!,
+        rotorFactory("IV", "N")!,
+        rotorFactory("I", "V")!,
+      ];
+      const plugboard = new Plugboard("AT CL DH EP FG IO JN KQ MU RX");
+      const m = new EnigmaMachine(reflector, rotors, plugboard);
+
+      const ciphertext =
+        "tmkfnwzxffiiyxutihwmdhxifzeqvkdvmqswbqndyozftiwmjhxhyrpaczugrremvpanwxgtkthn" +
+        "rlvhkzpgmnmvsecvckhoinplhhpvpxkmbhokccpdpevxvvhozzqbiyieouseznhjkwhydagtxdjd" +
+        "jkjpkcsdsuztqcxjdvlpamgqkkshphvksvpcbuwzfizpfuup";
+
+      m.setDisplay("MCSF");
+      const plaintext = m.processText(ciphertext);
+
+      const truthData = (
+        "vvvjschreederjaufgeleitkursfuenffuenfgradnichtsgefundenymarscaierebefohlenes" +
+        "quadratxstanrortmarquantonjotadreineunneunfuenfxsssooovieryseedremyeinsnulyy" +
+        "einsnulbedecktyzwoachtmbsteigtynbbelsichteinssmt"
+      ).toUpperCase();
+
+      expect(plaintext).toEqual(truthData);
+    });
+
+    test("HMS Hurricane intercept", () => {
+      // https://www.enigma.hoerenberg.com/index.php?cat=M4%20Project%202006&page=Rasch%20Message
+      const reflector = reflectorFactory("B-Thin")!;
+      const rotors = [
+        rotorFactory("Beta", "Z")!,
+        rotorFactory("VI", "Z")!,
+        rotorFactory("I", "D")!,
+        rotorFactory("III", "G")!,
+      ];
+      const plugboard = new Plugboard("BQ CR DI EJ KW MT OS PX UZ GH");
+      const m = new EnigmaMachine(reflector, rotors, plugboard);
+
+      const ciphertext =
+        "HCEYZTCSOPUPPZDICQRDLWXXFACTTJMBRDVCJJMMZRPYIKHZAWGLYXWTMJPQUEFSZBOTVR" +
+        "LALZXWVXTSLFFFAUDQFBWRRYAPSBOWJMKLDUYUPFUQDOWVHAHCDWAUARSWTKOFVOYFPUFH" +
+        "VZFDGGPOOVGRMBPXXZCANKMONFHXPCKHJZBUMXJWXKAUODXZUCVCXPFT";
+
+      m.setDisplay("NAQL");
+      const plaintext = m.processText(ciphertext);
+
+      const truthData =
+        "BOOTKLARXBEIJSCHNOORBETWAZWOSIBENXNOVXSECHSNULCBMXPROVIANTBISZWONULXDE" +
+        "ZXBENOETIGEGLMESERYNOCHVIEFKLHRXSTEHEMARQUBRUNOBRUNFZWOFUHFXLAGWWIEJKC" +
+        "HAEFERJXNNTWWWFUNFYEINSFUNFMBSTEIGENDYGUTESIWXDVVVJRASCH";
 
       expect(plaintext).toEqual(truthData);
     });
