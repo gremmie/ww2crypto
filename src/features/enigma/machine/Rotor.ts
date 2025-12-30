@@ -43,8 +43,9 @@ export class RotorError extends Error {
  * its own turnover position.
  *
  * Note that we allow the stepping parameter to be null. This indicates the
- * rotor does not rotate. This allows us to model the entry wheel and
- * reflectors as stationary rotors.
+ * rotor does not rotate, as is the case for the M4 "Greek" rotors.
+ * This also allows us to model the entry wheel and reflectors as stationary
+ * rotors.
  */
 export default class Rotor {
   readonly type: string;
@@ -59,21 +60,50 @@ export default class Rotor {
   private displayByPos = new Map<number, string>();
   private stepSet = new Set<string>();
 
+  /**
+   * Constructor for Rotor.
+   *
+   * @param type {string} - the name or type of the Rotor; e.g. "II"
+   *
+   * @param wiring {string} - the wiring of the rotor as a 26 character string
+   * consisting of all uppercase letters A-Z. The first letter of the string
+   * indicates what the "A" pin maps to, the second letter is for "B", etc.
+   *
+   * @param ringSetting {string|number} - the ring setting can be specified as
+   * a number from 0-25 or a single uppercase letter string. If omitted, a value
+   * of 0 is used.
+   *
+   * @param stepping {string[]} - an array of single uppercase strings which
+   * indicate when the rotor steps if the ring setting is set to 0.
+   * The rotor will step when the indicated letters are shown in the operator
+   * window.
+   * An empty list indicates the rotor does not rotate.
+   */
   constructor(
     type: string,
     wiring: string,
-    ringSetting: number = 0,
+    ringSetting?: number | string,
     stepping: string[] = [],
   ) {
     this.type = type;
     this.wiring = wiring.toUpperCase();
-    this.ringSetting = ringSetting;
+
+    if (ringSetting === undefined) {
+      this.ringSetting = 0;
+    } else if (typeof ringSetting === "number") {
+      this.ringSetting = ringSetting;
+    } else {
+      if (!/^[A-Z]$/.test(ringSetting)) {
+        throw new RotorError(`Invalid ringSetting ${ringSetting}`);
+      }
+      this.ringSetting = ringSetting.charCodeAt(0) - aCode;
+    }
 
     if (!isValidRotorWiring(this.wiring)) {
       throw new RotorError(`Invalid wiring ${this.wiring}`);
     }
 
-    if (ringSetting < 0 || ringSetting > 25) {
+    if (this.ringSetting < 0 || this.ringSetting > 25) {
       throw new RotorError(`Invalid ringSetting ${ringSetting}`);
     }
 

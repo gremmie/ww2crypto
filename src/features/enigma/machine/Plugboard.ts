@@ -23,7 +23,7 @@ export class PlugboardError extends Error {
  * to B, A crosses to B in the keyboard to entry wheel direction and also in
  * the reverse entry wheel to lamp direction.
  */
-export class Plugboard {
+export default class Plugboard {
   private readonly wiringMap: number[];
 
   /**

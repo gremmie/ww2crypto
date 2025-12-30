@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
-import {
-  Plugboard,
+import Plugboard, {
   PlugboardError,
 } from "../../../../src/features/enigma/machine/Plugboard.ts";
 

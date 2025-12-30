@@ -60,8 +60,8 @@ describe("EnigmaPlugboard", () => {
     let letterPlugs: string[];
 
     beforeEach(() => {
-      numberPlugs = Array.from({ length: 26 }).map((_, i) => `${i + 1}`);
-      letterPlugs = Array.from({ length: 26 }).map((_, i) =>
+      numberPlugs = Array.from({ length: 26 }, (_, i) => `${i + 1}`);
+      letterPlugs = Array.from({ length: 26 }, (_, i) =>
         String.fromCharCode(aCode + i),
       );
     });

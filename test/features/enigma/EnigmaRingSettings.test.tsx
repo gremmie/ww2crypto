@@ -12,7 +12,7 @@ import { aCode } from "../../../src/features/enigma/utils.ts";
 import { renderWithProviders } from "../../utils/test-utils.tsx";
 
 describe("EnigmaRingSettings", () => {
-  const numberSettings = Array.from({ length: 26 }).map((_, i) => i + 1);
+  const numberSettings = Array.from({ length: 26 }, (_, i) => i + 1);
   const letterSettings = numberSettings.map((n) =>
     String.fromCharCode(aCode + n - 1),
   );
