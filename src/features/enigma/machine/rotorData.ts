@@ -24,7 +24,8 @@ export const rotorDataByType = new Map<string, RotorData>([
   ["IV", { wiring: "ESOVPZJAYQUIRHXLNFTGKDCMWB", stepping: ["J"] }],
   ["V", { wiring: "VZBRGITYUPSDNHLXAWMJQOFECK", stepping: ["Z"] }],
   ["VI", { wiring: "JPGVOUMFYQBENHZRDKASXLICTW", stepping: ["Z", "M"] }],
-  ["VII", { wiring: "FKQHTLXOCBJSPDZRAMEWNIUYGV", stepping: ["Z", "M"] }],
+  ["VII", { wiring: "NZJHGRCXMYSWBOUFAIVLPEKQDT", stepping: ["Z", "M"] }],
+  ["VIII", { wiring: "FKQHTLXOCBJSPDZRAMEWNIUYGV", stepping: ["Z", "M"] }],
   ["Beta", { wiring: "LEYJVCNIXWPBQMDRTAKZGFUHOS", stepping: [] }],
   ["Gamma", { wiring: "FSOKANUERHMBTIYCWLQPZXVGJD", stepping: [] }],
 ]);

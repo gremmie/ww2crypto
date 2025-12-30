@@ -143,8 +143,8 @@ describe("EnigmaMachine", () => {
     });
   });
 
-  describe("Kriegsmarine M4", () => {
-    test("Decrypt example", () => {
+  describe("Kriegsmarine", () => {
+    test("M4 decrypt example", () => {
       // This is the Kriegsmarine example from Dirk Rijmenants' simulator manual.
       //
       // It is credited to Stefan Krah and the M4 project:
@@ -194,6 +194,32 @@ describe("EnigmaMachine", () => {
 
       expect(plaintext).toEqual(truthData);
       expect(m.getDisplay(), "VJWY");
+    });
+
+    test("M3 decrypt example", () => {
+      // This is the Scharnhorst message taken from
+      // https://www.bytereef.org/m4-project-scharnhorst-break.html
+      const stecker = "AN EZ HK IJ LR MQ OT PV SW UX";
+
+      const reflector = reflectorFactory("B")!;
+      const rotors = [
+        rotorFactory("III", "A")!,
+        rotorFactory("VI", "H")!,
+        rotorFactory("VIII", "M")!,
+      ];
+      const plugboard = new Plugboard(stecker);
+      const m = new EnigmaMachine(reflector, rotors, plugboard);
+
+      const ciphertext =
+        "ykaenzapmschzbfocuvmrmdpycofhadzizmefxthflolpzlfggbotgoxgretdwtjiqhlmxvjwkzuastr";
+
+      m.setDisplay("UZV");
+      const plaintext = m.processText(ciphertext);
+
+      const truthData =
+        "steuerejtanafjordjanstandortquaaacccvierneunneunzwofahrtzwonulsmxxscharnhorsthco".toUpperCase();
+
+      expect(plaintext).toEqual(truthData);
     });
   });
 });
