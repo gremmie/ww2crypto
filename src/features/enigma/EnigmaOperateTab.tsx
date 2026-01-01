@@ -8,10 +8,13 @@ export function EnigmaOperateTab() {
   const isSetupComplete = useAppSelector(selectIsSetupComplete);
 
   return (
-    <Box>
-      <Typography variant="h4">
-        {isSetupComplete ? "Operate stuff goes here" : <OperateEmptyView />}
-      </Typography>
-    </Box>
+    <>
+      {isSetupComplete && (
+        <Box>
+          <Typography variant="h4">Operate stuff goes here</Typography>
+        </Box>
+      )}
+      {!isSetupComplete && <OperateEmptyView />}
+    </>
   );
 }
