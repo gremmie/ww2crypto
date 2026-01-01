@@ -40,8 +40,8 @@ export default function EnigmaRotors() {
           </Alert>
           {numberOfRotors == 3 && (
             <Alert severity="info" sx={{ mt: 2 }}>
-              Note that rotors VI - VIII were only available on the Naval M3
-              model.
+              Note that rotors VI - VIII were only available on the Naval
+              Enigmas.
             </Alert>
           )}
         </Box>
