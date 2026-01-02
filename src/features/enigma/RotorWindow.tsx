@@ -25,18 +25,18 @@ export default function RotorWindow(props: RotorWindowProps) {
     }
   };
 
-  const handleBack = () => {
-    const newValue = String.fromCharCode(
-      modulo(displayValue.charCodeAt(0) - aCode - 1, 26) + aCode,
+  const stepValue = (direction: 1 | -1) => {
+    return String.fromCharCode(
+      modulo(displayValue.charCodeAt(0) - aCode + direction, 26) + aCode,
     );
-    dispatch(rotorDisplayChanged({ index: index, value: newValue }));
+  };
+
+  const handleBack = () => {
+    dispatch(rotorDisplayChanged({ index: index, value: stepValue(-1) }));
   };
 
   const handleForward = () => {
-    const newValue = String.fromCharCode(
-      modulo(displayValue.charCodeAt(0) - aCode + 1, 26) + aCode,
-    );
-    dispatch(rotorDisplayChanged({ index: index, value: newValue }));
+    dispatch(rotorDisplayChanged({ index: index, value: stepValue(1) }));
   };
 
   return (
