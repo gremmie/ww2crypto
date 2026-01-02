@@ -20,6 +20,7 @@ export interface EnigmaState {
   plugboard: string;
   plugboardNotation: NotationType;
   plugboardCableCount: number;
+  rotorDisplays: string[];
 }
 
 // Define the initial state using that type
@@ -34,6 +35,7 @@ const initialState: EnigmaState = {
   plugboard: "",
   plugboardNotation: "letter",
   plugboardCableCount: 10,
+  rotorDisplays: ["A", "A", "A"],
 };
 
 export type RotorTypeChangedPayload = {
@@ -44,6 +46,11 @@ export type RotorTypeChangedPayload = {
 export type RingSettingChangedPayload = {
   ringSetting: number;
   position: number;
+};
+
+export type RotorDisplayChangedPayload = {
+  index: number;
+  value: string;
 };
 
 export const enigmaSlice = createSlice({
@@ -76,6 +83,7 @@ export const enigmaSlice = createSlice({
       state.plugboard = "";
       state.plugboardNotation = state.numberOfRotors == 3 ? "letter" : "number";
       state.plugboardCableCount = 10;
+      state.rotorDisplays = new Array(state.numberOfRotors).fill("A");
     },
     reflectorChanged: (state, action: PayloadAction<ReflectorType>) => {
       state.reflector = action.payload;
@@ -164,6 +172,19 @@ export const enigmaSlice = createSlice({
         state.plugboard = connections.join(" ");
       }
     },
+    rotorDisplayChanged: (
+      state,
+      action: PayloadAction<RotorDisplayChangedPayload>,
+    ) => {
+      if (
+        action.payload.index < 0 ||
+        action.payload.index >= state.numberOfRotors ||
+        !/^[A-Z]$/.test(action.payload.value)
+      ) {
+        return;
+      }
+      state.rotorDisplays[action.payload.index] = action.payload.value;
+    },
   },
 });
 
@@ -183,6 +204,7 @@ export const {
   plugboardDisconnected,
   plugboardNotationChanged,
   plugboardCableCountChanged,
+  rotorDisplayChanged,
 } = enigmaSlice.actions;
 
 // Selectors
@@ -269,6 +291,13 @@ export const selectPlugboardNotation = (state: RootState) =>
 
 export const selectPlugboardCableCount = (state: RootState) =>
   state.enigma.plugboardCableCount;
+
+export const selectRotorWindow = (state: RootState, index: number) => {
+  if (index < 0 || index >= state.enigma.rotorDisplays.length) {
+    return null;
+  }
+  return state.enigma.rotorDisplays[index];
+};
 
 export default enigmaSlice.reducer;
 
