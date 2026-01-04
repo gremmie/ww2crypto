@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import {
   operatorClearedInput,
   operatorKeyPressed,
+  operatorPastedText,
   selectInputText,
 } from "./enigmaSlice.ts";
 
@@ -21,6 +22,19 @@ export default function OperatorInput() {
       dispatch(operatorKeyPressed(e.key.toUpperCase()));
     } else {
       e.preventDefault();
+    }
+  };
+
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const pastedText = e.clipboardData.getData("text/plain");
+    const validText = pastedText
+      .split("")
+      .filter((s) => validKeyPattern.test(s))
+      .join("")
+      .toUpperCase();
+    if (validText.length !== 0) {
+      dispatch(operatorPastedText(validText));
     }
   };
 
@@ -41,6 +55,7 @@ export default function OperatorInput() {
         }}
         value={inputText}
         onKeyDown={handleKeyDown}
+        onPaste={handlePaste}
         // TODO: handle paste
         // onPaste = {}
       />

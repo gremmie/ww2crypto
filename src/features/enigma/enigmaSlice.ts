@@ -221,6 +221,18 @@ export const enigmaSlice = createSlice({
         state.rotorDisplays[i] = newRotorDisplay[i];
       }
     },
+    operatorPastedText: (state, action: PayloadAction<string>) => {
+      const machine = createMachine(state);
+      if (machine === null) return;
+
+      state.inputText += action.payload;
+      state.outputText += machine.processText(action.payload);
+
+      const newRotorDisplay = machine.getDisplay();
+      for (let i = 0; i < newRotorDisplay.length; ++i) {
+        state.rotorDisplays[i] = newRotorDisplay[i];
+      }
+    },
     operatorClearedInput: (state) => {
       state.inputText = "";
     },
@@ -248,6 +260,7 @@ export const {
   plugboardCableCountChanged,
   rotorDisplayChanged,
   operatorKeyPressed,
+  operatorPastedText,
   operatorClearedInput,
   operatorClearedOutput,
 } = enigmaSlice.actions;
