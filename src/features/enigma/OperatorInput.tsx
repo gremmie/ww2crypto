@@ -1,4 +1,5 @@
-import Box from "@mui/material/Box";
+import ContentPasteIcon from "@mui/icons-material/ContentPaste";
+import { IconButton, Tooltip } from "@mui/material";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -28,7 +29,16 @@ export default function OperatorInput() {
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
     const pastedText = e.clipboardData.getData("text/plain");
-    const validText = pastedText
+    processPaste(pastedText);
+  };
+
+  const handlePasteClick = async () => {
+    const pastedText = await navigator.clipboard.readText();
+    processPaste(pastedText);
+  };
+
+  const processPaste = (text: string) => {
+    const validText = text
       .split("")
       .filter((s) => validKeyPattern.test(s))
       .join("")
@@ -59,11 +69,16 @@ export default function OperatorInput() {
         // TODO: handle paste
         // onPaste = {}
       />
-      <Box>
+      <Stack direction="row" justifyContent="space-between">
         <Button variant="text" onClick={handleClear}>
           Clear
         </Button>
-      </Box>
+        <Tooltip title="Paste from clipboard">
+          <IconButton aria-label="Paste" onClick={handlePasteClick}>
+            <ContentPasteIcon />
+          </IconButton>
+        </Tooltip>
+      </Stack>
     </Stack>
   );
 }
