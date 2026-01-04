@@ -1,7 +1,14 @@
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-import { operatorKeyPressed, selectInputText } from "./enigmaSlice.ts";
+import {
+  operatorClearedInput,
+  operatorKeyPressed,
+  selectInputText,
+} from "./enigmaSlice.ts";
 
 const validKeyPattern = /^[a-zA-Z]$/;
 
@@ -17,20 +24,31 @@ export default function OperatorInput() {
     }
   };
 
+  const handleClear = () => {
+    dispatch(operatorClearedInput());
+  };
+
   return (
-    <TextField
-      id="enigma-operator-input"
-      label="Input"
-      multiline
-      rows={4}
-      variant="filled"
-      sx={{
-        width: 400,
-      }}
-      value={inputText}
-      onKeyDown={handleKeyDown}
-      // TODO: handle paste
-      // onPaste = {}
-    />
+    <Stack direction="column" spacing={1}>
+      <TextField
+        id="enigma-operator-input"
+        label="Input"
+        multiline
+        rows={4}
+        variant="filled"
+        sx={{
+          width: 400,
+        }}
+        value={inputText}
+        onKeyDown={handleKeyDown}
+        // TODO: handle paste
+        // onPaste = {}
+      />
+      <Box>
+        <Button variant="text" onClick={handleClear}>
+          Clear
+        </Button>
+      </Box>
+    </Stack>
   );
 }

@@ -221,6 +221,12 @@ export const enigmaSlice = createSlice({
         state.rotorDisplays[i] = newRotorDisplay[i];
       }
     },
+    operatorClearedInput: (state) => {
+      state.inputText = "";
+    },
+    operatorClearedOutput: (state) => {
+      state.outputText = "";
+    },
   },
 });
 
@@ -242,6 +248,8 @@ export const {
   plugboardCableCountChanged,
   rotorDisplayChanged,
   operatorKeyPressed,
+  operatorClearedInput,
+  operatorClearedOutput,
 } = enigmaSlice.actions;
 
 // Selectors
