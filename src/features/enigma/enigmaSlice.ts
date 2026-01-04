@@ -1,6 +1,11 @@
-import type { PayloadAction } from "@reduxjs/toolkit";
+import type { PayloadAction, WritableDraft } from "@reduxjs/toolkit";
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store";
+import EnigmaMachine from "./machine/EnigmaMachine.ts";
+import Plugboard from "./machine/Plugboard.ts";
+import reflectorFactory from "./machine/reflectorFactory.ts";
+import Rotor from "./machine/Rotor.ts";
+import rotorFactory from "./machine/rotorFactory.ts";
 import { isValidPlugboardString, normalizePlugboardString } from "./utils.ts";
 
 export type TabType = "setup" | "operate";
@@ -21,6 +26,8 @@ export interface EnigmaState {
   plugboardNotation: NotationType;
   plugboardCableCount: number;
   rotorDisplays: string[];
+  inputText: string;
+  outputText: string;
 }
 
 // Define the initial state using that type
@@ -36,6 +43,8 @@ const initialState: EnigmaState = {
   plugboardNotation: "letter",
   plugboardCableCount: 10,
   rotorDisplays: ["A", "A", "A"],
+  inputText: "",
+  outputText: "",
 };
 
 export type RotorTypeChangedPayload = {
@@ -84,9 +93,13 @@ export const enigmaSlice = createSlice({
       state.plugboardNotation = state.numberOfRotors == 3 ? "letter" : "number";
       state.plugboardCableCount = 10;
       state.rotorDisplays = new Array(state.numberOfRotors).fill("A");
+      state.inputText = "";
+      state.outputText = "";
     },
     reflectorChanged: (state, action: PayloadAction<ReflectorType>) => {
       state.reflector = action.payload;
+      state.inputText = "";
+      state.outputText = "";
     },
     rotorTypeChanged: (
       state,
@@ -102,6 +115,8 @@ export const enigmaSlice = createSlice({
       }
       rotorTypes[action.payload.position] = action.payload.rotorType;
       state.rotorTypes = rotorTypes;
+      state.inputText = "";
+      state.outputText = "";
     },
     ringSettingChanged: (
       state,
@@ -114,6 +129,8 @@ export const enigmaSlice = createSlice({
       }
       ringSettings[action.payload.position] = newRingSetting;
       state.ringSettings = ringSettings;
+      state.inputText = "";
+      state.outputText = "";
     },
     ringSettingsNotationChanged: (
       state,
@@ -126,6 +143,8 @@ export const enigmaSlice = createSlice({
       if (s === "" || isValidPlugboardString(s, state.plugboardCableCount)) {
         state.plugboard = normalizePlugboardString(s);
       }
+      state.inputText = "";
+      state.outputText = "";
     },
     plugboardConnected: (state, action: PayloadAction<string>) => {
       if (!isConnection(action.payload)) return;
@@ -140,6 +159,8 @@ export const enigmaSlice = createSlice({
       ) {
         connections.push(newConnection.join(""));
         state.plugboard = connections.sort().join(" ");
+        state.inputText = "";
+        state.outputText = "";
       }
     },
     plugboardDisconnected: (state, action: PayloadAction<string>) => {
@@ -155,6 +176,8 @@ export const enigmaSlice = createSlice({
         state.plugboard = connections
           .filter((c) => c !== oldConnection)
           .join(" ");
+        state.inputText = "";
+        state.outputText = "";
       }
     },
     plugboardNotationChanged: (state, action: PayloadAction<NotationType>) => {
@@ -185,6 +208,19 @@ export const enigmaSlice = createSlice({
       }
       state.rotorDisplays[action.payload.index] = action.payload.value;
     },
+    operatorKeyPressed: (state, action: PayloadAction<string>) => {
+      if (!/^[A-Z]$/.test(action.payload)) return;
+      const machine = createMachine(state);
+      if (machine === null) return;
+
+      state.inputText += action.payload;
+      state.outputText += machine.keyPress(action.payload);
+
+      const newRotorDisplay = machine.getDisplay();
+      for (let i = 0; i < newRotorDisplay.length; ++i) {
+        state.rotorDisplays[i] = newRotorDisplay[i];
+      }
+    },
   },
 });
 
@@ -205,6 +241,7 @@ export const {
   plugboardNotationChanged,
   plugboardCableCountChanged,
   rotorDisplayChanged,
+  operatorKeyPressed,
 } = enigmaSlice.actions;
 
 // Selectors
@@ -299,6 +336,10 @@ export const selectRotorWindow = (state: RootState, index: number) => {
   return state.enigma.rotorDisplays[index];
 };
 
+export const selectInputText = (state: RootState) => state.enigma.inputText;
+
+export const selectOutputText = (state: RootState) => state.enigma.outputText;
+
 export default enigmaSlice.reducer;
 
 export const setupStepNames = [
@@ -322,3 +363,20 @@ const fourRotorChoices = [
   ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"],
   ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"],
 ];
+
+function createMachine(state: WritableDraft<EnigmaState>) {
+  if (state.reflector === null) return null;
+  if (!state.rotorTypes.every((type) => type !== null)) return null;
+  if (!state.ringSettings.every((n) => n !== null)) return null;
+
+  const plugboard = new Plugboard(state.plugboard);
+  const reflector = reflectorFactory(state.reflector)!;
+
+  const rotors: Rotor[] = [];
+  for (let i = 0; i < state.numberOfRotors; ++i) {
+    rotors.push(rotorFactory(state.rotorTypes[i], state.ringSettings[i])!);
+  }
+  const machine = new EnigmaMachine(reflector, rotors, plugboard);
+  machine.setDisplay(state.rotorDisplays.join(""));
+  return machine;
+}

@@ -49,7 +49,7 @@ export default function RotorWindow(props: RotorWindowProps) {
         variant="outlined"
         value={displayValue}
         sx={{
-          width: 40,
+          width: 43,
         }}
         onChange={handleChange}
       />

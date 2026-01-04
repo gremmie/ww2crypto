@@ -3,6 +3,8 @@ import Stack from "@mui/material/Stack";
 import type { ReactElement } from "react";
 import { useAppSelector } from "../../app/hooks.ts";
 import { selectNumberOfRotors } from "./enigmaSlice.ts";
+import OperatorInput from "./OperatorInput.tsx";
+import OperatorOutput from "./OperatorOutput.tsx";
 import RotorWindow from "./RotorWindow.tsx";
 
 export default function OperateView() {
@@ -23,6 +25,8 @@ export default function OperateView() {
         <Stack spacing={2} direction="row">
           {rotorWindows}
         </Stack>
+        <OperatorInput />
+        <OperatorOutput />
       </Stack>
     </Box>
   );
