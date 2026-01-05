@@ -28,6 +28,7 @@ export interface EnigmaState {
   rotorDisplays: string[];
   inputText: string;
   outputText: string;
+  activeLamp: string;
 }
 
 // Define the initial state using that type
@@ -45,6 +46,7 @@ const initialState: EnigmaState = {
   rotorDisplays: ["A", "A", "A"],
   inputText: "",
   outputText: "",
+  activeLamp: "",
 };
 
 export type RotorTypeChangedPayload = {
@@ -214,12 +216,17 @@ export const enigmaSlice = createSlice({
       if (machine === null) return;
 
       state.inputText += action.payload;
-      state.outputText += machine.keyPress(action.payload);
+      const output = machine.keyPress(action.payload);
+      state.outputText += output;
+      state.activeLamp = output;
 
       const newRotorDisplay = machine.getDisplay();
       for (let i = 0; i < newRotorDisplay.length; ++i) {
         state.rotorDisplays[i] = newRotorDisplay[i];
       }
+    },
+    operatorKeyReleased: (state) => {
+      state.activeLamp = "";
     },
     operatorPastedText: (state, action: PayloadAction<string>) => {
       const machine = createMachine(state);
@@ -260,6 +267,7 @@ export const {
   plugboardCableCountChanged,
   rotorDisplayChanged,
   operatorKeyPressed,
+  operatorKeyReleased,
   operatorPastedText,
   operatorClearedInput,
   operatorClearedOutput,
@@ -360,6 +368,8 @@ export const selectRotorWindow = (state: RootState, index: number) => {
 export const selectInputText = (state: RootState) => state.enigma.inputText;
 
 export const selectOutputText = (state: RootState) => state.enigma.outputText;
+
+export const selectActiveLamp = (state: RootState) => state.enigma.activeLamp;
 
 export default enigmaSlice.reducer;
 
