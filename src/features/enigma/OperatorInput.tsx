@@ -3,7 +3,7 @@ import { IconButton, Tooltip } from "@mui/material";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import React from "react";
+import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import {
   operatorClearedInput,
@@ -12,12 +12,15 @@ import {
   operatorPastedText,
   selectInputText,
 } from "./enigmaSlice.ts";
+import GroupTextSwitch from "./GroupTextSwitch.tsx";
+import { groupText } from "./utils.ts";
 
 const validKeyPattern = /^[a-zA-Z]$/;
 
 export default function OperatorInput() {
   const dispatch = useAppDispatch();
   const inputText = useAppSelector(selectInputText);
+  const [shouldGroupText, setShouldGroupText] = useState(false);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (
@@ -74,7 +77,7 @@ export default function OperatorInput() {
         sx={{
           width: 400,
         }}
-        value={inputText}
+        value={shouldGroupText ? groupText(inputText) : inputText}
         onKeyDown={handleKeyDown}
         onKeyUp={handleKeyUp}
         onPaste={handlePaste}
@@ -85,6 +88,10 @@ export default function OperatorInput() {
         <Button variant="text" onClick={handleClear}>
           Clear
         </Button>
+        <GroupTextSwitch
+          value={shouldGroupText}
+          onChange={setShouldGroupText}
+        />
         <Tooltip title="Paste from clipboard">
           <IconButton aria-label="Paste" onClick={handlePasteClick}>
             <ContentPasteIcon />

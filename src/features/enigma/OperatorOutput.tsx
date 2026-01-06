@@ -6,18 +6,22 @@ import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import { operatorClearedOutput, selectOutputText } from "./enigmaSlice.ts";
+import GroupTextSwitch from "./GroupTextSwitch.tsx";
+import { groupText } from "./utils.ts";
 
 export default function OperatorOutput() {
   const dispatch = useAppDispatch();
   const outputText = useAppSelector(selectOutputText);
   const [hasCopied, setHasCopied] = useState(false);
+  const [shouldGroupText, setShouldGroupText] = useState(false);
 
   const handleClear = () => {
     dispatch(operatorClearedOutput());
   };
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(outputText);
+    const copyText = shouldGroupText ? groupText(outputText) : outputText;
+    await navigator.clipboard.writeText(copyText);
     setHasCopied(true);
     setTimeout(() => setHasCopied(false), 3000);
   };
@@ -35,7 +39,7 @@ export default function OperatorOutput() {
         sx={{
           width: 400,
         }}
-        value={outputText}
+        value={shouldGroupText ? groupText(outputText) : outputText}
         slotProps={{
           input: {
             readOnly: true,
@@ -46,6 +50,10 @@ export default function OperatorOutput() {
         <Button variant="text" onClick={handleClear}>
           Clear
         </Button>
+        <GroupTextSwitch
+          value={shouldGroupText}
+          onChange={setShouldGroupText}
+        />
         <Tooltip title={copyTooltip}>
           <IconButton aria-label="Copy" onClick={handleCopy}>
             <ContentCopyIcon />

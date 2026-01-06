@@ -115,3 +115,18 @@ export function isValidRotorWiring(wiring: string) {
 export function modulo(n: number, d: number): number {
   return ((n % d) + d) % d;
 }
+
+/**
+ * Groups the given string into n-letter groups, delimited with spaces.
+ *
+ * @param s {string} - the input string
+ * @param n {number} - the group size in characters
+ * @returns {string} - a grouped version of the input s
+ */
+export function groupText(s: string, n: number = 5) {
+  const groups: Array<string> = [];
+  for (let i = 0; i < s.length; i += n) {
+    groups.push(s.slice(i, i + n));
+  }
+  return groups.join(" ");
+}

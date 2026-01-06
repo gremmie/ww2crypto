@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
 import {
+  groupText,
   isValidNumericPlugboardString,
   isValidPlugboardString,
   isValidRotorWiring,
@@ -252,5 +253,23 @@ describe("modulo", () => {
     expect(modulo(-6, 7)).toEqual(1);
     expect(modulo(-7, 7)).toEqual(0);
     expect(modulo(-1, 7)).toEqual(6);
+  });
+});
+
+describe("groupText", () => {
+  test("empty string", () => {
+    expect(groupText("")).toEqual("");
+  });
+
+  test("text length smaller than group size", () => {
+    expect(groupText("ABC")).toEqual("ABC");
+  });
+
+  test("text length equal to group size", () => {
+    expect(groupText("ABCDE")).toEqual("ABCDE");
+  });
+
+  test("text length greater than group size", () => {
+    expect(groupText("ABCDEFG")).toEqual("ABCDE FG");
   });
 });
