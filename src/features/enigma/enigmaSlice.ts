@@ -29,6 +29,7 @@ export interface EnigmaState {
   inputText: string;
   outputText: string;
   activeLamp: string;
+  isLampPanelOpen: boolean;
 }
 
 // Define the initial state using that type
@@ -47,6 +48,7 @@ const initialState: EnigmaState = {
   inputText: "",
   outputText: "",
   activeLamp: "",
+  isLampPanelOpen: true,
 };
 
 export type RotorTypeChangedPayload = {
@@ -246,6 +248,9 @@ export const enigmaSlice = createSlice({
     operatorClearedOutput: (state) => {
       state.outputText = "";
     },
+    lampPanelOpenStatusChanged: (state, action: PayloadAction<boolean>) => {
+      state.isLampPanelOpen = action.payload;
+    },
   },
 });
 
@@ -271,6 +276,7 @@ export const {
   operatorPastedText,
   operatorClearedInput,
   operatorClearedOutput,
+  lampPanelOpenStatusChanged,
 } = enigmaSlice.actions;
 
 // Selectors
@@ -370,6 +376,9 @@ export const selectInputText = (state: RootState) => state.enigma.inputText;
 export const selectOutputText = (state: RootState) => state.enigma.outputText;
 
 export const selectActiveLamp = (state: RootState) => state.enigma.activeLamp;
+
+export const selectIsLampPanelOpen = (state: RootState) =>
+  state.enigma.isLampPanelOpen;
 
 export default enigmaSlice.reducer;
 
