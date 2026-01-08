@@ -30,6 +30,7 @@ export interface EnigmaState {
   outputText: string;
   activeLamp: string;
   isLampPanelOpen: boolean;
+  configName: string;
 }
 
 // Define the initial state using that type
@@ -49,6 +50,7 @@ const initialState: EnigmaState = {
   outputText: "",
   activeLamp: "",
   isLampPanelOpen: true,
+  configName: "",
 };
 
 export type RotorTypeChangedPayload = {
@@ -251,6 +253,9 @@ export const enigmaSlice = createSlice({
     lampPanelOpenStatusChanged: (state, action: PayloadAction<boolean>) => {
       state.isLampPanelOpen = action.payload;
     },
+    configNameSaved: (state, action: PayloadAction<string>) => {
+      state.configName = action.payload;
+    },
   },
 });
 
@@ -277,6 +282,7 @@ export const {
   operatorClearedInput,
   operatorClearedOutput,
   lampPanelOpenStatusChanged,
+  configNameSaved,
 } = enigmaSlice.actions;
 
 // Selectors

@@ -17,6 +17,7 @@ import {
   setupStepNames,
   setupStepReversed,
 } from "./enigmaSlice.ts";
+import SaveConfigDialog from "./saveConfigDialog.tsx";
 import SetupCompleteAlert from "./setupCompleteAlert.tsx";
 import { SetupStepper } from "./setupStepper.tsx";
 
@@ -24,9 +25,10 @@ export default function EnigmaSetupTab() {
   const dispatch = useAppDispatch();
   const activeStep = useAppSelector(selectActiveSetupStep);
   const isSetupComplete = useAppSelector(selectIsSetupComplete);
+  const canJumpToOperate = isSetupComplete && activeStep == 3;
 
   const handleNext = () => {
-    if (isSetupComplete) {
+    if (canJumpToOperate) {
       dispatch(currentTabChanged("operate"));
     } else {
       dispatch(setupStepAdvanced());
@@ -60,15 +62,16 @@ export default function EnigmaSetupTab() {
           >
             Back
           </Button>
+          <SaveConfigDialog disabled={!isSetupComplete} />
           <Button
-            variant={isSetupComplete ? "contained" : "text"}
+            variant={canJumpToOperate ? "contained" : "text"}
             endIcon={<ChevronRightIcon />}
             disabled={
               activeStep === setupStepNames.length - 1 && !isSetupComplete
             }
             onClick={handleNext}
           >
-            Next
+            {canJumpToOperate ? "Operate" : "Next"}
           </Button>
         </Box>
       </Stack>
