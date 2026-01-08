@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import { operatorClearedOutput, selectOutputText } from "./enigmaSlice.ts";
-import GroupTextSwitch from "./GroupTextSwitch.tsx";
+import GroupTextSwitch from "./groupTextSwitch.tsx";
 import { groupText } from "./utils.ts";
 
 export default function OperatorOutput() {

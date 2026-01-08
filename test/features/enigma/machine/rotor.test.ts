@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import Rotor, {
   RotorError,
-} from "../../../../src/features/enigma/machine/Rotor.ts";
+} from "../../../../src/features/enigma/machine/rotor.ts";
 import { aCode, modulo } from "../../../../src/features/enigma/utils.ts";
 import { rotateString } from "../../../utils/test-utils.tsx";
 

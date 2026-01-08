@@ -7,8 +7,8 @@ import type { ReactElement } from "react";
 
 import { useAppSelector } from "../../app/hooks.ts";
 import { selectNumberOfRotors } from "./enigmaSlice.ts";
-import ReflectorSelect from "./ReflectorSelect.tsx";
-import RotorSelect from "./RotorSelect.tsx";
+import ReflectorSelect from "./reflectorSelect.tsx";
+import RotorSelect from "./rotorSelect.tsx";
 
 export default function EnigmaRotors() {
   const numberOfRotors = useAppSelector(selectNumberOfRotors);

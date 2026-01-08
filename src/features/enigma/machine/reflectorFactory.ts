@@ -1,4 +1,4 @@
-import Rotor from "./Rotor.ts";
+import Rotor from "./rotor.ts";
 import { reflectorDataByType } from "./rotorData.ts";
 
 export default function reflectorFactory(type: string) {

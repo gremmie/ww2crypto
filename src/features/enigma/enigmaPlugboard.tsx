@@ -15,11 +15,11 @@ import {
   selectPlugboardCableCount,
   selectPlugboardNotation,
 } from "./enigmaSlice.ts";
-import NotationSelector from "./NotationSelector.tsx";
-import PlugboardCableCountSelect from "./PlugboardCableCountSelect.tsx";
-import PlugboardConnections from "./PlugboardConnections.tsx";
-import PlugboardSelect from "./PlugboardSelect.tsx";
-import PlugboardTextInput from "./PlugboardTextInput.tsx";
+import NotationSelector from "./notationSelector.tsx";
+import PlugboardCableCountSelect from "./plugboardCableCountSelect.tsx";
+import PlugboardConnections from "./plugboardConnections.tsx";
+import PlugboardSelect from "./plugboardSelect.tsx";
+import PlugboardTextInput from "./plugboardTextInput.tsx";
 
 export default function EnigmaPlugboard() {
   const dispatch = useAppDispatch();

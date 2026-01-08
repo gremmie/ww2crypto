@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import Plugboard, {
   PlugboardError,
-} from "../../../../src/features/enigma/machine/Plugboard.ts";
+} from "../../../../src/features/enigma/machine/plugboard.ts";
 
 describe("Plugboard", () => {
   test("Bad constructor input", () => {

@@ -3,10 +3,10 @@ import Stack from "@mui/material/Stack";
 import type { ReactElement } from "react";
 import { useAppSelector } from "../../app/hooks.ts";
 import { selectNumberOfRotors } from "./enigmaSlice.ts";
-import LampBoard from "./LampBoard.tsx";
-import OperatorInput from "./OperatorInput.tsx";
-import OperatorOutput from "./OperatorOutput.tsx";
-import RotorWindow from "./RotorWindow.tsx";
+import LampBoard from "./lampBoard.tsx";
+import OperatorInput from "./operatorInput.tsx";
+import OperatorOutput from "./operatorOutput.tsx";
+import RotorWindow from "./rotorWindow.tsx";
 
 export default function OperateView() {
   const numRotors = useAppSelector(selectNumberOfRotors);

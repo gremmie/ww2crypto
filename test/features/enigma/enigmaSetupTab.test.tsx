@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, test } from "vitest";
-import EnigmaSetupTab from "../../../src/features/enigma/EnigmaSetupTab.tsx";
+import EnigmaSetupTab from "../../../src/features/enigma/enigmaSetupTab.tsx";
 import type { EnigmaState } from "../../../src/features/enigma/enigmaSlice.ts";
 import { renderWithProviders } from "../../utils/test-utils.tsx";
 

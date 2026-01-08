@@ -1,6 +1,6 @@
 import { aCode } from "../utils.ts";
-import Plugboard from "./Plugboard.ts";
-import type Rotor from "./Rotor.ts";
+import Plugboard from "./plugboard.ts";
+import type Rotor from "./rotor.ts";
 
 export class EnigmaMachineError extends Error {
   constructor(message: string) {

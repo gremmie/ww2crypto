@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test } from "vitest";
-import EnigmaMachine from "../../../../src/features/enigma/machine/EnigmaMachine.ts";
-import Plugboard from "../../../../src/features/enigma/machine/Plugboard.ts";
+import EnigmaMachine from "../../../../src/features/enigma/machine/enigmaMachine.ts";
+import Plugboard from "../../../../src/features/enigma/machine/plugboard.ts";
 import reflectorFactory from "../../../../src/features/enigma/machine/reflectorFactory.ts";
 import rotorFactory from "../../../../src/features/enigma/machine/rotorFactory.ts";
 import { toAlphaPlugboardString } from "../../../../src/features/enigma/utils.ts";

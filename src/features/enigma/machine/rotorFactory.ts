@@ -1,4 +1,4 @@
-import Rotor from "./Rotor.ts";
+import Rotor from "./rotor.ts";
 import { rotorDataByType } from "./rotorData.ts";
 
 export default function rotorFactory(

@@ -5,10 +5,10 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 
-import EnigmaModel from "./EnigmaModel.tsx";
-import EnigmaPlugboard from "./EnigmaPlugboard.tsx";
-import EnigmaRingSettings from "./EnigmaRingSettings.tsx";
-import EnigmaRotors from "./EnigmaRotors.tsx";
+import EnigmaModel from "./enigmaModel.tsx";
+import EnigmaPlugboard from "./enigmaPlugboard.tsx";
+import EnigmaRingSettings from "./enigmaRingSettings.tsx";
+import EnigmaRotors from "./enigmaRotors.tsx";
 import {
   currentTabChanged,
   selectActiveSetupStep,
@@ -17,8 +17,8 @@ import {
   setupStepNames,
   setupStepReversed,
 } from "./enigmaSlice.ts";
-import SetupCompleteAlert from "./SetupCompleteAlert.tsx";
-import { SetupStepper } from "./SetupStepper.tsx";
+import SetupCompleteAlert from "./setupCompleteAlert.tsx";
+import { SetupStepper } from "./setupStepper.tsx";
 
 export default function EnigmaSetupTab() {
   const dispatch = useAppDispatch();

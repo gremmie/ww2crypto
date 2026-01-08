@@ -8,8 +8,8 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-import { EnigmaOperateTab } from "./EnigmaOperateTab.tsx";
-import EnigmaSetupTab from "./EnigmaSetupTab.tsx";
+import { EnigmaOperateTab } from "./enigmaOperateTab.tsx";
+import EnigmaSetupTab from "./enigmaSetupTab.tsx";
 import {
   currentTabChanged,
   selectCurrentTab,

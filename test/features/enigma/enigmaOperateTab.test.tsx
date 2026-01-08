@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
-import { EnigmaOperateTab } from "../../../src/features/enigma/EnigmaOperateTab.tsx";
+import { EnigmaOperateTab } from "../../../src/features/enigma/enigmaOperateTab.tsx";
 import { renderWithProviders } from "../../utils/test-utils.tsx";
 
 describe("Enigma Operate Tab", () => {

@@ -12,7 +12,7 @@ import {
   operatorPastedText,
   selectInputText,
 } from "./enigmaSlice.ts";
-import GroupTextSwitch from "./GroupTextSwitch.tsx";
+import GroupTextSwitch from "./groupTextSwitch.tsx";
 import { groupText } from "./utils.ts";
 
 const validKeyPattern = /^[a-zA-Z]$/;

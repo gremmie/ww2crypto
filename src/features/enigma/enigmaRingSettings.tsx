@@ -9,8 +9,8 @@ import {
   selectRingSettingsNotation,
 } from "./enigmaSlice.ts";
 
-import NotationSelector from "./NotationSelector.tsx";
-import RingSelect from "./RingSelect.tsx";
+import NotationSelector from "./notationSelector.tsx";
+import RingSelect from "./ringSelect.tsx";
 
 export default function EnigmaRingSettings() {
   const dispatch = useAppDispatch();

@@ -9,7 +9,7 @@ import {
   lampPanelOpenStatusChanged,
   selectIsLampPanelOpen,
 } from "./enigmaSlice.ts";
-import Lamp from "./Lamp.tsx";
+import Lamp from "./lamp.tsx";
 
 export default function LampBoard() {
   const dispatch = useAppDispatch();

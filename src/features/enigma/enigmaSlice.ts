@@ -1,10 +1,10 @@
 import type { PayloadAction, WritableDraft } from "@reduxjs/toolkit";
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store";
-import EnigmaMachine from "./machine/EnigmaMachine.ts";
-import Plugboard from "./machine/Plugboard.ts";
+import EnigmaMachine from "./machine/enigmaMachine.ts";
+import Plugboard from "./machine/plugboard.ts";
 import reflectorFactory from "./machine/reflectorFactory.ts";
-import Rotor from "./machine/Rotor.ts";
+import Rotor from "./machine/rotor.ts";
 import rotorFactory from "./machine/rotorFactory.ts";
 import { isValidPlugboardString, normalizePlugboardString } from "./utils.ts";
 
