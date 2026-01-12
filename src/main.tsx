@@ -2,11 +2,15 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { setupStore } from "./app/store";
+import { applicationStarted } from "./features/common/actions.ts";
 import EnigmaMain from "./features/enigma/enigmaMain.tsx";
+
+const store = setupStore();
+store.dispatch(applicationStarted());
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Provider store={setupStore()}>
+    <Provider store={store}>
       <EnigmaMain />
     </Provider>
   </StrictMode>,

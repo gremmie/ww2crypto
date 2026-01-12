@@ -1,6 +1,15 @@
-import type { PayloadAction, WritableDraft } from "@reduxjs/toolkit";
-import { createSelector, createSlice } from "@reduxjs/toolkit";
+import {
+  createEntityAdapter,
+  createSelector,
+  createSlice,
+  type EntityState,
+  type PayloadAction,
+  type WritableDraft,
+} from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store";
+import { applicationStarted } from "../common/actions.ts";
+import ConfigStorage from "./config/configStorage.ts";
+import type { MachineConfig } from "./config/machineConfig.ts";
 import EnigmaMachine from "./machine/enigmaMachine.ts";
 import Plugboard from "./machine/plugboard.ts";
 import reflectorFactory from "./machine/reflectorFactory.ts";
@@ -13,6 +22,11 @@ export type TabType = "setup" | "operate";
 export type ReflectorType = "B" | "C" | "B-Thin" | "C-Thin" | null;
 
 export type NotationType = "letter" | "number";
+
+const configAdapter = createEntityAdapter({
+  selectId: (config: MachineConfig) => config.name,
+  sortComparer: (a, b) => a.name.localeCompare(b.name),
+});
 
 export interface EnigmaState {
   currentTab: TabType;
@@ -31,6 +45,7 @@ export interface EnigmaState {
   activeLamp: string;
   isLampPanelOpen: boolean;
   configName: string;
+  configs: EntityState<MachineConfig, string>;
 }
 
 // Define the initial state using that type
@@ -51,6 +66,7 @@ const initialState: EnigmaState = {
   activeLamp: "",
   isLampPanelOpen: true,
   configName: "",
+  configs: configAdapter.getInitialState(),
 };
 
 export type RotorTypeChangedPayload = {
@@ -254,8 +270,19 @@ export const enigmaSlice = createSlice({
       state.isLampPanelOpen = action.payload;
     },
     configNameSaved: (state, action: PayloadAction<string>) => {
-      state.configName = action.payload;
+      const configName = action.payload;
+
+      const config = ConfigStorage.getConfig(configName);
+      if (config !== undefined) {
+        state.configName = configName;
+        configAdapter.setOne(state.configs, config);
+      }
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(applicationStarted, (state) => {
+      configAdapter.setAll(state.configs, ConfigStorage.getConfigs());
+    });
   },
 });
 
@@ -385,6 +412,9 @@ export const selectActiveLamp = (state: RootState) => state.enigma.activeLamp;
 
 export const selectIsLampPanelOpen = (state: RootState) =>
   state.enigma.isLampPanelOpen;
+
+export const selectConfigNames = (state: RootState) =>
+  configAdapter.getSelectors().selectIds(state.enigma.configs);
 
 export default enigmaSlice.reducer;
 
