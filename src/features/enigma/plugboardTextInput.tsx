@@ -42,7 +42,8 @@ export default function PlugboardTextInput() {
     setValue("");
   };
 
-  const helpText = generateHelpText(cableCount, notation);
+  const helpText =
+    cableCount === 0 ? "" : generateHelpText(cableCount, notation);
 
   return (
     <Stack direction="row" alignItems="baseline" spacing={2}>
@@ -53,8 +54,13 @@ export default function PlugboardTextInput() {
         helperText={helpText}
         value={value}
         onChange={handleChange}
+        disabled={cableCount === 0}
       />
-      <Button variant="contained" disabled={!isValid} onClick={handleSetClick}>
+      <Button
+        variant="contained"
+        disabled={!isValid || cableCount === 0}
+        onClick={handleSetClick}
+      >
         Set
       </Button>
     </Stack>
