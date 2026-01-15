@@ -14,7 +14,10 @@ interface SetupCardProps {
 
 export default function SetupCard(props: SetupCardProps) {
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card
+      variant={props.isSelected ? "outlined" : undefined}
+      sx={{ minWidth: 275 }}
+    >
       <CardActionArea
         onClick={() => props.selectedCallback(props.config)}
         data-active={props.isSelected ? "" : undefined}

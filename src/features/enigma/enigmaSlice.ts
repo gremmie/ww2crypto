@@ -294,6 +294,7 @@ export const enigmaSlice = createSlice({
         state.ringSettingsNotation = config.ringNotation;
         state.plugboard = config.plugboard;
         state.plugboardNotation = config.plugboardNotation;
+        state.plugboardCableCount = config.plugboard.split(" ").length;
       }
     },
   },
