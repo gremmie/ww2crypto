@@ -17,6 +17,7 @@ import {
   setupStepNames,
   setupStepReversed,
 } from "./enigmaSlice.ts";
+import LoadConfigDialog from "./loadConfigDialog.tsx";
 import SaveConfigDialog from "./saveConfigDialog.tsx";
 import SetupCompleteAlert from "./setupCompleteAlert.tsx";
 import { SetupStepper } from "./setupStepper.tsx";
@@ -62,6 +63,7 @@ export default function EnigmaSetupTab() {
           >
             Back
           </Button>
+          <LoadConfigDialog />
           <SaveConfigDialog disabled={!isSetupComplete} />
           <Button
             variant={canJumpToOperate ? "contained" : "text"}

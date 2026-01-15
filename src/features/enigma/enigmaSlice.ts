@@ -28,6 +28,10 @@ const configAdapter = createEntityAdapter({
   sortComparer: (a, b) => a.name.localeCompare(b.name),
 });
 
+const configSelectors = configAdapter.getSelectors<RootState>(
+  (state) => state.enigma.configs,
+);
+
 export interface EnigmaState {
   currentTab: TabType;
   activeSetupStep: number;
@@ -278,6 +282,20 @@ export const enigmaSlice = createSlice({
         configAdapter.setOne(state.configs, config);
       }
     },
+    loadConfigInitiated: (state, action: PayloadAction<string>) => {
+      const config = configAdapter
+        .getSelectors()
+        .selectById(state.configs, action.payload);
+      if (config !== undefined) {
+        state.numberOfRotors = config.rotors.length;
+        state.reflector = config.reflector as ReflectorType;
+        state.rotorTypes = config.rotors;
+        state.ringSettings = config.rings;
+        state.ringSettingsNotation = config.ringNotation;
+        state.plugboard = config.plugboard;
+        state.plugboardNotation = config.plugboardNotation;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(applicationStarted, (state) => {
@@ -310,6 +328,7 @@ export const {
   operatorClearedOutput,
   lampPanelOpenStatusChanged,
   configNameSaved,
+  loadConfigInitiated,
 } = enigmaSlice.actions;
 
 // Selectors
@@ -415,6 +434,10 @@ export const selectIsLampPanelOpen = (state: RootState) =>
 
 export const selectConfigNames = (state: RootState) =>
   configAdapter.getSelectors().selectIds(state.enigma.configs);
+
+export const selectConfigs = (state: RootState) => {
+  return configSelectors.selectAll(state);
+};
 
 export default enigmaSlice.reducer;
 

@@ -1,3 +1,5 @@
+import type { MachineConfig } from "./config/machineConfig.ts";
+
 export const aCode = "A".charCodeAt(0);
 
 export function toNumericPlug(c: string) {
@@ -123,10 +125,33 @@ export function modulo(n: number, d: number): number {
  * @param n {number} - the group size in characters
  * @returns {string} - a grouped version of the input s
  */
-export function groupText(s: string, n: number = 5) {
+export function groupText(s: string, n: number = 5): string {
   const groups: Array<string> = [];
   for (let i = 0; i < s.length; i += n) {
     groups.push(s.slice(i, i + n));
   }
   return groups.join(" ");
+}
+
+/**
+ * Returns a summary string for a given MachineConfig.
+ *
+ * @param config {MachineConfig} - the config to produce the summary for
+ * @returns {string} - the summary string
+ */
+export function setupSummary(config: MachineConfig): string {
+  const rotors = config.rotors.join(" ");
+
+  const rings = config.rings
+    .map((r) =>
+      config.ringNotation === "number" ? r + 1 : String.fromCharCode(aCode + r),
+    )
+    .join(" ");
+
+  const plugboard =
+    config.plugboardNotation == "letter"
+      ? config.plugboard
+      : toNumericPlugboardString(config.plugboard);
+
+  return `${config.reflector} : ${rotors} : ${rings} : ${plugboard}`;
 }
