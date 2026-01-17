@@ -297,6 +297,15 @@ export const enigmaSlice = createSlice({
         state.plugboardCableCount = config.plugboard.split(" ").length;
       }
     },
+    deleteConfigInitiated: (state, action: PayloadAction<string>) => {
+      configAdapter.removeOne(state.configs, action.payload);
+    },
+    undoDeleteConfigInitiated: (
+      state,
+      action: PayloadAction<MachineConfig>,
+    ) => {
+      configAdapter.setOne(state.configs, action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(applicationStarted, (state) => {
@@ -330,6 +339,8 @@ export const {
   lampPanelOpenStatusChanged,
   configNameSaved,
   loadConfigInitiated,
+  deleteConfigInitiated,
+  undoDeleteConfigInitiated,
 } = enigmaSlice.actions;
 
 // Selectors

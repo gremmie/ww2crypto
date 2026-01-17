@@ -12,7 +12,7 @@ export const storageMiddleware: Middleware<object, RootState> =
 
       const config: MachineConfig = {
         name: action.payload,
-        createdAt: new Date(),
+        createdAt: new Date().toISOString(),
         reflector: state.reflector as string,
         rotors: state.rotorTypes,
         rings: state.ringSettings,

@@ -1,4 +1,5 @@
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -6,10 +7,17 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
+import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import * as React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-import { loadConfigInitiated, selectConfigs } from "./enigmaSlice.ts";
+import type { MachineConfig } from "./config/machineConfig.ts";
+import {
+  deleteConfigInitiated,
+  loadConfigInitiated,
+  selectConfigs,
+  undoDeleteConfigInitiated,
+} from "./enigmaSlice.ts";
 import SetupCard from "./setupCard.tsx";
 
 export default function LoadConfigDialog() {
@@ -18,6 +26,8 @@ export default function LoadConfigDialog() {
   const [open, setOpen] = React.useState(false);
   const [setupName, setSetupName] = React.useState("");
   const canLoad = setupName.length > 0;
+  const [deletedConfig, setDeletedConfig] =
+    React.useState<MachineConfig | null>(null);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -32,6 +42,17 @@ export default function LoadConfigDialog() {
     if (setupName.length === 0) return;
     dispatch(loadConfigInitiated(setupName));
     handleClose();
+  };
+
+  const handleDelete = (config: MachineConfig) => {
+    setDeletedConfig(config);
+    dispatch(deleteConfigInitiated(config.name));
+  };
+
+  const handleUndo = () => {
+    if (deletedConfig === null) return;
+    dispatch(undoDeleteConfigInitiated(deletedConfig));
+    setDeletedConfig(null);
   };
 
   return (
@@ -64,6 +85,21 @@ export default function LoadConfigDialog() {
           <CloseOutlinedIcon />
         </IconButton>
         <DialogContent>
+          {deletedConfig !== null && (
+            <Alert
+              severity="success"
+              onClose={() => setDeletedConfig(null)}
+              sx={{ m: 2 }}
+            >
+              <Box display="flex" alignItems="baseline">
+                Setup deleted.{" "}
+                <Link component="button" variant="body2" onClick={handleUndo}>
+                  Undo
+                </Link>
+                .
+              </Box>
+            </Alert>
+          )}
           <Stack direction="column" spacing={2} alignItems="center">
             <Box
               sx={{
@@ -71,7 +107,7 @@ export default function LoadConfigDialog() {
                 width: "100%",
                 overflowY: "auto",
                 p: 2,
-                border: (theme) => `1px solid ${theme.palette.grey[400]}`,
+                border: (theme) => `1px solid ${theme.palette.grey[300]}`,
               }}
             >
               <Stack direction="column" spacing={2}>
@@ -81,6 +117,7 @@ export default function LoadConfigDialog() {
                     config={config}
                     isSelected={setupName === config.name}
                     selectedCallback={(config) => setSetupName(config.name)}
+                    deleteCallback={handleDelete}
                   />
                 ))}
               </Stack>
