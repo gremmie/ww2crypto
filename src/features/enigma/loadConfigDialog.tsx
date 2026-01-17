@@ -9,6 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import type { MachineConfig } from "./config/machineConfig.ts";
@@ -91,13 +92,18 @@ export default function LoadConfigDialog() {
               onClose={() => setDeletedConfig(null)}
               sx={{ m: 2 }}
             >
-              <Box display="flex" alignItems="baseline">
+              <Typography variant="body1" component="span">
                 Setup deleted.{" "}
-                <Link component="button" variant="body2" onClick={handleUndo}>
+                <Link
+                  component="button"
+                  variant="inherit"
+                  sx={{ verticalAlign: "baseline" }}
+                  onClick={handleUndo}
+                >
                   Undo
                 </Link>
                 .
-              </Box>
+              </Typography>
             </Alert>
           )}
           <Stack direction="column" spacing={2} alignItems="center">
