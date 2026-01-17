@@ -53,7 +53,13 @@ export default function SaveConfigDialog(props: SaveConfigDialogProps) {
       >
         Save this setup
       </Button>
-      <Dialog fullWidth maxWidth="sm" open={open} onClose={handleClose}>
+      <Dialog
+        fullWidth
+        maxWidth="sm"
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition={false}
+      >
         <DialogTitle>Save Setup</DialogTitle>
         <IconButton
           aria-label="close"
