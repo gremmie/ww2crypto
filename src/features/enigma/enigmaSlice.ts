@@ -295,6 +295,7 @@ export const enigmaSlice = createSlice({
         state.plugboard = config.plugboard;
         state.plugboardNotation = config.plugboardNotation;
         state.plugboardCableCount = config.plugboard.split(" ").length;
+        state.configName = config.name;
       }
     },
     deleteConfigInitiated: (state, action: PayloadAction<string>) => {
@@ -449,6 +450,36 @@ export const selectConfigNames = (state: RootState) =>
 
 export const selectConfigs = (state: RootState) => {
   return configSelectors.selectAll(state);
+};
+
+export const selectConfigName = (state: RootState) => state.enigma.configName;
+
+export const selectIsConfigModified = (state: RootState) => {
+  const configName = state.enigma.configName;
+  if (!selectIsSetupComplete(state) || configName === "") return false;
+
+  const config = configSelectors.selectById(state, configName);
+  const enigmaState = state.enigma;
+  if (config.reflector !== enigmaState.reflector) return true;
+  if (config.rotors.length !== enigmaState.rotorTypes.length) return true;
+  if (
+    !config.rotors.every(
+      (value, index) => value == enigmaState.rotorTypes[index],
+    )
+  ) {
+    return true;
+  }
+  if (config.rings.length !== enigmaState.rotorTypes.length) return true;
+  if (
+    !config.rings.every(
+      (value, index) => value == enigmaState.ringSettings[index],
+    )
+  ) {
+    return true;
+  }
+  if (config.ringNotation !== enigmaState.ringSettingsNotation) return true;
+  if (config.plugboard !== enigmaState.plugboard) return true;
+  return config.plugboardNotation !== enigmaState.plugboardNotation;
 };
 
 export default enigmaSlice.reducer;

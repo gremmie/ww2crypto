@@ -20,6 +20,7 @@ import {
 import LoadConfigDialog from "./loadConfigDialog.tsx";
 import SaveConfigDialog from "./saveConfigDialog.tsx";
 import SetupCompleteAlert from "./setupCompleteAlert.tsx";
+import SetupName from "./setupName.tsx";
 import { SetupStepper } from "./setupStepper.tsx";
 
 export default function EnigmaSetupTab() {
@@ -48,6 +49,9 @@ export default function EnigmaSetupTab() {
             <SetupCompleteAlert />
           </Box>
         )}
+        <Box display="flex" justifyContent="center">
+          <SetupName />
+        </Box>
         <SetupStepper steps={setupStepNames} />
         <Box width="100%" sx={{ pt: 4 }} display="flex" justifyContent="center">
           <Box width="80%" display="flex" justifyContent="center">
