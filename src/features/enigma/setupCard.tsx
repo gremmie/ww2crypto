@@ -11,7 +11,8 @@ import { setupSummary } from "./utils.ts";
 interface SetupCardProps {
   config: MachineConfig;
   isSelected: boolean;
-  selectedCallback: (config: MachineConfig) => void;
+  clickCallback: (config: MachineConfig) => void;
+  dblClickCallback: (config: MachineConfig) => void;
   deleteCallback: (config: MachineConfig) => void;
 }
 
@@ -20,20 +21,20 @@ export default function SetupCard(props: SetupCardProps) {
   return (
     <Card
       variant={props.isSelected ? "outlined" : undefined}
-      sx={{ minWidth: 275 }}
+      sx={{
+        minWidth: 275,
+        border: (theme) =>
+          props.isSelected
+            ? `2px solid ${theme.palette.primary.main}`
+            : undefined,
+      }}
     >
       <CardActionArea
-        onClick={() => props.selectedCallback(props.config)}
+        onClick={() => props.clickCallback(props.config)}
+        onDoubleClick={() => props.dblClickCallback(props.config)}
         sx={{
           minWidth: 275,
-          "&[data-active]": {
-            backgroundColor: "action.selected",
-          },
-          "&:hover": {
-            backgroundColor: "action.selectedHover",
-          },
         }}
-        data-active={props.isSelected ? "" : undefined}
       >
         <CardHeader
           title={props.config.name}
@@ -46,7 +47,7 @@ export default function SetupCard(props: SetupCardProps) {
         </CardContent>
       </CardActionArea>
       <CardActions disableSpacing>
-        <Tooltip title="Delete Setup">
+        <Tooltip title="Delete Setup" arrow>
           <IconButton
             aria-label="delete"
             sx={{ ml: "auto" }}

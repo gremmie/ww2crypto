@@ -14,14 +14,16 @@ interface RotorWindowProps {
 
 export default function RotorWindow(props: RotorWindowProps) {
   const dispatch = useAppDispatch();
-  const validValuePattern = /^[A-Z]$/;
+  const validValuePattern = /^[a-zA-Z]$/;
   const index = props.index;
   const displayValue = useAppSelector((s) => selectRotorWindow(s, index)!);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value as string;
     if (validValuePattern.test(newValue)) {
-      dispatch(rotorDisplayChanged({ index: index, value: newValue }));
+      dispatch(
+        rotorDisplayChanged({ index: index, value: newValue.toUpperCase() }),
+      );
     }
   };
 

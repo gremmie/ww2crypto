@@ -75,7 +75,7 @@ export default function OperatorInput() {
         rows={4}
         variant="filled"
         sx={{
-          width: 440,
+          width: 430,
         }}
         value={shouldGroupText ? groupText(inputText) : inputText}
         onKeyDown={handleKeyDown}
@@ -92,7 +92,7 @@ export default function OperatorInput() {
           value={shouldGroupText}
           onChange={setShouldGroupText}
         />
-        <Tooltip title="Paste from clipboard">
+        <Tooltip title="Paste from clipboard" arrow>
           <IconButton aria-label="Paste" onClick={handlePasteClick}>
             <ContentPasteIcon />
           </IconButton>

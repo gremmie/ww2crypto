@@ -37,7 +37,7 @@ export default function OperatorOutput() {
         rows={4}
         variant="filled"
         sx={{
-          width: 440,
+          width: 430,
         }}
         value={shouldGroupText ? groupText(outputText) : outputText}
         slotProps={{
@@ -54,7 +54,7 @@ export default function OperatorOutput() {
           value={shouldGroupText}
           onChange={setShouldGroupText}
         />
-        <Tooltip title={copyTooltip}>
+        <Tooltip title={copyTooltip} arrow>
           <IconButton aria-label="Copy" onClick={handleCopy}>
             <ContentCopyIcon />
           </IconButton>

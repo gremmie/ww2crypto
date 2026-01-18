@@ -45,6 +45,11 @@ export default function LoadConfigDialog() {
     handleClose();
   };
 
+  const handleCardDblClick = (config: MachineConfig) => {
+    setSetupName(config.name);
+    handleLoad();
+  };
+
   const handleDelete = (config: MachineConfig) => {
     setDeletedConfig(config);
     dispatch(deleteConfigInitiated(config.name));
@@ -122,7 +127,8 @@ export default function LoadConfigDialog() {
                     key={config.name}
                     config={config}
                     isSelected={setupName === config.name}
-                    selectedCallback={(config) => setSetupName(config.name)}
+                    clickCallback={(config) => setSetupName(config.name)}
+                    dblClickCallback={handleCardDblClick}
                     deleteCallback={handleDelete}
                   />
                 ))}
