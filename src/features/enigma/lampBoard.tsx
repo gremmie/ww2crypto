@@ -30,7 +30,7 @@ export default function LampBoard() {
       <AccordionDetails>
         <Stack
           direction="column"
-          spacing={2}
+          spacing={1}
           alignItems="center"
           sx={{ pt: 1, pb: 2 }}
         >

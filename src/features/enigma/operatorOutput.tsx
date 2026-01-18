@@ -29,7 +29,7 @@ export default function OperatorOutput() {
   const copyTooltip = hasCopied ? "Copied!" : "Copy to clipboard";
 
   return (
-    <Stack direction="column" spacing={1} sx={{ pt: 4 }}>
+    <Stack direction="column" spacing={1} sx={{ pt: 1 }}>
       <TextField
         id="enigma-operator-output"
         label="Output"
@@ -37,7 +37,7 @@ export default function OperatorOutput() {
         rows={4}
         variant="filled"
         sx={{
-          width: 400,
+          width: 440,
         }}
         value={shouldGroupText ? groupText(outputText) : outputText}
         slotProps={{

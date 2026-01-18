@@ -1,4 +1,6 @@
 import CableIcon from "@mui/icons-material/Cable";
+import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+import { Tooltip } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
@@ -57,7 +59,15 @@ export default function EnigmaPlugboard() {
   return (
     <Paper elevation={2} sx={{ px: 4, py: 2 }}>
       <Stack spacing={2} alignItems="center">
-        <Typography variant="h6">Configure the plugboard</Typography>
+        <Typography
+          variant="h6"
+          sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
+        >
+          Configure the plugboard{" "}
+          <Tooltip title={plugboardHelp} arrow>
+            <HelpOutlineOutlinedIcon />
+          </Tooltip>
+        </Typography>
         <Stack direction="row" spacing={4} alignItems={"center"}>
           <PlugboardCableCountSelect />
           <NotationSelector
@@ -65,10 +75,6 @@ export default function EnigmaPlugboard() {
             onChange={handleNotationChange}
           />
         </Stack>
-        <Alert severity="info" sx={{ maxWidth: 0.7 }}>
-          During the war, procedure required that 10 patch cables were used. For
-          simulation purposes you can use anywhere from 0 to 13.
-        </Alert>
         <PlugboardConnections />
         <Alert severity="info" sx={{ maxWidth: 0.7 }}>
           You may enter the plugboard settings by manually connecting cables or
@@ -115,3 +121,7 @@ export default function EnigmaPlugboard() {
     </Paper>
   );
 }
+
+const plugboardHelp =
+  "During the war, procedure required that 10 patch cables were used. For " +
+  "simulation purposes you can use anywhere from 0 to 13.";

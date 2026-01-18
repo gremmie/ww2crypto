@@ -108,6 +108,16 @@ describe("EnigmaSetupTab", () => {
       plugboard: "IX MO",
       plugboardNotation: "letter",
       plugboardCableCount: 2,
+      rotorDisplays: ["A", "A", "A"],
+      inputText: "",
+      outputText: "",
+      activeLamp: "",
+      isLampPanelOpen: true,
+      configName: "",
+      configs: {
+        ids: [],
+        entities: {},
+      },
     };
     const { user, store } = renderWithProviders(<EnigmaSetupTab />, {
       preloadedState: { enigma: initialState },

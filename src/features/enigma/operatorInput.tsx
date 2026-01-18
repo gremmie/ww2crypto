@@ -75,7 +75,7 @@ export default function OperatorInput() {
         rows={4}
         variant="filled"
         sx={{
-          width: 400,
+          width: 440,
         }}
         value={shouldGroupText ? groupText(inputText) : inputText}
         onKeyDown={handleKeyDown}

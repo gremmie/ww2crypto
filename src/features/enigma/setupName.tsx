@@ -19,7 +19,9 @@ export default function SetupName() {
     </Typography>
   );
   const setupName = isModified ? (
-    <Tooltip title="Has unsaved changes">{nameSpan}</Tooltip>
+    <Tooltip title="Has unsaved changes" arrow>
+      {nameSpan}
+    </Tooltip>
   ) : (
     nameSpan
   );

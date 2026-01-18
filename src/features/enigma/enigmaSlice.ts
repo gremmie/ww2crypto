@@ -121,6 +121,7 @@ export const enigmaSlice = createSlice({
       state.rotorDisplays = new Array(state.numberOfRotors).fill("A");
       state.inputText = "";
       state.outputText = "";
+      state.configName = "";
     },
     reflectorChanged: (state, action: PayloadAction<ReflectorType>) => {
       state.reflector = action.payload;
@@ -456,7 +457,7 @@ export const selectConfigName = (state: RootState) => state.enigma.configName;
 
 export const selectIsConfigModified = (state: RootState) => {
   const configName = state.enigma.configName;
-  if (!selectIsSetupComplete(state) || configName === "") return false;
+  if (configName === "") return false;
 
   const config = configSelectors.selectById(state, configName);
   const enigmaState = state.enigma;

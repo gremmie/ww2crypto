@@ -55,6 +55,7 @@ export default function PlugboardTextInput() {
         value={value}
         onChange={handleChange}
         disabled={cableCount === 0}
+        sx={{ width: 300 }}
       />
       <Button
         variant="contained"
