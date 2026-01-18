@@ -68,7 +68,7 @@ export default function EnigmaSetupTab() {
             Back
           </Button>
           <LoadConfigDialog />
-          <SaveConfigDialog disabled={!isSetupComplete} />
+          <SaveConfigDialog />
           <Button
             variant={canJumpToOperate ? "contained" : "text"}
             endIcon={<ChevronRightIcon />}
