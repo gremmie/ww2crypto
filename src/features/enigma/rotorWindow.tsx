@@ -48,6 +48,9 @@ export default function RotorWindow(props: RotorWindowProps) {
       </IconButton>
       <TextField
         id={`rotor-window-${index}`}
+        slotProps={{
+          htmlInput: { "aria-label": `rotor window ${index}` },
+        }}
         variant="outlined"
         value={displayValue}
         sx={{
