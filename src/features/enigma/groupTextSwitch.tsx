@@ -12,7 +12,7 @@ export default function GroupTextSwitch(props: GroupTextSwitchProps) {
       control={
         <Switch
           size="small"
-          value={props.value}
+          checked={props.value}
           onChange={() => props.onChange(!props.value)}
         />
       }

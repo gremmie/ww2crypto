@@ -50,6 +50,8 @@ export interface EnigmaState {
   isLampPanelOpen: boolean;
   configName: string;
   configs: EntityState<MachineConfig, string>;
+  isInputGrouped: boolean;
+  isOutputGrouped: boolean;
 }
 
 // Define the initial state using that type
@@ -71,6 +73,8 @@ const initialState: EnigmaState = {
   isLampPanelOpen: true,
   configName: "",
   configs: configAdapter.getInitialState(),
+  isInputGrouped: false,
+  isOutputGrouped: false,
 };
 
 export type RotorTypeChangedPayload = {
@@ -308,6 +312,12 @@ export const enigmaSlice = createSlice({
     ) => {
       configAdapter.setOne(state.configs, action.payload);
     },
+    inputGroupSwitchChanged: (state, action: PayloadAction<boolean>) => {
+      state.isInputGrouped = action.payload;
+    },
+    outputGroupSwitchChanged: (state, action: PayloadAction<boolean>) => {
+      state.isOutputGrouped = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(applicationStarted, (state) => {
@@ -343,6 +353,8 @@ export const {
   loadConfigInitiated,
   deleteConfigInitiated,
   undoDeleteConfigInitiated,
+  inputGroupSwitchChanged,
+  outputGroupSwitchChanged,
 } = enigmaSlice.actions;
 
 // Selectors
@@ -482,6 +494,12 @@ export const selectIsConfigModified = (state: RootState) => {
   if (config.plugboard !== enigmaState.plugboard) return true;
   return config.plugboardNotation !== enigmaState.plugboardNotation;
 };
+
+export const selectIsInputGrouped = (state: RootState) =>
+  state.enigma.isInputGrouped;
+
+export const selectIsOutputGrouped = (state: RootState) =>
+  state.enigma.isOutputGrouped;
 
 export default enigmaSlice.reducer;
 

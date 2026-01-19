@@ -118,6 +118,8 @@ describe("EnigmaSetupTab", () => {
         ids: [],
         entities: {},
       },
+      isInputGrouped: false,
+      isOutputGrouped: false,
     };
     const { user, store } = renderWithProviders(<EnigmaSetupTab />, {
       preloadedState: { enigma: initialState },
