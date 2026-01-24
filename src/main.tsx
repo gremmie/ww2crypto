@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { setupStore } from "./app/store";
 import { applicationStarted } from "./features/common/actions.ts";
-import EnigmaMain from "./features/enigma/enigmaMain.tsx";
+import { MainApp } from "./features/main/mainApp.tsx";
 
 const store = setupStore();
 store.dispatch(applicationStarted());
@@ -13,7 +13,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <CssBaseline />
     <Provider store={store}>
-      <EnigmaMain />
+      <MainApp />
     </Provider>
   </StrictMode>,
 );
