@@ -64,7 +64,7 @@ export default function EnigmaPlugboard() {
           sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
         >
           Configure the plugboard{" "}
-          <Tooltip title={plugboardHelp} arrow>
+          <Tooltip title={plugboardHelp} arrow enterTouchDelay={350}>
             <HelpOutlineOutlinedIcon />
           </Tooltip>
         </Typography>

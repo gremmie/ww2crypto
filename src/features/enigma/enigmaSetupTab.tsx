@@ -53,32 +53,47 @@ export default function EnigmaSetupTab() {
           <SetupName />
         </Box>
         <SetupStepper steps={setupStepNames} />
-        <Box width="100%" sx={{ pt: 4 }} display="flex" justifyContent="center">
-          <Box width="80%" display="flex" justifyContent="center">
-            {renderStep(activeStep)}
+        <Box
+          sx={{
+            height: {
+              xs: "70vh",
+              sm: "auto",
+            },
+            overflowY: "auto",
+          }}
+        >
+          <Box
+            width="100%"
+            sx={{ pt: 4 }}
+            display="flex"
+            justifyContent="center"
+          >
+            <Box width="80%" display="flex" justifyContent="center">
+              {renderStep(activeStep)}
+            </Box>
           </Box>
-        </Box>
-        <Box display="flex" justifyContent="space-around" sx={{ pt: 2 }}>
-          <Button
-            variant="text"
-            startIcon={<ChevronLeftIcon />}
-            disabled={activeStep === 0}
-            onClick={handleBack}
-          >
-            Back
-          </Button>
-          <LoadConfigDialog />
-          <SaveConfigDialog />
-          <Button
-            variant={canJumpToOperate ? "contained" : "text"}
-            endIcon={<ChevronRightIcon />}
-            disabled={
-              activeStep === setupStepNames.length - 1 && !isSetupComplete
-            }
-            onClick={handleNext}
-          >
-            {canJumpToOperate ? "Operate" : "Next"}
-          </Button>
+          <Box display="flex" justifyContent="space-around" sx={{ pt: 2 }}>
+            <Button
+              variant="text"
+              startIcon={<ChevronLeftIcon />}
+              disabled={activeStep === 0}
+              onClick={handleBack}
+            >
+              Back
+            </Button>
+            <LoadConfigDialog />
+            <SaveConfigDialog />
+            <Button
+              variant={canJumpToOperate ? "contained" : "text"}
+              endIcon={<ChevronRightIcon />}
+              disabled={
+                activeStep === setupStepNames.length - 1 && !isSetupComplete
+              }
+              onClick={handleNext}
+            >
+              {canJumpToOperate ? "Operate" : "Next"}
+            </Button>
+          </Box>
         </Box>
       </Stack>
     </Box>

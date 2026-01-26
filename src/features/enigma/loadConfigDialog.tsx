@@ -114,7 +114,7 @@ export default function LoadConfigDialog() {
           <Stack direction="column" spacing={2} alignItems="center">
             <Box
               sx={{
-                height: { xs: 200, sm: 400, md: "60vh" },
+                height: { xs: "70vh" },
                 width: "100%",
                 overflowY: "auto",
                 p: 2,
