@@ -64,7 +64,7 @@ export default function EnigmaSetupTab() {
         >
           <Box
             width="100%"
-            sx={{ pt: 4 }}
+            sx={{ pt: 2 }}
             display="flex"
             justifyContent="center"
           >
@@ -72,6 +72,15 @@ export default function EnigmaSetupTab() {
               {renderStep(activeStep)}
             </Box>
           </Box>
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{ pt: 2 }}
+            justifyContent="space-evenly"
+          >
+            <LoadConfigDialog />
+            <SaveConfigDialog />
+          </Stack>
           <Box display="flex" justifyContent="space-around" sx={{ pt: 2 }}>
             <Button
               variant="text"
@@ -81,8 +90,6 @@ export default function EnigmaSetupTab() {
             >
               Back
             </Button>
-            <LoadConfigDialog />
-            <SaveConfigDialog />
             <Button
               variant={canJumpToOperate ? "contained" : "text"}
               endIcon={<ChevronRightIcon />}
