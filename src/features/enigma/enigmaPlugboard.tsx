@@ -1,7 +1,6 @@
 import CableIcon from "@mui/icons-material/Cable";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import { Tooltip } from "@mui/material";
-import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
@@ -68,7 +67,11 @@ export default function EnigmaPlugboard() {
             <HelpOutlineOutlinedIcon />
           </Tooltip>
         </Typography>
-        <Stack direction="row" spacing={4} alignItems={"center"}>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={2}
+          alignItems={"center"}
+        >
           <PlugboardCableCountSelect />
           <NotationSelector
             currentNotation={notation}
@@ -76,10 +79,6 @@ export default function EnigmaPlugboard() {
           />
         </Stack>
         <PlugboardConnections />
-        <Alert severity="info" sx={{ maxWidth: 0.7 }}>
-          You may enter the plugboard settings by manually connecting cables or
-          by typing a connection string.
-        </Alert>
         <Stack
           spacing={2}
           direction="row"
@@ -96,7 +95,14 @@ export default function EnigmaPlugboard() {
             choices={choices1}
             onChange={setFirst}
           />
-          <CableIcon />
+          <CableIcon
+            sx={{
+              display: {
+                xs: "none",
+                sm: "block",
+              },
+            }}
+          />
           <PlugboardSelect
             label="Plug 2"
             notation={notation}
