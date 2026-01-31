@@ -31,7 +31,7 @@ export default function EnigmaRingSettings() {
         currentNotation={notation}
         onChange={handleNotationChange}
       />
-      <Stack spacing={2} direction="row">
+      <Stack spacing={2} direction={{ xs: "column", sm: "row" }} useFlexGap>
         {selects}
       </Stack>
     </Stack>

@@ -59,7 +59,7 @@ export default function SaveConfigDialog() {
         disabled={!isSaveEnabled}
         onClick={handleClickOpen}
       >
-        Save this setup
+        Save Setup
       </Button>
       <Dialog
         fullWidth

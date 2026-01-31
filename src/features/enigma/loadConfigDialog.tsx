@@ -68,7 +68,7 @@ export default function LoadConfigDialog() {
         disabled={configs.length === 0}
         onClick={handleClickOpen}
       >
-        Load / Manage Setups
+        Load Setup
       </Button>
       <Dialog
         fullWidth

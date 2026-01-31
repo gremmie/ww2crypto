@@ -40,7 +40,7 @@ export default function EnigmaRotors() {
         </Tooltip>
       </Typography>
       <Stack
-        direction={{ xs: "column", md: "row" }}
+        direction={{ xs: "column", sm: "row" }}
         useFlexGap
         spacing={2}
         sx={{ mt: 4 }}
