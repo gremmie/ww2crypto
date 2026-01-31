@@ -26,17 +26,15 @@ export default function EnigmaRingSettings() {
   ));
 
   return (
-    <Paper elevation={2} sx={{ px: 4, py: 2 }}>
-      <Stack spacing={4} alignItems="center">
-        <Typography variant="h6">Establish ring settings</Typography>
-        <NotationSelector
-          currentNotation={notation}
-          onChange={handleNotationChange}
-        />
-        <Stack spacing={2} direction="row">
-          {selects}
-        </Stack>
+    <Stack spacing={4} alignItems="center">
+      <Typography variant="h6">Establish ring settings</Typography>
+      <NotationSelector
+        currentNotation={notation}
+        onChange={handleNotationChange}
+      />
+      <Stack spacing={2} direction="row">
+        {selects}
       </Stack>
-    </Paper>
+    </Stack>
   );
 }

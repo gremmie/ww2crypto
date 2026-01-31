@@ -56,75 +56,71 @@ export default function EnigmaPlugboard() {
   };
 
   return (
-    <Paper elevation={2} sx={{ px: 4, py: 2 }}>
-      <Stack spacing={2} alignItems="center">
-        <Typography
-          variant="h6"
-          sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
-        >
-          Configure the plugboard{" "}
-          <Tooltip title={plugboardHelp} arrow enterTouchDelay={350}>
-            <HelpOutlineOutlinedIcon />
-          </Tooltip>
-        </Typography>
-        <Stack
-          direction={{ xs: "column", sm: "row" }}
-          spacing={2}
-          alignItems={"center"}
-        >
-          <PlugboardCableCountSelect />
-          <NotationSelector
-            currentNotation={notation}
-            onChange={handleNotationChange}
-          />
-        </Stack>
-        <PlugboardConnections />
-        <Stack
-          spacing={2}
-          direction="row"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <PlugboardSelect
-            label="Plug 1"
-            notation={notation}
-            disabled={
-              cableCount === connections.length || choices1.length === 0
-            }
-            value={first}
-            choices={choices1}
-            onChange={setFirst}
-          />
-          <CableIcon
-            sx={{
-              display: {
-                xs: "none",
-                sm: "block",
-              },
-            }}
-          />
-          <PlugboardSelect
-            label="Plug 2"
-            notation={notation}
-            disabled={first === null}
-            value={second}
-            choices={choices2}
-            onChange={setSecond}
-          />
-          <Button
-            variant="contained"
-            disabled={first === null || second === null}
-            onClick={handleConnect}
-          >
-            Connect
-          </Button>
-        </Stack>
-        <Typography variant="h6" component="span">
-          Or
-        </Typography>
-        <PlugboardTextInput />
+    <Stack spacing={2} alignItems="center">
+      <Typography
+        variant="h6"
+        sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
+      >
+        Configure the plugboard{" "}
+        <Tooltip title={plugboardHelp} arrow enterTouchDelay={350}>
+          <HelpOutlineOutlinedIcon />
+        </Tooltip>
+      </Typography>
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        spacing={2}
+        alignItems={"center"}
+      >
+        <PlugboardCableCountSelect />
+        <NotationSelector
+          currentNotation={notation}
+          onChange={handleNotationChange}
+        />
       </Stack>
-    </Paper>
+      <PlugboardConnections />
+      <Stack
+        spacing={2}
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <PlugboardSelect
+          label="Plug 1"
+          notation={notation}
+          disabled={cableCount === connections.length || choices1.length === 0}
+          value={first}
+          choices={choices1}
+          onChange={setFirst}
+        />
+        <CableIcon
+          sx={{
+            display: {
+              xs: "none",
+              sm: "block",
+            },
+          }}
+        />
+        <PlugboardSelect
+          label="Plug 2"
+          notation={notation}
+          disabled={first === null}
+          value={second}
+          choices={choices2}
+          onChange={setSecond}
+        />
+        <Button
+          variant="contained"
+          disabled={first === null || second === null}
+          onClick={handleConnect}
+        >
+          Connect
+        </Button>
+      </Stack>
+      <Typography variant="h6" component="span">
+        Or
+      </Typography>
+      <PlugboardTextInput />
+    </Stack>
   );
 }
 

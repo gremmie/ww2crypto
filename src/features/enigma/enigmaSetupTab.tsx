@@ -75,7 +75,7 @@ export default function EnigmaSetupTab() {
           <Stack
             direction="row"
             spacing={2}
-            sx={{ pt: 2 }}
+            sx={{ pt: 4 }}
             justifyContent="space-evenly"
           >
             <LoadConfigDialog />

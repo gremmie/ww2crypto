@@ -33,24 +33,22 @@ export default function EnigmaRotors() {
   );
 
   return (
-    <Paper elevation={2} sx={{ px: 4, py: 2 }}>
-      <Stack spacing={4} alignItems="center">
-        <Typography variant="h6" display="flex" alignItems="center" gap={0.5}>
-          Select reflector, rotors, and rotor order
-          <Tooltip title={helpContent} arrow enterTouchDelay={350}>
-            <HelpOutlineOutlinedIcon />
-          </Tooltip>
-        </Typography>
-        <Stack
-          direction={{ xs: "column", md: "row" }}
-          useFlexGap
-          spacing={2}
-          sx={{ mt: 4 }}
-          justifyContent="center"
-        >
-          {selects}
-        </Stack>
+    <Stack spacing={4} alignItems="center">
+      <Typography variant="h6" display="flex" alignItems="center" gap={0.5}>
+        Select reflector, rotors, and rotor order
+        <Tooltip title={helpContent} arrow enterTouchDelay={350}>
+          <HelpOutlineOutlinedIcon />
+        </Tooltip>
+      </Typography>
+      <Stack
+        direction={{ xs: "column", md: "row" }}
+        useFlexGap
+        spacing={2}
+        sx={{ mt: 4 }}
+        justifyContent="center"
+      >
+        {selects}
       </Stack>
-    </Paper>
+    </Stack>
   );
 }

@@ -20,28 +20,26 @@ export default function EnigmaModel() {
   };
 
   return (
-    <Paper elevation={2} sx={{ px: 4, py: 2 }}>
-      <Stack spacing={2} alignItems="center">
-        <Typography variant="h6">Select Model</Typography>
-        <FormControl>
-          <RadioGroup
-            name="enigma-model-radio-group"
-            value={numberOfRotors.toString()}
-            onChange={handleChange}
-          >
-            <FormControlLabel
-              value="3"
-              control={<Radio />}
-              label="Three Rotor (Army, Air Force, Navy M3)"
-            />
-            <FormControlLabel
-              value="4"
-              control={<Radio />}
-              label="Four Rotor (Navy M4)"
-            />
-          </RadioGroup>
-        </FormControl>
-      </Stack>
-    </Paper>
+    <Stack spacing={2} alignItems="center">
+      <Typography variant="h6">Select Model</Typography>
+      <FormControl>
+        <RadioGroup
+          name="enigma-model-radio-group"
+          value={numberOfRotors.toString()}
+          onChange={handleChange}
+        >
+          <FormControlLabel
+            value="3"
+            control={<Radio />}
+            label="Three Rotor (Army, Air Force, Navy M3)"
+          />
+          <FormControlLabel
+            value="4"
+            control={<Radio />}
+            label="Four Rotor (Navy M4)"
+          />
+        </RadioGroup>
+      </FormControl>
+    </Stack>
   );
 }
