@@ -296,6 +296,7 @@ export const enigmaSlice = createSlice({
         state.reflector = config.reflector as ReflectorType;
         state.rotorTypes = config.rotors;
         state.ringSettings = config.rings;
+        state.rotorDisplays = new Array(state.numberOfRotors).fill("A");
         state.ringSettingsNotation = config.ringNotation;
         state.plugboard = config.plugboard;
         state.plugboardNotation = config.plugboardNotation;
