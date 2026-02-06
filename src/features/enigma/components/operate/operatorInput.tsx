@@ -26,6 +26,16 @@ export default function OperatorInput() {
   const isGrouped = useAppSelector(selectIsInputGrouped);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // We want keyboard copy & pasting to work, so check for that first.
+    if (
+      (e.key.toUpperCase() === "V" || e.key.toUpperCase() === "C") &&
+      (e.ctrlKey || e.metaKey) &&
+      !e.altKey &&
+      !e.repeat
+    ) {
+      return;
+    }
+
     if (
       validKeyPattern.test(e.key) &&
       !e.altKey &&
