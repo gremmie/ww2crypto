@@ -3,20 +3,20 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import * as React from "react";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import {
   type NotationType,
   plugboardBulkSet,
   selectPlugboardCableCount,
   selectPlugboardNotation,
-} from "./enigmaSlice.ts";
+} from "../../enigmaSlice.ts";
 import {
   aCode,
   isValidNumericPlugboardString,
   isValidPlugboardString,
   toAlphaPlugboardString,
   toNumericPlugboardString,
-} from "./utils.ts";
+} from "../../utils.ts";
 
 export default function PlugboardTextInput() {
   const dispatch = useAppDispatch();

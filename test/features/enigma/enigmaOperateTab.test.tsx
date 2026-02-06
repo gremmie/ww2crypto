@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
 import { setupStore } from "../../../src/app/store.ts";
-import { EnigmaOperateTab } from "../../../src/features/enigma/enigmaOperateTab.tsx";
+import { EnigmaOperateTab } from "../../../src/features/enigma/components/setup/enigmaOperateTab.tsx";
 import {
   modelChanged,
   plugboardBulkSet,

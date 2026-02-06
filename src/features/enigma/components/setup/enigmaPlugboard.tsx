@@ -3,12 +3,12 @@ import { Tooltip } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import {
   type NotationType,
   plugboardNotationChanged,
   selectPlugboardNotation,
-} from "./enigmaSlice.ts";
+} from "../../enigmaSlice.ts";
 import NotationSelector from "./notationSelector.tsx";
 import PlugboardCableCountSelect from "./plugboardCableCountSelect.tsx";
 import PlugboardConnections from "./plugboardConnections.tsx";

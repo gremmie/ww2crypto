@@ -5,7 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import React from "react";
-import EnigmaMain from "../enigma/enigmaMain.tsx";
+import EnigmaMain from "../enigma/components/enigmaMain.tsx";
 import ComingSoon from "./comingSoon.tsx";
 import MainDrawer from "./mainDrawer.tsx";
 import type { PageType } from "./pageType.ts";

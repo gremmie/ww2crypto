@@ -1,8 +1,8 @@
 import Alert from "@mui/material/Alert";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import { useAppDispatch } from "../../app/hooks.ts";
-import { currentTabChanged } from "./enigmaSlice.ts";
+import { useAppDispatch } from "../../../../app/hooks.ts";
+import { currentTabChanged } from "../../enigmaSlice.ts";
 
 export default function SetupCompleteAlert() {
   const dispatch = useAppDispatch();

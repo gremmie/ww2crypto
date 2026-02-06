@@ -6,8 +6,8 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-import { modelChanged, selectNumberOfRotors } from "./enigmaSlice.ts";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
+import { modelChanged, selectNumberOfRotors } from "../../enigmaSlice.ts";
 
 export default function EnigmaModel() {
   const dispatch = useAppDispatch();

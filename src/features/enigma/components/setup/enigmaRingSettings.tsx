@@ -1,12 +1,12 @@
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import {
   type NotationType,
   ringSettingsNotationChanged,
   selectNumberOfRotors,
   selectRingSettingsNotation,
-} from "./enigmaSlice.ts";
+} from "../../enigmaSlice.ts";
 
 import NotationSelector from "./notationSelector.tsx";
 import RingSelect from "./ringSelect.tsx";

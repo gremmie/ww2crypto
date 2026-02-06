@@ -5,15 +5,15 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import {
   operatorClearedOutput,
   outputGroupSwitchChanged,
   selectIsOutputGrouped,
   selectOutputText,
-} from "./enigmaSlice.ts";
+} from "../../enigmaSlice.ts";
+import { groupText } from "../../utils.ts";
 import GroupTextSwitch from "./groupTextSwitch.tsx";
-import { groupText } from "./utils.ts";
 
 export default function OperatorOutput() {
   const dispatch = useAppDispatch();

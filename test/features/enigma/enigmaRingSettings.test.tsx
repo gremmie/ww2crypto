@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, test } from "vitest";
 import { setupStore } from "../../../src/app/store.ts";
-import EnigmaRingSettings from "../../../src/features/enigma/enigmaRingSettings.tsx";
+import EnigmaRingSettings from "../../../src/features/enigma/components/setup/enigmaRingSettings.tsx";
 import {
   modelChanged,
   type NotationType,

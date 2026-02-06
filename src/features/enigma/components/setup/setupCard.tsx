@@ -5,8 +5,8 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import type { MachineConfig } from "./config/machineConfig.ts";
-import { setupSummary } from "./utils.ts";
+import type { MachineConfig } from "../../config/machineConfig.ts";
+import { setupSummary } from "../../utils.ts";
 
 interface SetupCardProps {
   config: MachineConfig;

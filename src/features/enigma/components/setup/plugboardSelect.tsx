@@ -2,8 +2,8 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { type SelectChangeEvent } from "@mui/material/Select";
-import type { NotationType } from "./enigmaSlice.ts";
-import { toNumericPlug } from "./utils.ts";
+import type { NotationType } from "../../enigmaSlice.ts";
+import { toNumericPlug } from "../../utils.ts";
 
 interface PlugboardSelectProps {
   label: string;

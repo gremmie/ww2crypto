@@ -3,11 +3,11 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { type SelectChangeEvent } from "@mui/material/Select";
 
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import {
   plugboardCableCountChanged,
   selectPlugboardCableCount,
-} from "./enigmaSlice.ts";
+} from "../../enigmaSlice.ts";
 
 const choices = Array.from({ length: 14 }, (_, i) => i);
 

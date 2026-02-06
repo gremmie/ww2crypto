@@ -11,14 +11,14 @@ import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-import type { MachineConfig } from "./config/machineConfig.ts";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
+import type { MachineConfig } from "../../config/machineConfig.ts";
 import {
   deleteConfigInitiated,
   loadConfigInitiated,
   selectConfigs,
   undoDeleteConfigInitiated,
-} from "./enigmaSlice.ts";
+} from "../../enigmaSlice.ts";
 import SetupCard from "./setupCard.tsx";
 
 export default function LoadConfigDialog() {

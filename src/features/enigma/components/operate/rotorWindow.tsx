@@ -4,9 +4,9 @@ import { IconButton } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-import { rotorDisplayChanged, selectRotorWindow } from "./enigmaSlice.ts";
-import { aCode, modulo } from "./utils.ts";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
+import { rotorDisplayChanged, selectRotorWindow } from "../../enigmaSlice.ts";
+import { aCode, modulo } from "../../utils.ts";
 
 interface RotorWindowProps {
   index: number;

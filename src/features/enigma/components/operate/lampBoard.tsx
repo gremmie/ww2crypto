@@ -4,11 +4,11 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import {
   lampPanelOpenStatusChanged,
   selectIsLampPanelOpen,
-} from "./enigmaSlice.ts";
+} from "../../enigmaSlice.ts";
 import Lamp from "./lamp.tsx";
 
 export default function LampBoard() {

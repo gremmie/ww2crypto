@@ -1,8 +1,8 @@
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import type { ReactElement } from "react";
-import { useAppSelector } from "../../app/hooks.ts";
-import { selectNumberOfRotors } from "./enigmaSlice.ts";
+import { useAppSelector } from "../../../../app/hooks.ts";
+import { selectNumberOfRotors } from "../../enigmaSlice.ts";
 import LampBoard from "./lampBoard.tsx";
 import OperatorInput from "./operatorInput.tsx";
 import OperatorOutput from "./operatorOutput.tsx";

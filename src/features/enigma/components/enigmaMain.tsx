@@ -7,14 +7,14 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-import { EnigmaOperateTab } from "./enigmaOperateTab.tsx";
-import EnigmaSetupTab from "./enigmaSetupTab.tsx";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks.ts";
 import {
   currentTabChanged,
   selectCurrentTab,
   type TabType,
-} from "./enigmaSlice.ts";
+} from "../enigmaSlice.ts";
+import { EnigmaOperateTab } from "./setup/enigmaOperateTab.tsx";
+import EnigmaSetupTab from "./setup/enigmaSetupTab.tsx";
 
 export default function EnigmaMain() {
   const dispatch = useAppDispatch();

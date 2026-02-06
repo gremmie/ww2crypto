@@ -6,14 +6,14 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import {
   plugboardBulkSet,
   plugboardDisconnected,
   selectPlugboard,
   selectPlugboardNotation,
-} from "./enigmaSlice.ts";
-import { toNumericConnection } from "./utils.ts";
+} from "../../enigmaSlice.ts";
+import { toNumericConnection } from "../../utils.ts";
 
 const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),

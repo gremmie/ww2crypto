@@ -4,8 +4,8 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { type ReactElement } from "react";
 
-import { useAppSelector } from "../../app/hooks.ts";
-import { selectNumberOfRotors } from "./enigmaSlice.ts";
+import { useAppSelector } from "../../../../app/hooks.ts";
+import { selectNumberOfRotors } from "../../enigmaSlice.ts";
 import ReflectorSelect from "./reflectorSelect.tsx";
 import RotorSelect from "./rotorSelect.tsx";
 

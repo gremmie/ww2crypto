@@ -1,10 +1,10 @@
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import Typography from "@mui/material/Typography";
-import { useAppDispatch } from "../../app/hooks.ts";
-import { currentTabChanged } from "./enigmaSlice.ts";
+import { useAppDispatch } from "../../../../app/hooks.ts";
+import { currentTabChanged } from "../../enigmaSlice.ts";
 
 export default function OperateEmptyView() {
   const dispatch = useAppDispatch();

@@ -2,12 +2,12 @@ import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
 import Stepper from "@mui/material/Stepper";
 
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import {
   selectActiveSetupStep,
   selectStepCompletionStatus,
   setupStepChanged,
-} from "./enigmaSlice.ts";
+} from "../../enigmaSlice.ts";
 
 interface SetupStepperProps {
   steps: string[];

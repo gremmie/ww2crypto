@@ -2,7 +2,7 @@ import { screen, within } from "@testing-library/react";
 import { type UserEvent } from "@testing-library/user-event";
 import { beforeEach, describe, expect, test } from "vitest";
 import { setupStore } from "../../../src/app/store.ts";
-import EnigmaPlugboard from "../../../src/features/enigma/enigmaPlugboard.tsx";
+import EnigmaPlugboard from "../../../src/features/enigma/components/setup/enigmaPlugboard.tsx";
 import {
   modelChanged,
   setupStepChanged,

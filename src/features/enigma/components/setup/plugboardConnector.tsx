@@ -2,13 +2,13 @@ import CableIcon from "@mui/icons-material/Cable";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import * as React from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import {
   plugboardConnected,
   selectPlugboard,
   selectPlugboardCableCount,
   selectPlugboardNotation,
-} from "./enigmaSlice.ts";
+} from "../../enigmaSlice.ts";
 import PlugboardSelect from "./plugboardSelect.tsx";
 
 export default function PlugboardConnector() {

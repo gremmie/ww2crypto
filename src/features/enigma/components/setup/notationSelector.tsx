@@ -5,7 +5,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import * as React from "react";
 
-import type { NotationType } from "./enigmaSlice.ts";
+import type { NotationType } from "../../enigmaSlice.ts";
 
 interface NotationSelectorProps {
   currentNotation: NotationType;

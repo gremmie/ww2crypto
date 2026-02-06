@@ -4,14 +4,14 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { type SelectChangeEvent } from "@mui/material/Select";
 
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import {
   rotorTypeChanged,
   type RotorTypeChangedPayload,
   selectNumberOfRotors,
   selectRotorTypeChoicesForRotor,
   selectRotorTypeForRotor,
-} from "./enigmaSlice.ts";
+} from "../../enigmaSlice.ts";
 
 interface RotorSelectProps {
   rotorNumber: number;

@@ -11,14 +11,14 @@ import FormGroup from "@mui/material/FormGroup";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import * as React from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import {
   configNameSaved,
   selectConfigName,
   selectConfigNames,
   selectIsConfigModified,
   selectIsSetupComplete,
-} from "./enigmaSlice.ts";
+} from "../../enigmaSlice.ts";
 
 export default function SaveConfigDialog() {
   const dispatch = useAppDispatch();

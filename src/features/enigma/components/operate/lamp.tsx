@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
-import { useAppSelector } from "../../app/hooks.ts";
-import { selectActiveLamp } from "./enigmaSlice.ts";
+import { useAppSelector } from "../../../../app/hooks.ts";
+import { selectActiveLamp } from "../../enigmaSlice.ts";
 
 interface LampProperties {
   letter: string;

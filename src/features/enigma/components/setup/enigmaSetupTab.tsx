@@ -3,12 +3,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-
-import EnigmaModel from "./enigmaModel.tsx";
-import EnigmaPlugboard from "./enigmaPlugboard.tsx";
-import EnigmaRingSettings from "./enigmaRingSettings.tsx";
-import EnigmaRotors from "./enigmaRotors.tsx";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import {
   currentTabChanged,
   selectActiveSetupStep,
@@ -16,7 +11,12 @@ import {
   setupStepAdvanced,
   setupStepNames,
   setupStepReversed,
-} from "./enigmaSlice.ts";
+} from "../../enigmaSlice.ts";
+
+import EnigmaModel from "./enigmaModel.tsx";
+import EnigmaPlugboard from "./enigmaPlugboard.tsx";
+import EnigmaRingSettings from "./enigmaRingSettings.tsx";
+import EnigmaRotors from "./enigmaRotors.tsx";
 import LoadConfigDialog from "./loadConfigDialog.tsx";
 import SaveConfigDialog from "./saveConfigDialog.tsx";
 import SetupCompleteAlert from "./setupCompleteAlert.tsx";

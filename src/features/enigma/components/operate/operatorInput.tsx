@@ -1,9 +1,11 @@
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
+import Tooltip from "@mui/material/Tooltip";
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import {
   inputGroupSwitchChanged,
   operatorClearedInput,
@@ -12,11 +14,9 @@ import {
   operatorPastedText,
   selectInputText,
   selectIsInputGrouped,
-} from "./enigmaSlice.ts";
+} from "../../enigmaSlice.ts";
+import { groupText } from "../../utils.ts";
 import GroupTextSwitch from "./groupTextSwitch.tsx";
-import { groupText } from "./utils.ts";
-import Tooltip from "@mui/material/Tooltip";
-import IconButton from "@mui/material/IconButton";
 
 const validKeyPattern = /^[a-zA-Z]$/;
 

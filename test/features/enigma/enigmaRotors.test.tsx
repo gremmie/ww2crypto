@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, test } from "vitest";
 import { setupStore } from "../../../src/app/store.ts";
-import EnigmaSetupTab from "../../../src/features/enigma/enigmaSetupTab.tsx";
+import EnigmaSetupTab from "../../../src/features/enigma/components/setup/enigmaSetupTab.tsx";
 import {
   modelChanged,
   setupStepChanged,
