@@ -46,7 +46,14 @@ export default function PlugboardTextInput() {
     cableCount === 0 ? "" : generateHelpText(cableCount, notation);
 
   return (
-    <Stack direction="row" alignItems="baseline" spacing={2}>
+    <Stack
+      direction="row"
+      alignItems="baseline"
+      justifyContent="center"
+      spacing={2}
+      useFlexGap
+      flexWrap="wrap"
+    >
       <TextField
         id="enigma-plugboard-text-input"
         label="Connection String"
@@ -55,7 +62,7 @@ export default function PlugboardTextInput() {
         value={value}
         onChange={handleChange}
         disabled={cableCount === 0}
-        sx={{ width: { xs: 220, sm: 300 } }}
+        sx={{ width: 300 }}
       />
       <Button
         variant="contained"

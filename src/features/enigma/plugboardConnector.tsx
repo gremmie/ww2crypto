@@ -46,6 +46,8 @@ export default function PlugboardConnector() {
       direction="row"
       alignItems="center"
       justifyContent="center"
+      useFlexGap
+      flexWrap="wrap"
     >
       <PlugboardSelect
         label="Plug 1"
@@ -55,14 +57,7 @@ export default function PlugboardConnector() {
         choices={choices1}
         onChange={setFirst}
       />
-      <CableIcon
-        sx={{
-          display: {
-            xs: "none",
-            sm: "block",
-          },
-        }}
-      />
+      <CableIcon />
       <PlugboardSelect
         label="Plug 2"
         notation={notation}
