@@ -92,7 +92,7 @@ export default function OperatorInput() {
         rows={4}
         variant="filled"
         sx={{
-          width: { xs: "95vw", sm: 430 },
+          width: { xs: "96vw", sm: 430 },
         }}
         value={isGrouped ? groupText(inputText) : inputText}
         onKeyDown={handleKeyDown}

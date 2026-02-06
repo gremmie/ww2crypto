@@ -15,9 +15,9 @@ export default function Lamp(props: LampProperties) {
       justifyContent="center"
       alignItems="center"
       sx={{
-        width: 30,
-        height: 30,
-        border: "4px solid black",
+        width: { xs: 26, sm: 30 },
+        height: { xs: 26, sm: 30 },
+        border: { xs: "2px solid black", sm: "4px solid black" },
         borderRadius: "50%",
         backgroundColor: activeLamp === props.letter ? "yellow" : null,
       }}

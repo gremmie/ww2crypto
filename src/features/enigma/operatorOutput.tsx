@@ -57,7 +57,7 @@ export default function OperatorOutput() {
         rows={4}
         variant="filled"
         sx={{
-          width: { xs: "95vw", sm: 430 },
+          width: { xs: "96vw", sm: 430 },
         }}
         value={isGrouped ? groupText(outputText) : outputText}
         slotProps={{
