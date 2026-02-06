@@ -1,5 +1,4 @@
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
-import { IconButton, Tooltip } from "@mui/material";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -16,6 +15,8 @@ import {
 } from "./enigmaSlice.ts";
 import GroupTextSwitch from "./groupTextSwitch.tsx";
 import { groupText } from "./utils.ts";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
 
 const validKeyPattern = /^[a-zA-Z]$/;
 
@@ -70,20 +71,6 @@ export default function OperatorInput() {
 
   return (
     <Stack direction="column" spacing={1}>
-      <TextField
-        id="enigma-operator-input"
-        label="Input"
-        multiline
-        rows={4}
-        variant="filled"
-        sx={{
-          width: 430,
-        }}
-        value={isGrouped ? groupText(inputText) : inputText}
-        onKeyDown={handleKeyDown}
-        onKeyUp={handleKeyUp}
-        onPaste={handlePaste}
-      />
       <Stack direction="row" justifyContent="space-between">
         <Button variant="text" onClick={handleClear}>
           Clear
@@ -98,6 +85,20 @@ export default function OperatorInput() {
           </IconButton>
         </Tooltip>
       </Stack>
+      <TextField
+        id="enigma-operator-input"
+        label="Input"
+        multiline
+        rows={4}
+        variant="filled"
+        sx={{
+          width: { xs: "95vw", sm: 430 },
+        }}
+        value={isGrouped ? groupText(inputText) : inputText}
+        onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyUp}
+        onPaste={handlePaste}
+      />
     </Stack>
   );
 }

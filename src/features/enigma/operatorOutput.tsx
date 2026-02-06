@@ -1,8 +1,9 @@
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { IconButton, Tooltip } from "@mui/material";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
+import Tooltip from "@mui/material/Tooltip";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import {
@@ -35,22 +36,6 @@ export default function OperatorOutput() {
 
   return (
     <Stack direction="column" spacing={1} sx={{ pt: 1 }}>
-      <TextField
-        id="enigma-operator-output"
-        label="Output"
-        multiline
-        rows={4}
-        variant="filled"
-        sx={{
-          width: 430,
-        }}
-        value={isGrouped ? groupText(outputText) : outputText}
-        slotProps={{
-          input: {
-            readOnly: true,
-          },
-        }}
-      />
       <Stack direction="row" justifyContent="space-between">
         <Button variant="text" onClick={handleClear}>
           Clear
@@ -65,6 +50,22 @@ export default function OperatorOutput() {
           </IconButton>
         </Tooltip>
       </Stack>
+      <TextField
+        id="enigma-operator-output"
+        label="Output"
+        multiline
+        rows={4}
+        variant="filled"
+        sx={{
+          width: { xs: "95vw", sm: 430 },
+        }}
+        value={isGrouped ? groupText(outputText) : outputText}
+        slotProps={{
+          input: {
+            readOnly: true,
+          },
+        }}
+      />
     </Stack>
   );
 }
