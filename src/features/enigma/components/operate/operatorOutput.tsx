@@ -22,7 +22,7 @@ export default function OperatorOutput() {
   };
 
   return (
-    <Stack direction="column" spacing={1} sx={{ pt: 1 }}>
+    <Stack direction="column" spacing={1}>
       <Stack direction="row" justifyContent="space-between">
         <Button variant="text" onClick={handleClear}>
           Clear

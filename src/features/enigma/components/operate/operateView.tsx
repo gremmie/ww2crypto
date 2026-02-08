@@ -27,8 +27,15 @@ export default function OperateView() {
           {rotorWindows}
         </Stack>
         <LampBoard />
-        <OperatorInput />
-        <OperatorOutput />
+        <Stack
+          spacing={{ xs: 2, md: 4 }}
+          direction={{ xs: "column", md: "row" }}
+          useFlexGap
+          flexWrap="wrap"
+        >
+          <OperatorInput />
+          <OperatorOutput />
+        </Stack>
       </Stack>
     </Box>
   );
