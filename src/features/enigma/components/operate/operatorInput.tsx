@@ -16,6 +16,7 @@ import {
   selectIsInputGrouped,
 } from "../../enigmaSlice.ts";
 import { groupText } from "../../utils.ts";
+import { CopyButton } from "./copyButton.tsx";
 import GroupTextSwitch from "./groupTextSwitch.tsx";
 
 const validKeyPattern = /^[a-zA-Z]$/;
@@ -89,11 +90,14 @@ export default function OperatorInput() {
           value={isGrouped}
           onChange={() => dispatch(inputGroupSwitchChanged(!isGrouped))}
         />
-        <Tooltip title="Paste from clipboard" arrow>
-          <IconButton aria-label="Paste" onClick={handlePasteClick}>
-            <ContentPasteIcon />
-          </IconButton>
-        </Tooltip>
+        <div>
+          <CopyButton textToCopy={inputText} isGrouped={isGrouped} />
+          <Tooltip title="Paste from clipboard" arrow>
+            <IconButton aria-label="Paste" onClick={handlePasteClick}>
+              <ContentPasteIcon />
+            </IconButton>
+          </Tooltip>
+        </div>
       </Stack>
       <TextField
         id="enigma-operator-input"

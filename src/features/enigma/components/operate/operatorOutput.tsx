@@ -1,10 +1,6 @@
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import Tooltip from "@mui/material/Tooltip";
-import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import {
   operatorClearedOutput,
@@ -13,26 +9,17 @@ import {
   selectOutputText,
 } from "../../enigmaSlice.ts";
 import { groupText } from "../../utils.ts";
+import { CopyButton } from "./copyButton.tsx";
 import GroupTextSwitch from "./groupTextSwitch.tsx";
 
 export default function OperatorOutput() {
   const dispatch = useAppDispatch();
   const outputText = useAppSelector(selectOutputText);
-  const [hasCopied, setHasCopied] = useState(false);
   const isGrouped = useAppSelector(selectIsOutputGrouped);
 
   const handleClear = () => {
     dispatch(operatorClearedOutput());
   };
-
-  const handleCopy = async () => {
-    const copyText = isGrouped ? groupText(outputText) : outputText;
-    await navigator.clipboard.writeText(copyText);
-    setHasCopied(true);
-    setTimeout(() => setHasCopied(false), 3000);
-  };
-
-  const copyTooltip = hasCopied ? "Copied!" : "Copy to clipboard";
 
   return (
     <Stack direction="column" spacing={1} sx={{ pt: 1 }}>
@@ -44,11 +31,7 @@ export default function OperatorOutput() {
           value={isGrouped}
           onChange={() => dispatch(outputGroupSwitchChanged(!isGrouped))}
         />
-        <Tooltip title={copyTooltip} arrow>
-          <IconButton aria-label="Copy" onClick={handleCopy}>
-            <ContentCopyIcon />
-          </IconButton>
-        </Tooltip>
+        <CopyButton textToCopy={outputText} isGrouped={isGrouped} />
       </Stack>
       <TextField
         id="enigma-operator-output"
