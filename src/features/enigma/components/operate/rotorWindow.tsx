@@ -3,7 +3,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IconButton } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import React from "react";
+import React, { useRef } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import { rotorDisplayChanged, selectRotorWindow } from "../../enigmaSlice.ts";
 import { aCode, modulo } from "../../utils.ts";
@@ -41,6 +41,15 @@ export default function RotorWindow(props: RotorWindowProps) {
     dispatch(rotorDisplayChanged({ index: index, value: stepValue(1) }));
   };
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleSelect = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+      inputRef.current.select();
+    }
+  };
+
   return (
     <Stack direction="column" spacing={1}>
       <IconButton aria-label="Back" onClick={handleBack}>
@@ -48,6 +57,7 @@ export default function RotorWindow(props: RotorWindowProps) {
       </IconButton>
       <TextField
         id={`rotor-window-${index}`}
+        inputRef={inputRef}
         slotProps={{
           htmlInput: { "aria-label": `rotor window ${index}` },
         }}
@@ -57,6 +67,7 @@ export default function RotorWindow(props: RotorWindowProps) {
           width: 43,
         }}
         onChange={handleChange}
+        onClick={handleSelect}
       />
       <IconButton aria-label="Forward" onClick={handleForward}>
         <KeyboardArrowDownIcon />
