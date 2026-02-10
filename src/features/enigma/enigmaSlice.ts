@@ -17,7 +17,7 @@ import Rotor from "./machine/rotor.ts";
 import rotorFactory from "./machine/rotorFactory.ts";
 import { isValidPlugboardString, normalizePlugboardString } from "./utils.ts";
 
-export type TabType = "setup" | "operate";
+export type TabType = "about" | "setup" | "operate";
 
 export type ReflectorType = "B" | "C" | "B-Thin" | "C-Thin" | null;
 
@@ -56,7 +56,7 @@ export interface EnigmaState {
 
 // Define the initial state using that type
 const initialState: EnigmaState = {
-  currentTab: "setup",
+  currentTab: "about",
   activeSetupStep: 0,
   numberOfRotors: 3,
   reflector: null,

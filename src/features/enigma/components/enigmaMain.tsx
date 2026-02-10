@@ -1,3 +1,4 @@
+import InfoOutlineIcon from "@mui/icons-material/InfoOutline";
 import KeyboardIcon from "@mui/icons-material/Keyboard";
 import SettingsIcon from "@mui/icons-material/Settings";
 import TabContext from "@mui/lab/TabContext";
@@ -34,6 +35,12 @@ export default function EnigmaMain() {
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <TabList onChange={handleChange} aria-label="Enigma Tabs">
               <Tab
+                label="About"
+                value="about"
+                icon={<InfoOutlineIcon />}
+                iconPosition="start"
+              />
+              <Tab
                 label="Setup"
                 value="setup"
                 icon={<SettingsIcon />}
@@ -47,6 +54,9 @@ export default function EnigmaMain() {
               />
             </TabList>
           </Box>
+          <TabPanel value="about">
+            <div>Coming Soon</div>
+          </TabPanel>
           <TabPanel value="setup">
             <EnigmaSetupTab />
           </TabPanel>
