@@ -22,6 +22,8 @@ export function MainApp() {
     setDrawerOpen(false);
   };
 
+  const siteTagLine = " - WW2 Cipher Machine Simulations in your Browser";
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -37,7 +39,14 @@ export function MainApp() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            ww2crypto.com
+            ww2crypto.online
+            <Typography
+              variant="h6"
+              component="span"
+              sx={{ display: { xs: "none", md: "inline" } }}
+            >
+              {siteTagLine}
+            </Typography>
           </Typography>
         </Toolbar>
       </AppBar>
