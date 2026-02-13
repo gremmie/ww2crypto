@@ -5,6 +5,10 @@ import { Provider } from "react-redux";
 import { setupStore } from "./app/store";
 import { applicationStarted } from "./features/common/actions.ts";
 import { MainApp } from "./features/main/mainApp.tsx";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 
 const store = setupStore();
 store.dispatch(applicationStarted());

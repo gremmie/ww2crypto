@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import React from "react";
 import EnigmaMain from "../enigma/components/enigmaMain.tsx";
 import ComingSoon from "./comingSoon.tsx";
+import { HomePage } from "./homePage.tsx";
 import MainDrawer from "./mainDrawer.tsx";
 import type { PageType } from "./pageType.ts";
 
@@ -50,7 +51,7 @@ export function MainApp() {
           </Typography>
         </Toolbar>
       </AppBar>
-      {currentPage === "home" && <ComingSoon pageTitle="Home" />}
+      {currentPage === "home" && <HomePage />}
       {currentPage === "enigma" && <EnigmaMain />}
       {currentPage === "m209" && <ComingSoon pageTitle="M-209" />}
       {currentPage === "purple" && <ComingSoon pageTitle="PURPLE" />}
