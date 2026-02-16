@@ -1,19 +1,15 @@
 import Step from "@mui/material/Step";
-import StepButton from "@mui/material/StepButton";
 import Stepper from "@mui/material/Stepper";
 
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
+import { RouterStepButton } from "../../../../routerLinkComponents/routerStepButton.tsx";
 import {
   selectActiveSetupStep,
   selectStepCompletionStatus,
   setupStepChanged,
 } from "../../enigmaSlice.ts";
 
-interface SetupStepperProps {
-  steps: string[];
-}
-
-export const SetupStepper = (props: SetupStepperProps) => {
+export const SetupStepper = () => {
   const dispatch = useAppDispatch();
   const activeStep = useAppSelector(selectActiveSetupStep);
   const status = useAppSelector(selectStepCompletionStatus);
@@ -24,12 +20,13 @@ export const SetupStepper = (props: SetupStepperProps) => {
 
   return (
     <Stepper nonLinear activeStep={activeStep} alternativeLabel>
-      {props.steps.map((label, index) => {
+      {stepData.map((step, index) => {
         return (
           <Step key={index} completed={status[index]}>
-            <StepButton
+            <RouterStepButton
               color="inherit"
               onClick={() => handleChangeStep(index)}
+              to={step.path as never}
               sx={{
                 // Active completed steps are shown in primary so we don't lose our place.
                 "& .MuiStepLabel-iconContainer.Mui-active.Mui-completed": {
@@ -45,11 +42,18 @@ export const SetupStepper = (props: SetupStepperProps) => {
                 },
               }}
             >
-              {label}
-            </StepButton>
+              {step.label}
+            </RouterStepButton>
           </Step>
         );
       })}
     </Stepper>
   );
 };
+
+const stepData = [
+  { label: "Model", path: "/enigma/setup/model" },
+  { label: "Reflector & Rotors", path: "/enigma/setup/rotors" },
+  { label: "Ring Settings", path: "/enigma/setup/rings" },
+  { label: "Plugboard", path: "/enigma/setup/plugboard" },
+];

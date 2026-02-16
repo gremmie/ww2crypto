@@ -1,9 +1,11 @@
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import TabPanel from "@mui/lab/TabPanel";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import { Outlet, useLocation } from "@tanstack/react-router";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
+import { RouterButton } from "../../../../routerLinkComponents/routerButton.tsx";
 import {
   currentTabChanged,
   selectActiveSetupStep,
@@ -12,11 +14,6 @@ import {
   setupStepNames,
   setupStepReversed,
 } from "../../enigmaSlice.ts";
-
-import EnigmaModel from "./enigmaModel.tsx";
-import EnigmaPlugboard from "./enigmaPlugboard.tsx";
-import EnigmaRingSettings from "./enigmaRingSettings.tsx";
-import EnigmaRotors from "./enigmaRotors.tsx";
 import LoadConfigDialog from "./loadConfigDialog.tsx";
 import SaveConfigDialog from "./saveConfigDialog.tsx";
 import SetupCompleteAlert from "./setupCompleteAlert.tsx";
@@ -40,89 +37,97 @@ export default function EnigmaSetupTab() {
   const handleBack = () => {
     dispatch(setupStepReversed());
   };
+  const location = useLocation();
+
+  const nextPath = () => {
+    if (canJumpToOperate) {
+      return "/enigma/operate";
+    }
+    return toNextByLocation.get(location.pathname);
+  };
+
+  const backPath = () => {
+    return toBackByLocation.get(location.pathname);
+  };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Stack spacing={2}>
-        {isSetupComplete && (
+    <TabPanel value="setup">
+      <Box sx={{ width: "100%" }}>
+        <Stack spacing={2}>
+          {isSetupComplete && (
+            <Box display="flex" justifyContent="center">
+              <SetupCompleteAlert />
+            </Box>
+          )}
           <Box display="flex" justifyContent="center">
-            <SetupCompleteAlert />
+            <SetupName />
           </Box>
-        )}
-        <Box display="flex" justifyContent="center">
-          <SetupName />
-        </Box>
-        <SetupStepper steps={setupStepNames} />
-        <Box
-          sx={{
-            height: {
-              xs: "70vh",
-              sm: "auto",
-            },
-            overflowY: "auto",
-          }}
-        >
+          <SetupStepper />
           <Box
-            width="100%"
-            sx={{ pt: 2 }}
-            display="flex"
-            justifyContent="center"
+            sx={{
+              height: {
+                xs: "70vh",
+                sm: "auto",
+              },
+              overflowY: "auto",
+            }}
           >
-            <Box width="80%" display="flex" justifyContent="center">
-              {renderStep(activeStep)}
+            <Box
+              width="100%"
+              sx={{ pt: 2 }}
+              display="flex"
+              justifyContent="center"
+            >
+              <Box width="80%" display="flex" justifyContent="center">
+                <Outlet />
+              </Box>
+            </Box>
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={{ pt: 4 }}
+              justifyContent="space-evenly"
+            >
+              <LoadConfigDialog />
+              <SaveConfigDialog />
+            </Stack>
+            <Box display="flex" justifyContent="space-around" sx={{ pt: 2 }}>
+              <RouterButton
+                variant="text"
+                startIcon={<ChevronLeftIcon />}
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                to={backPath() as never}
+              >
+                Back
+              </RouterButton>
+              <RouterButton
+                variant={canJumpToOperate ? "contained" : "text"}
+                endIcon={<ChevronRightIcon />}
+                disabled={
+                  activeStep === setupStepNames.length - 1 && !isSetupComplete
+                }
+                onClick={handleNext}
+                to={nextPath() as never}
+              >
+                {canJumpToOperate ? "Operate" : "Next"}
+              </RouterButton>
             </Box>
           </Box>
-          <Stack
-            direction="row"
-            spacing={2}
-            sx={{ pt: 4 }}
-            justifyContent="space-evenly"
-          >
-            <LoadConfigDialog />
-            <SaveConfigDialog />
-          </Stack>
-          <Box display="flex" justifyContent="space-around" sx={{ pt: 2 }}>
-            <Button
-              variant="text"
-              startIcon={<ChevronLeftIcon />}
-              disabled={activeStep === 0}
-              onClick={handleBack}
-            >
-              Back
-            </Button>
-            <Button
-              variant={canJumpToOperate ? "contained" : "text"}
-              endIcon={<ChevronRightIcon />}
-              disabled={
-                activeStep === setupStepNames.length - 1 && !isSetupComplete
-              }
-              onClick={handleNext}
-            >
-              {canJumpToOperate ? "Operate" : "Next"}
-            </Button>
-          </Box>
-        </Box>
-      </Stack>
-    </Box>
+        </Stack>
+      </Box>
+    </TabPanel>
   );
 }
 
-function renderStep(step: number) {
-  switch (step) {
-    case 0: {
-      return <EnigmaModel />;
-    }
-    case 1: {
-      return <EnigmaRotors />;
-    }
-    case 2: {
-      return <EnigmaRingSettings />;
-    }
-    case 3: {
-      return <EnigmaPlugboard />;
-    }
-    default: {
-      return setupStepNames[step];
-    }
-  }
-}
+const toNextByLocation = new Map<string, string>([
+  ["/enigma/setup/model", "/enigma/setup/rotors"],
+  ["/enigma/setup/rotors", "/enigma/setup/rings"],
+  ["/enigma/setup/rings", "/enigma/setup/plugboard"],
+]);
+
+const toBackByLocation = new Map<string, string>([
+  ["/enigma/setup/rotors", "/enigma/setup/model"],
+  ["/enigma/setup/rings", "/enigma/setup/rotors"],
+  ["/enigma/setup/plugboard", "/enigma/setup/rings"],
+]);

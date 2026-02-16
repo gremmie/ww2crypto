@@ -1,18 +1,18 @@
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import KeyboardAltOutlinedIcon from "@mui/icons-material/KeyboardAltOutlined";
-import { ListItemButton, ListItemText } from "@mui/material";
+import { ListItemText } from "@mui/material";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import type { PageType } from "./pageType.ts";
+import { RouterListItemButton } from "../../routerLinkComponents/routerListItemButton.tsx";
+import { useLocation } from "@tanstack/react-router";
 
 interface DrawerItemProps {
-  page: PageType;
-  currentPage: PageType;
-  onChangePage: (page: PageType) => void;
+  page: "home" | "enigma" | "m209" | "purple" | "about";
+  onChangePage: () => void;
 }
 
-const drawerLabelsByPageType: Map<PageType, string> = new Map([
+const drawerLabelsByPage: Map<string, string> = new Map([
   ["home", "Home"],
   ["enigma", "Enigma"],
   ["m209", "M-209"],
@@ -20,12 +20,28 @@ const drawerLabelsByPageType: Map<PageType, string> = new Map([
   ["about", "About"],
 ]);
 
+const pathsByPage: Map<string, string> = new Map([
+  ["home", "/"],
+  ["enigma", "/enigma/about"],
+  ["m209", "/m209"],
+  ["purple", "/purple"],
+  ["about", "/about"],
+]);
+
 export const DrawerItem = (props: DrawerItemProps) => {
+  const currentPage = useLocation({
+    select: (location): string => {
+      if (location.pathname === "/") return "/";
+      return "/" + location.pathname.split("/")[1];
+    },
+  });
+
   return (
     <ListItem disablePadding>
-      <ListItemButton
-        selected={props.page === props.currentPage}
-        onClick={() => props.onChangePage(props.page)}
+      <RouterListItemButton
+        selected={props.page === currentPage}
+        onClick={() => props.onChangePage()}
+        to={pathsByPage.get(props.page) as never}
       >
         <ListItemIcon>
           {props.page === "home" && <HomeOutlinedIcon />}
@@ -34,8 +50,8 @@ export const DrawerItem = (props: DrawerItemProps) => {
           )}
           {props.page === "about" && <InfoOutlinedIcon />}
         </ListItemIcon>
-        <ListItemText primary={drawerLabelsByPageType.get(props.page)} />
-      </ListItemButton>
+        <ListItemText primary={drawerLabelsByPage.get(props.page)} />
+      </RouterListItemButton>
     </ListItem>
   );
 };

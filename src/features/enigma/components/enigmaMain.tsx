@@ -3,19 +3,17 @@ import KeyboardIcon from "@mui/icons-material/Keyboard";
 import SettingsIcon from "@mui/icons-material/Settings";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
 import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
+import { Outlet } from "@tanstack/react-router";
 import * as React from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks.ts";
+import { RouterTab } from "../../../routerLinkComponents/routerTab.tsx";
 import {
   currentTabChanged,
   selectCurrentTab,
   type TabType,
 } from "../enigmaSlice.ts";
-import { EnigmaOperateTab } from "./setup/enigmaOperateTab.tsx";
-import EnigmaSetupTab from "./setup/enigmaSetupTab.tsx";
 
 export default function EnigmaMain() {
   const dispatch = useAppDispatch();
@@ -34,35 +32,30 @@ export default function EnigmaMain() {
         <TabContext value={currentTab}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <TabList onChange={handleChange} aria-label="Enigma Tabs">
-              <Tab
+              <RouterTab
                 label="About"
                 value="about"
                 icon={<InfoOutlineIcon />}
                 iconPosition="start"
+                to="/enigma/about"
               />
-              <Tab
+              <RouterTab
                 label="Setup"
                 value="setup"
                 icon={<SettingsIcon />}
                 iconPosition="start"
+                to="/enigma/setup/model"
               />
-              <Tab
+              <RouterTab
                 label="Operate"
                 value="operate"
                 icon={<KeyboardIcon />}
                 iconPosition="start"
+                to="/enigma/operate"
               />
             </TabList>
           </Box>
-          <TabPanel value="about">
-            <div>Coming Soon</div>
-          </TabPanel>
-          <TabPanel value="setup">
-            <EnigmaSetupTab />
-          </TabPanel>
-          <TabPanel value="operate">
-            <EnigmaOperateTab />
-          </TabPanel>
+          <Outlet />
         </TabContext>
       </Box>
     </>

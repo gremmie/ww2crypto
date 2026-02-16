@@ -1,9 +1,9 @@
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import Box from "@mui/material/Box";
-import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useAppDispatch } from "../../../../app/hooks.ts";
+import { RouterLink } from "../../../../routerLinkComponents/routerLink.tsx";
 import { currentTabChanged } from "../../enigmaSlice.ts";
 
 export default function OperateEmptyView() {
@@ -25,14 +25,14 @@ export default function OperateEmptyView() {
         </Typography>
         <Typography variant="body1" component="span">
           Please finish{" "}
-          <Link
-            component="button"
+          <RouterLink
             variant="inherit"
             onClick={() => dispatch(currentTabChanged("setup"))}
             sx={{ verticalAlign: "baseline" }}
+            to="/enigma/setup/model"
           >
             setting up
-          </Link>{" "}
+          </RouterLink>{" "}
           the machine.
         </Typography>
       </Stack>

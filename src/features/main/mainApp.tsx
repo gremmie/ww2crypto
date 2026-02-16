@@ -4,22 +4,17 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { Outlet } from "@tanstack/react-router";
 import React from "react";
-import EnigmaMain from "../enigma/components/enigmaMain.tsx";
-import ComingSoon from "./comingSoon.tsx";
-import { HomePage } from "./homePage.tsx";
 import MainDrawer from "./mainDrawer.tsx";
-import type { PageType } from "./pageType.ts";
 
 export function MainApp() {
   const [isDrawerOpen, setDrawerOpen] = React.useState(false);
-  const [currentPage, setCurrentPage] = React.useState<PageType>("home");
 
   const toggleDrawer = () => {
     setDrawerOpen(!isDrawerOpen);
   };
-  const changePage = (page: PageType) => {
-    setCurrentPage(page);
+  const changePage = () => {
     setDrawerOpen(false);
   };
 
@@ -51,14 +46,9 @@ export function MainApp() {
           </Typography>
         </Toolbar>
       </AppBar>
-      {currentPage === "home" && <HomePage />}
-      {currentPage === "enigma" && <EnigmaMain />}
-      {currentPage === "m209" && <ComingSoon pageTitle="M-209" />}
-      {currentPage === "purple" && <ComingSoon pageTitle="PURPLE" />}
-      {currentPage === "about" && <ComingSoon pageTitle="About" />}
+      <Outlet />
       <MainDrawer
         isOpen={isDrawerOpen}
-        currentPage={currentPage}
         onClose={toggleDrawer}
         onChangePage={changePage}
       />
