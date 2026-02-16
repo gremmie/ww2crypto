@@ -6,6 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { RouterListItemButton } from "../../routerLinkComponents/routerListItemButton.tsx";
 import { useLocation } from "@tanstack/react-router";
+import type { TRoutes } from "../../routeTypes.ts";
 
 interface DrawerItemProps {
   page: "home" | "enigma" | "m209" | "purple" | "about";
@@ -41,7 +42,7 @@ export const DrawerItem = (props: DrawerItemProps) => {
       <RouterListItemButton
         selected={props.page === currentPage}
         onClick={() => props.onChangePage()}
-        to={pathsByPage.get(props.page) as never}
+        to={pathsByPage.get(props.page) as TRoutes}
       >
         <ListItemIcon>
           {props.page === "home" && <HomeOutlinedIcon />}

@@ -6,6 +6,7 @@ import Stack from "@mui/material/Stack";
 import { Outlet, useLocation } from "@tanstack/react-router";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import { RouterButton } from "../../../../routerLinkComponents/routerButton.tsx";
+import type { TRoutes } from "../../../../routeTypes.ts";
 import {
   currentTabChanged,
   selectActiveSetupStep,
@@ -43,11 +44,11 @@ export default function EnigmaSetupTab() {
     if (canJumpToOperate) {
       return "/enigma/operate";
     }
-    return toNextByLocation.get(location.pathname);
+    return toNextByLocation.get(location.pathname as TRoutes);
   };
 
   const backPath = () => {
-    return toBackByLocation.get(location.pathname);
+    return toBackByLocation.get(location.pathname as TRoutes);
   };
 
   return (
@@ -97,7 +98,7 @@ export default function EnigmaSetupTab() {
                 startIcon={<ChevronLeftIcon />}
                 disabled={activeStep === 0}
                 onClick={handleBack}
-                to={backPath() as never}
+                to={backPath()}
               >
                 Back
               </RouterButton>
@@ -108,7 +109,7 @@ export default function EnigmaSetupTab() {
                   activeStep === setupStepNames.length - 1 && !isSetupComplete
                 }
                 onClick={handleNext}
-                to={nextPath() as never}
+                to={nextPath()}
               >
                 {canJumpToOperate ? "Operate" : "Next"}
               </RouterButton>
@@ -120,13 +121,13 @@ export default function EnigmaSetupTab() {
   );
 }
 
-const toNextByLocation = new Map<string, string>([
+const toNextByLocation = new Map<TRoutes, TRoutes>([
   ["/enigma/setup/model", "/enigma/setup/rotors"],
   ["/enigma/setup/rotors", "/enigma/setup/rings"],
   ["/enigma/setup/rings", "/enigma/setup/plugboard"],
 ]);
 
-const toBackByLocation = new Map<string, string>([
+const toBackByLocation = new Map<TRoutes, TRoutes>([
   ["/enigma/setup/rotors", "/enigma/setup/model"],
   ["/enigma/setup/rings", "/enigma/setup/rotors"],
   ["/enigma/setup/plugboard", "/enigma/setup/rings"],

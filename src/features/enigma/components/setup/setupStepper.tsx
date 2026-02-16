@@ -3,6 +3,7 @@ import Stepper from "@mui/material/Stepper";
 
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import { RouterStepButton } from "../../../../routerLinkComponents/routerStepButton.tsx";
+import type { TRoutes } from "../../../../routeTypes.ts";
 import {
   selectActiveSetupStep,
   selectStepCompletionStatus,
@@ -51,7 +52,12 @@ export const SetupStepper = () => {
   );
 };
 
-const stepData = [
+interface StepData {
+  label: string;
+  path: TRoutes;
+}
+
+const stepData: StepData[] = [
   { label: "Model", path: "/enigma/setup/model" },
   { label: "Reflector & Rotors", path: "/enigma/setup/rotors" },
   { label: "Ring Settings", path: "/enigma/setup/rings" },
