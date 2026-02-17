@@ -2,12 +2,9 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useAppDispatch } from "../../../../app/hooks.ts";
 import { RouterLink } from "../../../../routerLinkComponents/routerLink.tsx";
-import { currentTabChanged } from "../../enigmaSlice.ts";
 
 export default function OperateEmptyView() {
-  const dispatch = useAppDispatch();
   return (
     <Box
       width="100%"
@@ -27,7 +24,6 @@ export default function OperateEmptyView() {
           Please finish{" "}
           <RouterLink
             variant="inherit"
-            onClick={() => dispatch(currentTabChanged("setup"))}
             sx={{ verticalAlign: "baseline" }}
             to="/enigma/setup/model"
           >

@@ -4,17 +4,10 @@ import TabPanel from "@mui/lab/TabPanel";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { Outlet, useLocation } from "@tanstack/react-router";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
+import { useAppSelector } from "../../../../app/hooks.ts";
 import { RouterButton } from "../../../../routerLinkComponents/routerButton.tsx";
 import type { TRoutes } from "../../../../routeTypes.ts";
-import {
-  currentTabChanged,
-  selectActiveSetupStep,
-  selectIsSetupComplete,
-  setupStepAdvanced,
-  setupStepNames,
-  setupStepReversed,
-} from "../../enigmaSlice.ts";
+import { selectIsSetupComplete } from "../../enigmaSlice.ts";
 import LoadConfigDialog from "./loadConfigDialog.tsx";
 import SaveConfigDialog from "./saveConfigDialog.tsx";
 import SetupCompleteAlert from "./setupCompleteAlert.tsx";
@@ -22,23 +15,12 @@ import SetupName from "./setupName.tsx";
 import { SetupStepper } from "./setupStepper.tsx";
 
 export default function EnigmaSetupTab() {
-  const dispatch = useAppDispatch();
-  const activeStep = useAppSelector(selectActiveSetupStep);
-  const isSetupComplete = useAppSelector(selectIsSetupComplete);
-  const canJumpToOperate = isSetupComplete && activeStep == 3;
-
-  const handleNext = () => {
-    if (canJumpToOperate) {
-      dispatch(currentTabChanged("operate"));
-    } else {
-      dispatch(setupStepAdvanced());
-    }
-  };
-
-  const handleBack = () => {
-    dispatch(setupStepReversed());
-  };
   const location = useLocation();
+  const currentPath = location.pathname as TRoutes;
+  const isFirstStep = currentPath === "/enigma/setup/model";
+  const isLastStep = currentPath === "/enigma/setup/plugboard";
+  const isSetupComplete = useAppSelector(selectIsSetupComplete);
+  const canJumpToOperate = isSetupComplete && isLastStep;
 
   const nextPath = () => {
     if (canJumpToOperate) {
@@ -96,8 +78,7 @@ export default function EnigmaSetupTab() {
               <RouterButton
                 variant="text"
                 startIcon={<ChevronLeftIcon />}
-                disabled={activeStep === 0}
-                onClick={handleBack}
+                disabled={isFirstStep}
                 to={backPath()}
               >
                 Back
@@ -105,10 +86,7 @@ export default function EnigmaSetupTab() {
               <RouterButton
                 variant={canJumpToOperate ? "contained" : "text"}
                 endIcon={<ChevronRightIcon />}
-                disabled={
-                  activeStep === setupStepNames.length - 1 && !isSetupComplete
-                }
-                onClick={handleNext}
+                disabled={isLastStep && !isSetupComplete}
                 to={nextPath()}
               >
                 {canJumpToOperate ? "Operate" : "Next"}

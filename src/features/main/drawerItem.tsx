@@ -21,7 +21,7 @@ const drawerLabelsByPage: Map<string, string> = new Map([
   ["about", "About"],
 ]);
 
-const pathsByPage: Map<string, string> = new Map([
+const pathsByPage: Map<string, TRoutes> = new Map([
   ["home", "/"],
   ["enigma", "/enigma/about"],
   ["m209", "/m209"],
@@ -32,8 +32,8 @@ const pathsByPage: Map<string, string> = new Map([
 export const DrawerItem = (props: DrawerItemProps) => {
   const currentPage = useLocation({
     select: (location): string => {
-      if (location.pathname === "/") return "/";
-      return "/" + location.pathname.split("/")[1];
+      if (location.pathname === "/") return "home";
+      return location.pathname.split("/")[1];
     },
   });
 
@@ -42,7 +42,7 @@ export const DrawerItem = (props: DrawerItemProps) => {
       <RouterListItemButton
         selected={props.page === currentPage}
         onClick={() => props.onChangePage()}
-        to={pathsByPage.get(props.page) as TRoutes}
+        to={pathsByPage.get(props.page)}
       >
         <ListItemIcon>
           {props.page === "home" && <HomeOutlinedIcon />}

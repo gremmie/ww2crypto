@@ -8,7 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "type-check": "tsc --p tsconfig.app.json --noEmit",
+    "check": "pnpm run type-check && pnpm run lint"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

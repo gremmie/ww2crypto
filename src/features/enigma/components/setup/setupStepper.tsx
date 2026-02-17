@@ -1,23 +1,17 @@
 import Step from "@mui/material/Step";
 import Stepper from "@mui/material/Stepper";
+import { useLocation } from "@tanstack/react-router";
 
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
+import { useAppSelector } from "../../../../app/hooks.ts";
 import { RouterStepButton } from "../../../../routerLinkComponents/routerStepButton.tsx";
 import type { TRoutes } from "../../../../routeTypes.ts";
-import {
-  selectActiveSetupStep,
-  selectStepCompletionStatus,
-  setupStepChanged,
-} from "../../enigmaSlice.ts";
+import { selectStepCompletionStatus } from "../../enigmaSlice.ts";
 
 export const SetupStepper = () => {
-  const dispatch = useAppDispatch();
-  const activeStep = useAppSelector(selectActiveSetupStep);
   const status = useAppSelector(selectStepCompletionStatus);
-
-  const handleChangeStep = (newStep: number) => {
-    dispatch(setupStepChanged(newStep));
-  };
+  const location = useLocation();
+  const currentPath = location.pathname as TRoutes;
+  const activeStep = stepData.findIndex((value) => value.path === currentPath);
 
   return (
     <Stepper nonLinear activeStep={activeStep} alternativeLabel>
@@ -26,8 +20,7 @@ export const SetupStepper = () => {
           <Step key={index} completed={status[index]}>
             <RouterStepButton
               color="inherit"
-              onClick={() => handleChangeStep(index)}
-              to={step.path as never}
+              to={step.path}
               sx={{
                 // Active completed steps are shown in primary so we don't lose our place.
                 "& .MuiStepLabel-iconContainer.Mui-active.Mui-completed": {

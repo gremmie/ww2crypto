@@ -17,8 +17,6 @@ import Rotor from "./machine/rotor.ts";
 import rotorFactory from "./machine/rotorFactory.ts";
 import { isValidPlugboardString, normalizePlugboardString } from "./utils.ts";
 
-export type TabType = "about" | "setup" | "operate";
-
 export type ReflectorType = "B" | "C" | "B-Thin" | "C-Thin" | null;
 
 export type NotationType = "letter" | "number";
@@ -33,8 +31,6 @@ const configSelectors = configAdapter.getSelectors<RootState>(
 );
 
 export interface EnigmaState {
-  currentTab: TabType;
-  activeSetupStep: number;
   numberOfRotors: number;
   reflector: ReflectorType;
   rotorTypes: string[];
@@ -56,8 +52,6 @@ export interface EnigmaState {
 
 // Define the initial state using that type
 const initialState: EnigmaState = {
-  currentTab: "about",
-  activeSetupStep: 0,
   numberOfRotors: 3,
   reflector: null,
   rotorTypes: new Array(3).fill(null),
@@ -96,22 +90,6 @@ export const enigmaSlice = createSlice({
   name: "enigma",
   initialState,
   reducers: {
-    currentTabChanged: (state, action: PayloadAction<TabType>) => {
-      state.currentTab = action.payload;
-    },
-    setupStepChanged: (state, action: PayloadAction<number>) => {
-      state.activeSetupStep = action.payload;
-    },
-    setupStepAdvanced: (state) => {
-      if (state.activeSetupStep < setupStepNames.length - 1) {
-        state.activeSetupStep = state.activeSetupStep + 1;
-      }
-    },
-    setupStepReversed: (state) => {
-      if (state.activeSetupStep > 0) {
-        state.activeSetupStep = state.activeSetupStep - 1;
-      }
-    },
     modelChanged: (state, action: PayloadAction<number>) => {
       state.numberOfRotors = action.payload;
       state.reflector = null;
@@ -329,10 +307,6 @@ export const enigmaSlice = createSlice({
 
 // Actions
 export const {
-  currentTabChanged,
-  setupStepChanged,
-  setupStepAdvanced,
-  setupStepReversed,
   modelChanged,
   reflectorChanged,
   rotorTypeChanged,
@@ -359,11 +333,6 @@ export const {
 } = enigmaSlice.actions;
 
 // Selectors
-
-export const selectCurrentTab = (state: RootState) => state.enigma.currentTab;
-
-export const selectActiveSetupStep = (state: RootState) =>
-  state.enigma.activeSetupStep;
 
 export const selectStep1Complete = (state: RootState) =>
   state.enigma.numberOfRotors !== null;
@@ -503,13 +472,6 @@ export const selectIsOutputGrouped = (state: RootState) =>
   state.enigma.isOutputGrouped;
 
 export default enigmaSlice.reducer;
-
-export const setupStepNames = [
-  "Model",
-  "Reflector & Rotors",
-  "Ring Settings",
-  "Plugboard",
-];
 
 const isConnection = (s: string) => /[a-zA-Z]{2}/.test(s);
 

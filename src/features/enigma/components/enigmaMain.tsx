@@ -5,23 +5,14 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Outlet } from "@tanstack/react-router";
-import * as React from "react";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks.ts";
+import { Outlet, useLocation } from "@tanstack/react-router";
 import { RouterTab } from "../../../routerLinkComponents/routerTab.tsx";
-import {
-  currentTabChanged,
-  selectCurrentTab,
-  type TabType,
-} from "../enigmaSlice.ts";
+import type { TRoutes } from "../../../routeTypes.ts";
 
 export default function EnigmaMain() {
-  const dispatch = useAppDispatch();
-  const currentTab = useAppSelector(selectCurrentTab);
-
-  const handleChange = (_event: React.SyntheticEvent, newValue: TabType) => {
-    dispatch(currentTabChanged(newValue));
-  };
+  const location = useLocation();
+  const currentPath = location.pathname as TRoutes;
+  const currentTab = currentPath.split("/")[2];
 
   return (
     <>
@@ -31,7 +22,7 @@ export default function EnigmaMain() {
       <Box sx={{ width: "100%", typography: "body1" }}>
         <TabContext value={currentTab}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList onChange={handleChange} aria-label="Enigma Tabs">
+            <TabList aria-label="Enigma Tabs">
               <RouterTab
                 label="About"
                 value="about"
