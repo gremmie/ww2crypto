@@ -12,6 +12,7 @@ import type { TRoutes } from "../../../routeTypes.ts";
 export default function EnigmaMain() {
   const location = useLocation();
   const currentPath = location.pathname as TRoutes;
+  if (!currentPath.startsWith("/enigma/")) return null;
   const currentTab = currentPath.split("/")[2];
 
   return (
