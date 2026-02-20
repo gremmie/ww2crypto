@@ -1,4 +1,4 @@
-import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { CardActionArea, CardHeader, Tooltip } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -53,7 +53,9 @@ export default function SetupCard(props: SetupCardProps) {
             sx={{ ml: "auto" }}
             onClick={() => props.deleteCallback(props.config)}
           >
-            <DeleteIcon />
+            <DeleteOutlineOutlinedIcon
+              sx={{ color: (theme) => theme.palette.error.main }}
+            />
           </IconButton>
         </Tooltip>
       </CardActions>
