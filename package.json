@@ -10,7 +10,9 @@
     "preview": "vite preview",
     "test": "vitest",
     "type-check": "tsc --p tsconfig.app.json --noEmit",
-    "check": "pnpm run type-check && pnpm run lint"
+    "check": "pnpm run type-check && pnpm run lint",
+    "e2e": "pnpm exec playwright test",
+    "testgen": "pnpm exec playwright codegen localhost:5173"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
