@@ -1,7 +1,7 @@
-/// <reference types="vitest/config" />
 import tanstackRouter from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import { configDefaults } from "vitest/config";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -16,5 +16,6 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: "./test/setup.ts",
+    exclude: [...configDefaults.exclude, "e2e/**/*"],
   },
 });
