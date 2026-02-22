@@ -278,5 +278,65 @@ describe("EnigmaMachine", () => {
 
       expect(plaintext).toEqual(truthData);
     });
+
+    describe("Compatibility with 3-rotor models", () => {
+      test("Beta rotor", () => {
+        const reflectorB = reflectorFactory("B")!;
+        const threeRotors = [
+          rotorFactory("III", "Q")!,
+          rotorFactory("I", "B")!,
+          rotorFactory("V", "F")!,
+        ];
+        const plugboard = new Plugboard("CM DT EH FQ IU JP KV LS NX OR");
+        const m3 = new EnigmaMachine(reflectorB, threeRotors, plugboard);
+
+        const plaintext =
+          "LETSGETPIZZATONIGHTXIWILLARRIVEATNINETEENHUNDREDHOURSXORDERTHEUSUAL";
+
+        m3.setDisplay("BGN");
+        const ciphertext = m3.processText(plaintext);
+
+        const reflectorBThin = reflectorFactory("B-Thin")!;
+        const fourRoters = [
+          rotorFactory("Beta", "A")!,
+          rotorFactory("III", "Q")!,
+          rotorFactory("I", "B")!,
+          rotorFactory("V", "F")!,
+        ];
+        const m4 = new EnigmaMachine(reflectorBThin, fourRoters, plugboard);
+        m4.setDisplay("ABGN");
+
+        expect(plaintext).toEqual(m4.processText(ciphertext));
+      });
+
+      test("Gamma rotor", () => {
+        const reflectorC = reflectorFactory("C")!;
+        const threeRotors = [
+          rotorFactory("VI", "T")!,
+          rotorFactory("VII", "I")!,
+          rotorFactory("I", "R")!,
+        ];
+        const plugboard = new Plugboard("AG BI DH EK FZ JS LM OR PV QW");
+        const m3 = new EnigmaMachine(reflectorC, threeRotors, plugboard);
+
+        const plaintext =
+          "LETSGETPIZZATONIGHTXIWILLARRIVEATNINETEENHUNDREDHOURSXORDERTHEUSUAL";
+
+        m3.setDisplay("BGN");
+        const ciphertext = m3.processText(plaintext);
+
+        const reflectorCThin = reflectorFactory("C-Thin")!;
+        const fourRoters = [
+          rotorFactory("Gamma", "A")!,
+          rotorFactory("VI", "T")!,
+          rotorFactory("VII", "I")!,
+          rotorFactory("I", "R")!,
+        ];
+        const m4 = new EnigmaMachine(reflectorCThin, fourRoters, plugboard);
+        m4.setDisplay("ABGN");
+
+        expect(plaintext).toEqual(m4.processText(ciphertext));
+      });
+    });
   });
 });
