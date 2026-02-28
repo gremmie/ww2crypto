@@ -1,6 +1,8 @@
 import TabPanel from "@mui/lab/TabPanel";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import { ExternalLinkListItem } from "../../common/components/externalLinkListItem.tsx";
+import { links } from "../../common/links.ts";
 
 export default function EnigmaAbout() {
   return (
@@ -224,7 +226,7 @@ export default function EnigmaAbout() {
           </Typography>
           <Typography variant="body1" component="li" gutterBottom>
             Now we can finally type the message we want to send. For the sake of
-            this example, type the following into the input box.
+            this example, type the following into the input box:
             "PLEASEORDERTHEPIZZA".
           </Typography>
           <Typography variant="body1" component="li" gutterBottom>
@@ -277,12 +279,19 @@ export default function EnigmaAbout() {
           </Typography>
         </ol>
         <Typography variant="h4" sx={{ mt: 3 }} gutterBottom>
-          References
+          Links
         </Typography>
         <Typography gutterBottom>
-          The following references were used in the creation of our Enigma
-          simulation.
+          Here are some resources that I found extremely useful to understanding
+          the Enigma machine.
         </Typography>
+        <ul>
+          {links
+            .filter((link) => link.tags.includes("enigma"))
+            .map((link) => (
+              <ExternalLinkListItem link={link} />
+            ))}
+        </ul>
       </Paper>
     </TabPanel>
   );
