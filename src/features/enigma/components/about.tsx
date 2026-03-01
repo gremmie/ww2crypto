@@ -140,7 +140,11 @@ export default function EnigmaAbout() {
           letters A-Z, so the input box only accepts letter input. For
           convenience lower case letters are accepted and translated to upper
           case. You can also paste text from your clipboard, but please note
-          that non-letter characters in your text will be ignored.
+          that non-letter characters in your text will be ignored. Numbers will
+          have to be spelled out. As there are no punctuation keys, operators
+          used various conventions like using "X" as a space or stop character,
+          and "YY" as a comma. It was also common to omit spaces and
+          punctuation.
         </Typography>
         <Typography variant="body1" gutterBottom>
           As you type, the lights on the lampboard will "light" up, indicating
@@ -170,7 +174,10 @@ export default function EnigmaAbout() {
         <Typography variant="body1" gutterBottom>
           This example walks you through setting up your virtual Enigma machine
           and preparing your first message, based upon an actual procedure used
-          by the German military.
+          by the German military. Note that this is not the only procedure one
+          could use, actual procedures were more complicated. See the references
+          below for more information. The steps shown here are sufficient to get
+          you started trading messages with friends.
         </Typography>
         <Typography variant="h6" sx={{ mt: 3 }} gutterBottom>
           Setup
@@ -215,10 +222,12 @@ export default function EnigmaAbout() {
             We now encrypt our message key by typing "RAX" into the "Input" box.
             If you've setup your machine correctly, you should see "HUQ" in the
             output box. This is your encrypted message key that will be sent
-            "over the air" to your recipient.
+            "over the air" to your recipient. Write down or remember "HUQ" for
+            later.
           </Typography>
           <Typography variant="body1" component="li" gutterBottom>
-            Now reset your rotor positions to your message key of "RAX".
+            Now reset your rotor positions to your unencrypted message key of
+            "RAX".
           </Typography>
           <Typography variant="body1" component="li" gutterBottom>
             Clear your input and output boxes by clicking the "Clear" buttons
