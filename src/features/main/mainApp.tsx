@@ -34,12 +34,22 @@ export function MainApp() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{
+              flexGrow: 1,
+              fontFamily: '"Special Elite", cursive',
+              fontWeight: 400,
+            }}
+          >
             ww2crypto.online
             <Typography
               variant="h6"
               component="span"
-              sx={{ display: { xs: "none", md: "inline" } }}
+              sx={{
+                display: { xs: "none", md: "inline" },
+              }}
             >
               {siteTagLine}
             </Typography>

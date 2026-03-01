@@ -8,7 +8,11 @@ import { links } from "../common/links.ts";
 export function AboutPage() {
   return (
     <Paper elevation={2} sx={{ mt: 3, ml: 3, p: 3, maxWidth: 950 }}>
-      <Typography variant="h4" gutterBottom>
+      <Typography
+        variant="h4"
+        sx={{ fontFamily: '"Special Elite", cursive', fontWeight: 400 }}
+        gutterBottom
+      >
         About
       </Typography>
       <Typography gutterBottom>
@@ -29,7 +33,11 @@ export function AboutPage() {
         Python code to Typescript and finally create browser-based simulations.
         Thus <i>ww2crypto.online</i> was born!
       </Typography>
-      <Typography variant="h5" sx={{ mt: 2 }} gutterBottom>
+      <Typography
+        variant="h5"
+        sx={{ fontFamily: '"Special Elite", cursive', fontWeight: 400, mt: 3 }}
+        gutterBottom
+      >
         Contact
       </Typography>
       <Typography gutterBottom>
@@ -43,7 +51,11 @@ export function AboutPage() {
         . In particular I would love to hear what brought you to the site and
         what you are using it for.
       </Typography>
-      <Typography variant="h5" sx={{ mt: 2 }} gutterBottom>
+      <Typography
+        variant="h5"
+        sx={{ fontFamily: '"Special Elite", cursive', fontWeight: 400, mt: 3 }}
+        gutterBottom
+      >
         Source Code
       </Typography>
       <Typography gutterBottom>
@@ -51,7 +63,11 @@ export function AboutPage() {
         <ExternalLink id="ww2crypto-github" />. The source code for this site
         lives there, released under an MIT license.
       </Typography>
-      <Typography variant="h5" sx={{ mt: 2 }} gutterBottom>
+      <Typography
+        variant="h5"
+        sx={{ fontFamily: '"Special Elite", cursive', fontWeight: 400, mt: 3 }}
+        gutterBottom
+      >
         Colophon
       </Typography>
       <Typography gutterBottom>

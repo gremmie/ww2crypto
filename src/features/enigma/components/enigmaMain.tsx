@@ -17,7 +17,17 @@ export default function EnigmaMain() {
 
   return (
     <>
-      <Typography variant="h4" gutterBottom sx={{ mt: 2, ml: 2 }}>
+      <Typography
+        variant="h4"
+        component="h3"
+        gutterBottom
+        sx={{
+          fontFamily: '"Special Elite", cursive',
+          fontWeight: 400,
+          mt: 2,
+          ml: 2,
+        }}
+      >
         Enigma
       </Typography>
       <Box sx={{ width: "100%", typography: "body1" }}>

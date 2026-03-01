@@ -5,7 +5,11 @@ import { RouterLink } from "../../routerLinkComponents/routerLink.tsx";
 export function HomePage() {
   return (
     <Paper elevation={2} sx={{ mt: 3, ml: 3, p: 3, maxWidth: 950 }}>
-      <Typography variant="h4" gutterBottom>
+      <Typography
+        variant="h4"
+        sx={{ fontFamily: '"Special Elite", cursive', fontWeight: 400 }}
+        gutterBottom
+      >
         ww2crypto.online
       </Typography>
       <Typography variant="body1" component="p" gutterBottom>
@@ -27,7 +31,11 @@ export function HomePage() {
         We hope this project sparks your interest in cryptology and the history
         of these cipher machines!
       </Typography>
-      <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
+      <Typography
+        variant="h5"
+        sx={{ fontFamily: '"Special Elite", cursive', fontWeight: 400, mt: 4 }}
+        gutterBottom
+      >
         News
       </Typography>
       <ul>

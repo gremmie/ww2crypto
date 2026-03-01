@@ -6,7 +6,11 @@ import { links } from "../common/links.ts";
 export function LinksPage() {
   return (
     <Paper elevation={2} sx={{ mt: 3, ml: 3, p: 3, maxWidth: 950 }}>
-      <Typography variant="h4" gutterBottom>
+      <Typography
+        variant="h4"
+        sx={{ fontFamily: '"Special Elite", cursive', fontWeight: 400 }}
+        gutterBottom
+      >
         Links
       </Typography>
       <Typography gutterBottom>

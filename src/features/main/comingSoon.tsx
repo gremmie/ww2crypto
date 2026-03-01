@@ -10,7 +10,16 @@ interface ComingSoonProps {
 export default function ComingSoon(props: ComingSoonProps) {
   return (
     <>
-      <Typography variant="h4" gutterBottom sx={{ mt: 2, ml: 2 }}>
+      <Typography
+        variant="h4"
+        sx={{
+          mt: 2,
+          ml: 2,
+          fontFamily: '"Special Elite", cursive',
+          fontWeight: 400,
+        }}
+        gutterBottom
+      >
         {props.pageTitle}
       </Typography>
       <Box

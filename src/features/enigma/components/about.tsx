@@ -8,7 +8,11 @@ export default function EnigmaAbout() {
   return (
     <TabPanel value="about">
       <Paper elevation={2} sx={{ p: 3, maxWidth: 950 }}>
-        <Typography variant="h3" gutterBottom>
+        <Typography
+          variant="h3"
+          sx={{ fontFamily: '"Special Elite", cursive', fontWeight: 400 }}
+          gutterBottom
+        >
           The Enigma Cipher Machine
         </Typography>
         <Typography variant="body1">
@@ -40,7 +44,15 @@ export default function EnigmaAbout() {
           the remaining three rotating rotors were chosen from the same set of
           eight used by the M3.
         </Typography>
-        <Typography variant="h4" sx={{ mt: 3 }} gutterBottom>
+        <Typography
+          variant="h4"
+          sx={{
+            fontFamily: '"Special Elite", cursive',
+            fontWeight: 400,
+            mt: 3,
+          }}
+          gutterBottom
+        >
           Setting up the Enigma
         </Typography>
         <Typography variant="body1">
@@ -104,7 +116,15 @@ export default function EnigmaAbout() {
           For our simulation, setup takes place on the "Setup" tab, where we
           walk you through the steps of configuring the machine.
         </Typography>
-        <Typography variant="h5" sx={{ mt: 3 }} gutterBottom>
+        <Typography
+          variant="h5"
+          sx={{
+            fontFamily: '"Special Elite", cursive',
+            fontWeight: 400,
+            mt: 3,
+          }}
+          gutterBottom
+        >
           Saving your Settings
         </Typography>
         <Typography variant="body1" gutterBottom>
@@ -121,7 +141,15 @@ export default function EnigmaAbout() {
           can also clear your browser's local storage to delete all saved
           settings at once.
         </Typography>
-        <Typography variant="h4" sx={{ mt: 3 }} gutterBottom>
+        <Typography
+          variant="h4"
+          sx={{
+            fontFamily: '"Special Elite", cursive',
+            fontWeight: 400,
+            mt: 3,
+          }}
+          gutterBottom
+        >
           Operating the Enigma
         </Typography>
         <Typography variant="body1" gutterBottom>
@@ -168,7 +196,15 @@ export default function EnigmaAbout() {
           We hope you enjoy encrypting and decrypting messages using our Enigma
           simulator!
         </Typography>
-        <Typography variant="h5" sx={{ mt: 3 }} gutterBottom>
+        <Typography
+          variant="h5"
+          sx={{
+            fontFamily: '"Special Elite", cursive',
+            fontWeight: 400,
+            mt: 3,
+          }}
+          gutterBottom
+        >
           Example
         </Typography>
         <Typography variant="body1" gutterBottom>
@@ -179,7 +215,15 @@ export default function EnigmaAbout() {
           below for more information. The steps shown here are sufficient to get
           you started trading messages with friends.
         </Typography>
-        <Typography variant="h6" sx={{ mt: 3 }} gutterBottom>
+        <Typography
+          variant="h6"
+          sx={{
+            fontFamily: '"Special Elite", cursive',
+            fontWeight: 400,
+            mt: 3,
+          }}
+          gutterBottom
+        >
           Setup
         </Typography>
         <ol>
@@ -204,7 +248,11 @@ export default function EnigmaAbout() {
             signal for "A" and "X", "B", and "I", etc.
           </Typography>
         </ol>
-        <Typography variant="h6" sx={{ mt: 3 }} gutterBottom>
+        <Typography
+          variant="h6"
+          sx={{ fontFamily: '"Special Elite", cursive', fontWeight: 400 }}
+          gutterBottom
+        >
           Encrypting your first message
         </Typography>
         <ol>
@@ -250,7 +298,15 @@ export default function EnigmaAbout() {
             "ESGHUQYKHXCMEDSZDRYFREYMO".
           </Typography>
         </ol>
-        <Typography variant="h6" sx={{ mt: 3 }} gutterBottom>
+        <Typography
+          variant="h6"
+          sx={{
+            fontFamily: '"Special Elite", cursive',
+            fontWeight: 400,
+            mt: 3,
+          }}
+          gutterBottom
+        >
           Decrypting your first message
         </Typography>
         <ol>
@@ -287,7 +343,15 @@ export default function EnigmaAbout() {
             "PLEASEORDERTHEPIZZA"!
           </Typography>
         </ol>
-        <Typography variant="h4" sx={{ mt: 3 }} gutterBottom>
+        <Typography
+          variant="h4"
+          sx={{
+            fontFamily: '"Special Elite", cursive',
+            fontWeight: 400,
+            mt: 3,
+          }}
+          gutterBottom
+        >
           Links
         </Typography>
         <Typography gutterBottom>

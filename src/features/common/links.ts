@@ -167,4 +167,11 @@ export const links: LinkInfo[] = [
     description: "For integration tests",
     tags: ["colophon"],
   },
+  {
+    id: "special-elite",
+    name: "Special Elite Font",
+    url: "https://fonts.google.com/specimen/Special+Elite",
+    description: "Vintage typewriter font",
+    tags: ["colophon"],
+  },
 ];
