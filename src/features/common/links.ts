@@ -126,9 +126,9 @@ export const links: LinkInfo[] = [
     tags: ["colophon"],
   },
   {
-    id: "mui",
+    id: "material",
     name: "Material UI",
-    url: "https://mui.com/",
+    url: "https://mui.com/material-ui/",
     description: "UI elements and components",
     tags: ["colophon"],
   },
