@@ -6,6 +6,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Outlet } from "@tanstack/react-router";
 import React from "react";
+import { CopyrightTag } from "../../copyrightTag.tsx";
 import MainDrawer from "./mainDrawer.tsx";
 
 export function MainApp() {
@@ -62,6 +63,9 @@ export function MainApp() {
         onClose={toggleDrawer}
         onChangePage={changePage}
       />
+      <Box sx={{ m: 3 }}>
+        <CopyrightTag />
+      </Box>
     </Box>
   );
 }

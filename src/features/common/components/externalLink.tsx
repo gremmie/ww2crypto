@@ -26,7 +26,7 @@ export default function ExternalLink(props: ExternalLinkProps) {
         target="_blank"
         rel="noopener"
         variant="inherit"
-        sx={{ verticalAlign: "baseline" }}
+        sx={{ verticalAlign: "center" }}
       >
         {name}
         {showArrow && <ArrowOutwardIcon fontSize="inherit" sx={{ mx: 0.5 }} />}
