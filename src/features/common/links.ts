@@ -47,4 +47,47 @@ export const links: LinkInfo[] = [
       "Watch this first if you are brand new to the Enigma machine.",
     tags: ["enigma"],
   },
+  {
+    id: "py-enigma",
+    name: "Py-Enigma",
+    url: "https://github.com/gremmie/enigma",
+    description:
+      "A historically accurate Enigma Machine library written in Python 3. " +
+      "Contains library code and a command-line application. Created by the author of this site.",
+    tags: ["misc"],
+  },
+  {
+    id: "m209",
+    name: "M-209",
+    url: "https://github.com/gremmie/m209",
+    description:
+      "A historically accurate M-209 library written in Python 3. " +
+      "Contains library code and a command-line application. Created by the author of this site.",
+    tags: ["misc"],
+  },
+  {
+    id: "purple",
+    name: "PURPLE",
+    url: "https://github.com/gremmie/purple",
+    description:
+      "A historically accurate PURPLE library written in Python 3. " +
+      "Contains library code and a command-line application. Created by the author of this site.",
+    tags: ["misc"],
+  },
+  {
+    id: "pallocks-enigma",
+    name: "Enigma simulation in Javascript/HTML",
+    url: "https://people.physik.hu-berlin.de/~palloks/js/enigma/index_en.html",
+    description:
+      "Daniel Pallocks' browser-based Enigma simulation. This one simulates a much wider variety of Enigma " +
+      "models.",
+    tags: ["misc"],
+  },
+  {
+    id: "crypto-collectors",
+    name: "Crypto Collectors Mailing List",
+    url: "https://groups.io/g/cryptocollectors/",
+    description: "Mailing list for collectors of vintage crypto equipment.",
+    tags: ["misc"],
+  },
 ];

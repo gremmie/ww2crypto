@@ -1,15 +1,16 @@
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import KeyboardAltOutlinedIcon from "@mui/icons-material/KeyboardAltOutlined";
+import LinkIcon from "@mui/icons-material/Link";
 import { ListItemText } from "@mui/material";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import { RouterListItemButton } from "../../routerLinkComponents/routerListItemButton.tsx";
 import { useLocation } from "@tanstack/react-router";
+import { RouterListItemButton } from "../../routerLinkComponents/routerListItemButton.tsx";
 import type { TRoutes } from "../../routeTypes.ts";
 
 interface DrawerItemProps {
-  page: "home" | "enigma" | "m209" | "purple" | "about";
+  page: "home" | "enigma" | "m209" | "purple" | "links" | "about";
   onChangePage: () => void;
 }
 
@@ -18,6 +19,7 @@ const drawerLabelsByPage: Map<string, string> = new Map([
   ["enigma", "Enigma"],
   ["m209", "M-209"],
   ["purple", "PURPLE"],
+  ["links", "Links"],
   ["about", "About"],
 ]);
 
@@ -26,6 +28,7 @@ const pathsByPage: Map<string, TRoutes> = new Map([
   ["enigma", "/enigma/about"],
   ["m209", "/m209"],
   ["purple", "/purple"],
+  ["links", "/links"],
   ["about", "/about"],
 ]);
 
@@ -36,6 +39,10 @@ export const DrawerItem = (props: DrawerItemProps) => {
       return location.pathname.split("/")[1];
     },
   });
+  const useHomeIcon = props.page === "home";
+  const useLinkIcon = props.page === "links";
+  const useInfoIcon = props.page === "about";
+  const useKeyboardIcon = !useHomeIcon && !useLinkIcon && !useInfoIcon;
 
   return (
     <ListItem disablePadding>
@@ -45,11 +52,10 @@ export const DrawerItem = (props: DrawerItemProps) => {
         to={pathsByPage.get(props.page)}
       >
         <ListItemIcon>
-          {props.page === "home" && <HomeOutlinedIcon />}
-          {props.page !== "home" && props.page !== "about" && (
-            <KeyboardAltOutlinedIcon />
-          )}
-          {props.page === "about" && <InfoOutlinedIcon />}
+          {useHomeIcon && <HomeOutlinedIcon />}
+          {useKeyboardIcon && <KeyboardAltOutlinedIcon />}
+          {useLinkIcon && <LinkIcon />}
+          {useInfoIcon && <InfoOutlinedIcon />}
         </ListItemIcon>
         <ListItemText primary={drawerLabelsByPage.get(props.page)} />
       </RouterListItemButton>

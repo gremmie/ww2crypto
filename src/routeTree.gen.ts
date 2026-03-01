@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PurpleRouteImport } from './routes/purple'
 import { Route as M209RouteImport } from './routes/m209'
+import { Route as LinksRouteImport } from './routes/links'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as EnigmaRouteRouteImport } from './routes/enigma/route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -30,6 +31,11 @@ const PurpleRoute = PurpleRouteImport.update({
 const M209Route = M209RouteImport.update({
   id: '/m209',
   path: '/m209',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LinksRoute = LinksRouteImport.update({
+  id: '/links',
+  path: '/links',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/enigma': typeof EnigmaRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/links': typeof LinksRoute
   '/m209': typeof M209Route
   '/purple': typeof PurpleRoute
   '/enigma/setup': typeof EnigmaSetupRouteRouteWithChildren
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/enigma': typeof EnigmaRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/links': typeof LinksRoute
   '/m209': typeof M209Route
   '/purple': typeof PurpleRoute
   '/enigma/setup': typeof EnigmaSetupRouteRouteWithChildren
@@ -116,6 +124,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/enigma': typeof EnigmaRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/links': typeof LinksRoute
   '/m209': typeof M209Route
   '/purple': typeof PurpleRoute
   '/enigma/setup': typeof EnigmaSetupRouteRouteWithChildren
@@ -132,6 +141,7 @@ export interface FileRouteTypes {
     | '/'
     | '/enigma'
     | '/about'
+    | '/links'
     | '/m209'
     | '/purple'
     | '/enigma/setup'
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/'
     | '/enigma'
     | '/about'
+    | '/links'
     | '/m209'
     | '/purple'
     | '/enigma/setup'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/'
     | '/enigma'
     | '/about'
+    | '/links'
     | '/m209'
     | '/purple'
     | '/enigma/setup'
@@ -175,6 +187,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   EnigmaRouteRoute: typeof EnigmaRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
+  LinksRoute: typeof LinksRoute
   M209Route: typeof M209Route
   PurpleRoute: typeof PurpleRoute
 }
@@ -193,6 +206,13 @@ declare module '@tanstack/react-router' {
       path: '/m209'
       fullPath: '/m209'
       preLoaderRoute: typeof M209RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/links': {
+      id: '/links'
+      path: '/links'
+      fullPath: '/links'
+      preLoaderRoute: typeof LinksRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -305,6 +325,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   EnigmaRouteRoute: EnigmaRouteRouteWithChildren,
   AboutRoute: AboutRoute,
+  LinksRoute: LinksRoute,
   M209Route: M209Route,
   PurpleRoute: PurpleRoute,
 }

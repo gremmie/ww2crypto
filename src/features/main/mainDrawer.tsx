@@ -21,6 +21,7 @@ export default function MainDrawer(props: MainDrawerProps) {
           <DrawerItem page="m209" onChangePage={props.onChangePage} />
           <DrawerItem page="purple" onChangePage={props.onChangePage} />
           <Divider />
+          <DrawerItem page="links" onChangePage={props.onChangePage} />
           <DrawerItem page="about" onChangePage={props.onChangePage} />
         </List>
       </Box>
