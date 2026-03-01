@@ -15,9 +15,11 @@ export function LinksPage() {
         tab.
       </Typography>
       <ul>
-        {links.map((link) => (
-          <ExternalLinkListItem link={link} />
-        ))}
+        {links
+          .filter((link) => link.tags.includes("all"))
+          .map((link) => (
+            <ExternalLinkListItem link={link} />
+          ))}
       </ul>
     </Paper>
   );

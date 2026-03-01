@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import ComingSoon from "../features/main/comingSoon.tsx";
+import { AboutPage } from "../features/main/aboutPage.tsx";
 
 export const Route = createFileRoute("/about")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  return <ComingSoon pageTitle="About" />;
+  return <AboutPage />;
 }
