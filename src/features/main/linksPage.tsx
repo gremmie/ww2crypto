@@ -22,7 +22,7 @@ export function LinksPage() {
         {links
           .filter((link) => link.tags.includes("all"))
           .map((link) => (
-            <ExternalLinkListItem link={link} />
+            <ExternalLinkListItem key={link.id} link={link} />
           ))}
       </ul>
     </Paper>

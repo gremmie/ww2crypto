@@ -1,3 +1,4 @@
+import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { RouterLink } from "../../routerLinkComponents/routerLink.tsx";
@@ -60,9 +61,32 @@ export function AboutPage() {
       </Typography>
       <Typography gutterBottom>
         Development of this site takes place on the{" "}
-        <ExternalLink id="ww2crypto-github" />. The source code for this site
-        lives there, released under an MIT license.
+        <ExternalLink id="ww2crypto-github" />.
       </Typography>
+      <Typography
+        variant="h5"
+        sx={{ fontFamily: '"Special Elite", cursive', fontWeight: 400, mt: 3 }}
+        gutterBottom
+      >
+        Leave a Tip
+      </Typography>
+      <Typography gutterBottom>
+        If you've enjoyed this site, you can buy me a beer at ko-fi.
+      </Typography>
+      <Box sx={{ mt: 1.5 }}>
+        <a
+          href="https://ko-fi.com/brianneal2026"
+          target="_blank"
+          rel="noopener"
+        >
+          <img
+            src="/kofi_blue.png"
+            alt="Leave a tip for me at ko-fi"
+            width={326.7}
+            height={66}
+          />
+        </a>
+      </Box>
       <Typography
         variant="h5"
         sx={{ fontFamily: '"Special Elite", cursive', fontWeight: 400, mt: 3 }}
@@ -77,7 +101,7 @@ export function AboutPage() {
         {links
           .filter((link) => link.tags.includes("colophon"))
           .map((link) => (
-            <ExternalLinkListItem link={link} />
+            <ExternalLinkListItem key={link.id} link={link} />
           ))}
       </ul>
     </Paper>
