@@ -1,17 +1,26 @@
 import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { RouterLink } from "../../routerLinkComponents/routerLink.tsx";
+import { ThemeSelect } from "../../themeSelect.tsx";
 
 export function HomePage() {
   return (
     <Paper elevation={2} sx={{ mt: 3, ml: 3, p: 3, maxWidth: 950 }}>
-      <Typography
-        variant="h4"
-        sx={{ fontFamily: '"Special Elite", cursive', fontWeight: 400 }}
-        gutterBottom
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{ justifyContent: "space-between", alignItems: "center", mb: 3 }}
       >
-        ww2crypto.online
-      </Typography>
+        <Typography
+          variant="h4"
+          sx={{ fontFamily: '"Special Elite", cursive', fontWeight: 400 }}
+          gutterBottom
+        >
+          ww2crypto.online
+        </Typography>
+        <ThemeSelect />
+      </Stack>
       <Typography variant="body1" component="p" gutterBottom>
         Welcome! On this site we host several browser-based World War 2-era
         cipher machine simulations! You can setup each simulation just like an

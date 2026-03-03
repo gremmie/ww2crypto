@@ -1,4 +1,5 @@
 import CssBaseline from "@mui/material/CssBaseline";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
@@ -24,11 +25,19 @@ declare module "@tanstack/react-router" {
   }
 }
 
+const darkTheme = createTheme({
+  colorSchemes: {
+    dark: true,
+  },
+});
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <CssBaseline />
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
+    <ThemeProvider theme={darkTheme} noSsr>
+      <CssBaseline />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </ThemeProvider>
   </StrictMode>,
 );
