@@ -46,7 +46,13 @@ export default defineConfig({
 
     {
       name: "webkit",
-      use: { ...devices["Desktop Safari"] },
+      use: {
+        ...devices["Desktop Safari"],
+        // This helps WebKit bypass some rendering overhead in headless mode
+        launchOptions: {
+          args: ["--disable-gpu"],
+        },
+      },
     },
 
     /* Test against mobile viewports. */
