@@ -1,6 +1,9 @@
 import { expect, test } from "@playwright/test";
 
 test("Enigma M4 test", async ({ page }) => {
+  // Webkit struggles on this one.
+  test.setTimeout(60000);
+
   await page.goto("http://localhost:5173/");
 
   await page.getByRole("button", { name: "menu" }).click();
