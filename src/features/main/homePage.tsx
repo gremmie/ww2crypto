@@ -49,7 +49,7 @@ export function HomePage() {
       </Typography>
       <ul>
         <Typography variant="body1" component="li" gutterBottom>
-          <b>March 1, 2026</b> - This site is officially launched and we
+          <b>March 3, 2026</b> - This site is officially launched and we
           currently feature a{" "}
           <RouterLink to="/enigma/about">WW2 Enigma simulation</RouterLink>. We
           have immediate plans to add simulations for the <b>US M-209</b> and
