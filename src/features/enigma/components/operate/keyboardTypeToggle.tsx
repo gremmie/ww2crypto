@@ -2,22 +2,22 @@ import DesktopWindowsOutlinedIcon from "@mui/icons-material/DesktopWindowsOutlin
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
+import { keyboardTypeChanged, selectKeyboardType } from "../../enigmaSlice.ts";
 import type { KeyboardType } from "./keyboardType.ts";
 
-interface KeyboardTypeToggleProps {
-  initialValue: KeyboardType;
-  onChange: (newValue: KeyboardType) => void;
-}
+export function KeyboardTypeToggle() {
+  const dispatch = useAppDispatch();
+  const keyboardType = useAppSelector(selectKeyboardType);
 
-export function KeyboardTypeToggle(props: KeyboardTypeToggleProps) {
   const handleChange = (newValue: KeyboardType | null) => {
     if (newValue !== null) {
-      props.onChange(newValue);
+      dispatch(keyboardTypeChanged(newValue));
     }
   };
   return (
     <ToggleButtonGroup
-      value={props.initialValue}
+      value={keyboardType}
       exclusive
       onChange={(_, newMode: KeyboardType | null) => handleChange(newMode)}
       size="small"

@@ -9,18 +9,18 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import {
   bufferedTextChanged,
   inputGroupSwitchChanged,
+  operatorSentBulkText,
   operatorClearedInput,
   operatorKeyPressed,
   operatorKeyReleased,
-  operateSentBulkText,
   selectBufferedText,
   selectInputText,
   selectIsInputGrouped,
+  selectKeyboardType,
 } from "../../enigmaSlice.ts";
 import { groupText } from "../../utils.ts";
 import { CopyButton } from "./copyButton.tsx";
 import GroupTextSwitch from "./groupTextSwitch.tsx";
-import type { KeyboardType } from "./keyboardType.ts";
 import { KeyboardTypeToggle } from "./keyboardTypeToggle.tsx";
 
 const validKeyPattern = /^[a-zA-Z]$/;
@@ -29,11 +29,11 @@ export default function OperatorInput() {
   const dispatch = useAppDispatch();
   const inputText = useAppSelector(selectInputText);
   const isGrouped = useAppSelector(selectIsInputGrouped);
-  const [keyboardMode, setKeyboardMode] = React.useState<KeyboardType>("raw");
+  const keyboardType = useAppSelector(selectKeyboardType);
   const bufferedText = useAppSelector(selectBufferedText);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (keyboardMode === "buffered") return;
+    if (keyboardType === "buffered") return;
     // We want keyboard copy & pasting to work, so check for that first.
     if (
       (e.key.toUpperCase() === "V" || e.key.toUpperCase() === "C") &&
@@ -58,20 +58,20 @@ export default function OperatorInput() {
   };
 
   const handleKeyUp = () => {
-    if (keyboardMode === "buffered") return;
+    if (keyboardType === "buffered") return;
     dispatch(operatorKeyReleased());
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (keyboardMode === "raw") return;
+    if (keyboardType === "raw") return;
     dispatch(bufferedTextChanged(event.target.value));
   };
 
   const handleProcessBuffered = () => {
-    if (keyboardMode === "raw") return;
+    if (keyboardType === "raw") return;
     const validText = filterInputText(bufferedText);
     if (validText.length > 0) {
-      dispatch(operateSentBulkText(validText));
+      dispatch(operatorSentBulkText(validText));
     }
   };
 
@@ -88,9 +88,9 @@ export default function OperatorInput() {
 
   const processPaste = (text: string) => {
     const validText = filterInputText(text);
-    if (keyboardMode === "raw" && validText.length !== 0) {
-      dispatch(operateSentBulkText(validText));
-    } else if (keyboardMode === "buffered") {
+    if (keyboardType === "raw" && validText.length !== 0) {
+      dispatch(operatorSentBulkText(validText));
+    } else if (keyboardType === "buffered") {
       dispatch(bufferedTextChanged(validText));
     }
   };
@@ -99,7 +99,7 @@ export default function OperatorInput() {
     dispatch(operatorClearedInput());
   };
 
-  const inputValue = keyboardMode === "raw" ? inputText : bufferedText;
+  const inputValue = keyboardType === "raw" ? inputText : bufferedText;
 
   return (
     <Stack direction="column" spacing={1}>
@@ -112,10 +112,7 @@ export default function OperatorInput() {
         <Button variant="text" onClick={handleClear}>
           Clear
         </Button>
-        <KeyboardTypeToggle
-          initialValue={keyboardMode}
-          onChange={setKeyboardMode}
-        />
+        <KeyboardTypeToggle />
         <GroupTextSwitch
           value={isGrouped}
           onChange={() => dispatch(inputGroupSwitchChanged(!isGrouped))}
@@ -131,7 +128,7 @@ export default function OperatorInput() {
       </Stack>
       <TextField
         id="enigma-operator-input"
-        label={keyboardMode === "raw" ? "Raw Input" : "Buffered Input"}
+        label={keyboardType === "raw" ? "Raw Input" : "Buffered Input"}
         multiline
         rows={4}
         variant="filled"
@@ -144,7 +141,7 @@ export default function OperatorInput() {
         onPaste={handlePaste}
         onChange={handleChange}
       />
-      {keyboardMode === "buffered" && (
+      {keyboardType === "buffered" && (
         <Button variant="contained" onClick={handleProcessBuffered}>
           Process Text
         </Button>

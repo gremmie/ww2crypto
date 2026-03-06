@@ -8,6 +8,7 @@ import {
 } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store";
 import { applicationStarted } from "../common/actions.ts";
+import type { KeyboardType } from "./components/operate/keyboardType.ts";
 import ConfigStorage from "./config/configStorage.ts";
 import type { MachineConfig } from "./config/machineConfig.ts";
 import EnigmaMachine from "./machine/enigmaMachine.ts";
@@ -49,6 +50,7 @@ export interface EnigmaState {
   configs: EntityState<MachineConfig, string>;
   isInputGrouped: boolean;
   isOutputGrouped: boolean;
+  keyboardType: KeyboardType;
 }
 
 // Define the initial state using that type
@@ -71,6 +73,7 @@ const initialState: EnigmaState = {
   configs: configAdapter.getInitialState(),
   isInputGrouped: false,
   isOutputGrouped: false,
+  keyboardType: "raw",
 };
 
 export type RotorTypeChangedPayload = {
@@ -244,7 +247,7 @@ export const enigmaSlice = createSlice({
     operatorKeyReleased: (state) => {
       state.activeLamp = "";
     },
-    operateSentBulkText: (state, action: PayloadAction<string>) => {
+    operatorSentBulkText: (state, action: PayloadAction<string>) => {
       const machine = createMachine(state);
       if (machine === null) return;
 
@@ -310,6 +313,9 @@ export const enigmaSlice = createSlice({
     bufferedTextChanged: (state, action: PayloadAction<string>) => {
       state.bufferedText = action.payload;
     },
+    keyboardTypeChanged: (state, action: PayloadAction<KeyboardType>) => {
+      state.keyboardType = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(applicationStarted, (state) => {
@@ -333,7 +339,7 @@ export const {
   rotorDisplayChanged,
   operatorKeyPressed,
   operatorKeyReleased,
-  operateSentBulkText,
+  operatorSentBulkText,
   operatorClearedInput,
   operatorClearedOutput,
   lampPanelOpenStatusChanged,
@@ -344,6 +350,7 @@ export const {
   inputGroupSwitchChanged,
   outputGroupSwitchChanged,
   bufferedTextChanged,
+  keyboardTypeChanged,
 } = enigmaSlice.actions;
 
 // Selectors
@@ -487,6 +494,9 @@ export const selectIsInputGrouped = (state: RootState) =>
 
 export const selectIsOutputGrouped = (state: RootState) =>
   state.enigma.isOutputGrouped;
+
+export const selectKeyboardType = (state: RootState) =>
+  state.enigma.keyboardType;
 
 export default enigmaSlice.reducer;
 
