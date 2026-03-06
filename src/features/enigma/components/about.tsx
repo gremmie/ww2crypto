@@ -164,22 +164,40 @@ export default function EnigmaAbout() {
         </Typography>
         <Typography variant="body1" gutterBottom>
           Whether you are encrypting or decrypting a message, you enter text in
-          the "input" box. Note that Enigma machine keyboards consisted only of
-          letters A-Z, so the input box only accepts letter input. For
-          convenience lower case letters are accepted and translated to upper
-          case. You can also paste text from your clipboard, but please note
-          that non-letter characters in your text will be ignored. Numbers will
-          have to be spelled out. As there are no punctuation keys, operators
-          used various conventions like using "X" as a space or stop character,
-          and "YY" as a comma. It was also common to omit spaces and
-          punctuation.
+          the "input" box. There are two modes of input: "raw" and "buffered".
+          Use the toggle button above the input box to switch modes.
         </Typography>
         <Typography variant="body1" gutterBottom>
-          As you type, the lights on the lampboard will "light" up, indicating
-          the result of encrypting or decrypting your input text. On an actual
-          machine, a second person was usually present to write down each
-          indicated letter of the message. For your convenience this text is
-          collected in the output box.
+          When you use "raw" input, each key press from your keyboard simulates
+          a key press on the Enigma. The Enigma keyboard consisted only of the
+          letters A-Z, so in this mode the input box only accepts letter input.
+          For convenience lower case letters are accepted and translated to
+          upper case. In this mode the lights on the lampboard will "light" up
+          while the key is held down. Use this mode when you are at a computer
+          with a physical keyboard. On an actual Enigma machine, a second person
+          was usually present to write down each indicated letter of the
+          message. For your convenience this text is collected in the output
+          box.
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          Mobile devices like phones must use "buffered" mode. Here you can type
+          into the input box and when ready click "Process Text" to send the
+          input to the Enigma. In this mode you can type spaces and any other
+          character, but please note these will be ignored when you finally
+          click "Process Text."
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          In either mode you can paste text from your clipboard. In raw mode
+          non-letter characters will be ignored.
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          Because the Enigma machine only had letter keys, Enigma operators
+          often omitted spaces between words, numbers had to be spelled out, and
+          various conventions were used for punctuation. For example, "X" was
+          used for a full stop, but not at the end of the message. "YY" was used
+          for a comma. There were often common abbreviations for military
+          jargon, but operators were encouraged to switch these up to make
+          cryptanalysis more difficult.
         </Typography>
         <Typography variant="body1" gutterBottom>
           It was common for Enigma messages to be grouped in 5-letter groups. We
