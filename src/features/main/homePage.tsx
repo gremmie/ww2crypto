@@ -49,6 +49,10 @@ export function HomePage() {
       </Typography>
       <ul>
         <Typography variant="body1" component="li" gutterBottom>
+          <b>March 5, 2026</b> - Created a "buffered" mode so the Enigma machine
+          can be operated on a mobile device without a physical keyboard.
+        </Typography>
+        <Typography variant="body1" component="li" gutterBottom>
           <b>March 3, 2026</b> - This site is officially launched and we
           currently feature a{" "}
           <RouterLink to="/enigma/about">WW2 Enigma simulation</RouterLink>. We
