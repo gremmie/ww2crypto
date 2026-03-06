@@ -82,7 +82,7 @@ describe("Enigma Operate Tab", () => {
     expect(rotorWindow2).toHaveValue("V");
 
     // Type some plaintext.
-    const inputTextField = screen.getByRole("textbox", { name: "Input" });
+    const inputTextField = screen.getByRole("textbox", { name: "Raw Input" });
     await user.type(inputTextField, "steuerejtanafjord");
     expect(inputTextField).toHaveValue("steuerejtanafjord".toUpperCase());
 

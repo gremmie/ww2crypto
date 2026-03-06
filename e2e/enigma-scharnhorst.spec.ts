@@ -43,9 +43,9 @@ test("Enigma Scharnhorst setup and decrypt test", async ({ page }) => {
   await page.getByRole("textbox", { name: "rotor window 2" }).click();
   await page.getByRole("textbox", { name: "rotor window 2" }).fill("v");
 
-  await page.getByRole("textbox", { name: "Input" }).click();
+  await page.getByRole("textbox", { name: "Raw Input" }).click();
   await page
-    .getByRole("textbox", { name: "Input" })
+    .getByRole("textbox", { name: "Raw Input" })
     .pressSequentially(
       "ykaenzapmschzbfocuvmrmdpycofhadzizmefxthflolpzlfggbotgoxgretdwtjiqhlmxvjwkzuastr",
     );

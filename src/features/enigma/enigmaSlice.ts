@@ -42,6 +42,7 @@ export interface EnigmaState {
   rotorDisplays: string[];
   inputText: string;
   outputText: string;
+  bufferedText: string;
   activeLamp: string;
   isLampPanelOpen: boolean;
   configName: string;
@@ -63,6 +64,7 @@ const initialState: EnigmaState = {
   rotorDisplays: ["A", "A", "A"],
   inputText: "",
   outputText: "",
+  bufferedText: "",
   activeLamp: "",
   isLampPanelOpen: true,
   configName: "",
@@ -103,12 +105,14 @@ export const enigmaSlice = createSlice({
       state.rotorDisplays = new Array(state.numberOfRotors).fill("A");
       state.inputText = "";
       state.outputText = "";
+      state.bufferedText = "";
       state.configName = "";
     },
     reflectorChanged: (state, action: PayloadAction<ReflectorType>) => {
       state.reflector = action.payload;
       state.inputText = "";
       state.outputText = "";
+      state.bufferedText = "";
     },
     rotorTypeChanged: (
       state,
@@ -126,6 +130,7 @@ export const enigmaSlice = createSlice({
       state.rotorTypes = rotorTypes;
       state.inputText = "";
       state.outputText = "";
+      state.bufferedText = "";
     },
     ringSettingChanged: (
       state,
@@ -140,6 +145,7 @@ export const enigmaSlice = createSlice({
       state.ringSettings = ringSettings;
       state.inputText = "";
       state.outputText = "";
+      state.bufferedText = "";
     },
     ringSettingsNotationChanged: (
       state,
@@ -154,6 +160,7 @@ export const enigmaSlice = createSlice({
       }
       state.inputText = "";
       state.outputText = "";
+      state.bufferedText = "";
     },
     plugboardConnected: (state, action: PayloadAction<string>) => {
       if (!isConnection(action.payload)) return;
@@ -170,6 +177,7 @@ export const enigmaSlice = createSlice({
         state.plugboard = connections.sort().join(" ");
         state.inputText = "";
         state.outputText = "";
+        state.bufferedText = "";
       }
     },
     plugboardDisconnected: (state, action: PayloadAction<string>) => {
@@ -187,6 +195,7 @@ export const enigmaSlice = createSlice({
           .join(" ");
         state.inputText = "";
         state.outputText = "";
+        state.bufferedText = "";
       }
     },
     plugboardNotationChanged: (state, action: PayloadAction<NotationType>) => {
@@ -249,6 +258,7 @@ export const enigmaSlice = createSlice({
     },
     operatorClearedInput: (state) => {
       state.inputText = "";
+      state.bufferedText = "";
     },
     operatorClearedOutput: (state) => {
       state.outputText = "";
@@ -297,6 +307,9 @@ export const enigmaSlice = createSlice({
     outputGroupSwitchChanged: (state, action: PayloadAction<boolean>) => {
       state.isOutputGrouped = action.payload;
     },
+    bufferedTextChanged: (state, action: PayloadAction<string>) => {
+      state.bufferedText = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(applicationStarted, (state) => {
@@ -330,6 +343,7 @@ export const {
   undoDeleteConfigInitiated,
   inputGroupSwitchChanged,
   outputGroupSwitchChanged,
+  bufferedTextChanged,
 } = enigmaSlice.actions;
 
 // Selectors
@@ -422,6 +436,9 @@ export const selectRotorWindow = (state: RootState, index: number) => {
 export const selectInputText = (state: RootState) => state.enigma.inputText;
 
 export const selectOutputText = (state: RootState) => state.enigma.outputText;
+
+export const selectBufferedText = (state: RootState) =>
+  state.enigma.bufferedText;
 
 export const selectActiveLamp = (state: RootState) => state.enigma.activeLamp;
 

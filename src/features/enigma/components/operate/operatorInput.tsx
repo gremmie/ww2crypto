@@ -7,17 +7,21 @@ import Tooltip from "@mui/material/Tooltip";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import {
+  bufferedTextChanged,
   inputGroupSwitchChanged,
   operatorClearedInput,
   operatorKeyPressed,
   operatorKeyReleased,
   operatorPastedText,
+  selectBufferedText,
   selectInputText,
   selectIsInputGrouped,
 } from "../../enigmaSlice.ts";
 import { groupText } from "../../utils.ts";
 import { CopyButton } from "./copyButton.tsx";
 import GroupTextSwitch from "./groupTextSwitch.tsx";
+import type { KeyboardType } from "./keyboardType.ts";
+import { KeyboardTypeToggle } from "./keyboardTypeToggle.tsx";
 
 const validKeyPattern = /^[a-zA-Z]$/;
 
@@ -25,8 +29,11 @@ export default function OperatorInput() {
   const dispatch = useAppDispatch();
   const inputText = useAppSelector(selectInputText);
   const isGrouped = useAppSelector(selectIsInputGrouped);
+  const [keyboardMode, setKeyboardMode] = React.useState<KeyboardType>("raw");
+  const bufferedText = useAppSelector(selectBufferedText);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (keyboardMode === "buffered") return;
     // We want keyboard copy & pasting to work, so check for that first.
     if (
       (e.key.toUpperCase() === "V" || e.key.toUpperCase() === "C") &&
@@ -51,7 +58,21 @@ export default function OperatorInput() {
   };
 
   const handleKeyUp = () => {
+    if (keyboardMode === "buffered") return;
     dispatch(operatorKeyReleased());
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (keyboardMode === "raw") return;
+    dispatch(bufferedTextChanged(event.target.value));
+  };
+
+  const handleProcessBuffered = () => {
+    if (keyboardMode === "raw") return;
+    const validText = filterInputText(bufferedText);
+    if (validText.length > 0) {
+      dispatch(operatorPastedText(validText));
+    }
   };
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
@@ -66,13 +87,11 @@ export default function OperatorInput() {
   };
 
   const processPaste = (text: string) => {
-    const validText = text
-      .split("")
-      .filter((s) => validKeyPattern.test(s))
-      .join("")
-      .toUpperCase();
-    if (validText.length !== 0) {
+    const validText = filterInputText(text);
+    if (keyboardMode === "raw" && validText.length !== 0) {
       dispatch(operatorPastedText(validText));
+    } else if (keyboardMode === "buffered") {
+      dispatch(bufferedTextChanged(validText));
     }
   };
 
@@ -80,12 +99,23 @@ export default function OperatorInput() {
     dispatch(operatorClearedInput());
   };
 
+  const inputValue = keyboardMode === "raw" ? inputText : bufferedText;
+
   return (
     <Stack direction="column" spacing={1}>
-      <Stack direction="row" justifyContent="space-between">
+      <Stack
+        direction="row"
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+      >
         <Button variant="text" onClick={handleClear}>
           Clear
         </Button>
+        <KeyboardTypeToggle
+          initialValue={keyboardMode}
+          onChange={setKeyboardMode}
+        />
         <GroupTextSwitch
           value={isGrouped}
           onChange={() => dispatch(inputGroupSwitchChanged(!isGrouped))}
@@ -101,18 +131,31 @@ export default function OperatorInput() {
       </Stack>
       <TextField
         id="enigma-operator-input"
-        label="Input"
+        label={keyboardMode === "raw" ? "Raw Input" : "Buffered Input"}
         multiline
         rows={4}
         variant="filled"
         sx={{
           width: { xs: "96vw", sm: 430 },
         }}
-        value={isGrouped ? groupText(inputText) : inputText}
+        value={isGrouped ? groupText(inputValue) : inputValue}
         onKeyDown={handleKeyDown}
         onKeyUp={handleKeyUp}
         onPaste={handlePaste}
+        onChange={handleChange}
       />
+      {keyboardMode === "buffered" && (
+        <Button variant="contained" onClick={handleProcessBuffered}>
+          Process Text
+        </Button>
+      )}
     </Stack>
   );
 }
+
+const filterInputText = (text: string) =>
+  text
+    .split("")
+    .filter((s) => validKeyPattern.test(s))
+    .join("")
+    .toUpperCase();

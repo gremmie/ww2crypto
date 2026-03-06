@@ -67,12 +67,12 @@ test("Enigma M4 test", async ({ page }) => {
     "rlvhkzpgmnmvsecvckhoinplhhpvpxkmbhokccpdpevxvvhozzqbiyieouseznhjkwhydagtxdjd" +
     "jkjpkcsdsuztqcxjdvlpamgqkkshphvksvpcbuwzfizpfuup";
 
-  await page.getByRole("textbox", { name: "Input" }).click();
+  await page.getByRole("textbox", { name: "Raw Input" }).click();
   // Webkit seems to have trouble with pressSequentially and this much
   // ciphertext. Insert a small delay between keypresses and give a longer
   // timeout.
   await page
-    .getByRole("textbox", { name: "Input" })
+    .getByRole("textbox", { name: "Raw Input" })
     .pressSequentially(ciphertext, { delay: 30, timeout: 60000 });
 
   const plaintext =
