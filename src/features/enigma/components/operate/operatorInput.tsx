@@ -12,7 +12,7 @@ import {
   operatorClearedInput,
   operatorKeyPressed,
   operatorKeyReleased,
-  operatorPastedText,
+  operateSentBulkText,
   selectBufferedText,
   selectInputText,
   selectIsInputGrouped,
@@ -71,7 +71,7 @@ export default function OperatorInput() {
     if (keyboardMode === "raw") return;
     const validText = filterInputText(bufferedText);
     if (validText.length > 0) {
-      dispatch(operatorPastedText(validText));
+      dispatch(operateSentBulkText(validText));
     }
   };
 
@@ -89,7 +89,7 @@ export default function OperatorInput() {
   const processPaste = (text: string) => {
     const validText = filterInputText(text);
     if (keyboardMode === "raw" && validText.length !== 0) {
-      dispatch(operatorPastedText(validText));
+      dispatch(operateSentBulkText(validText));
     } else if (keyboardMode === "buffered") {
       dispatch(bufferedTextChanged(validText));
     }

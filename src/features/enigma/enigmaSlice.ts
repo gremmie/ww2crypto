@@ -244,7 +244,7 @@ export const enigmaSlice = createSlice({
     operatorKeyReleased: (state) => {
       state.activeLamp = "";
     },
-    operatorPastedText: (state, action: PayloadAction<string>) => {
+    operateSentBulkText: (state, action: PayloadAction<string>) => {
       const machine = createMachine(state);
       if (machine === null) return;
 
@@ -333,7 +333,7 @@ export const {
   rotorDisplayChanged,
   operatorKeyPressed,
   operatorKeyReleased,
-  operatorPastedText,
+  operateSentBulkText,
   operatorClearedInput,
   operatorClearedOutput,
   lampPanelOpenStatusChanged,
