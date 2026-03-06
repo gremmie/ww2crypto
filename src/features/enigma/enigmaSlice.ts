@@ -296,13 +296,19 @@ export const enigmaSlice = createSlice({
       }
     },
     deleteConfigInitiated: (state, action: PayloadAction<string>) => {
-      configAdapter.removeOne(state.configs, action.payload);
+      const configName = action.payload;
+      configAdapter.removeOne(state.configs, configName);
+      ConfigStorage.removeConfig(configName);
+      if (state.configName === configName) {
+        state.configName = "";
+      }
     },
     undoDeleteConfigInitiated: (
       state,
       action: PayloadAction<MachineConfig>,
     ) => {
       configAdapter.setOne(state.configs, action.payload);
+      ConfigStorage.saveConfig(action.payload);
     },
     inputGroupSwitchChanged: (state, action: PayloadAction<boolean>) => {
       state.isInputGrouped = action.payload;

@@ -24,6 +24,12 @@ export default class ConfigStorage {
     ConfigStorage.saveConfigMap(configMap);
   }
 
+  static removeConfig(configName: string) {
+    const configMap = ConfigStorage.getConfigMap();
+    configMap.delete(configName);
+    ConfigStorage.saveConfigMap(configMap);
+  }
+
   static saveConfigMap(configMap: Map<string, MachineConfig>) {
     localStorage.setItem(
       enigmaKey,

@@ -25,6 +25,7 @@ export default function SaveConfigDialog() {
   const [open, setOpen] = React.useState(false);
   const [configName, setConfigName] = React.useState("");
   const [canOverwrite, setCanOverwrite] = React.useState(false);
+  const [isClosing, setIsClosing] = React.useState(false);
   const configNames = useAppSelector(selectConfigNames);
   const configExists = configNames.includes(configName);
   const canSave = configName.length !== 0 && (!configExists || canOverwrite);
@@ -40,16 +41,17 @@ export default function SaveConfigDialog() {
   };
 
   const handleClose = () => {
+    setIsClosing(true);
     setOpen(false);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    handleClose();
     const formData = new FormData(event.currentTarget);
     const formJson = Object.fromEntries(formData.entries());
     const name = formJson.name as string;
     dispatch(configNameSaved(name.trim()));
-    handleClose();
   };
 
   return (
@@ -95,9 +97,11 @@ export default function SaveConfigDialog() {
               variant="filled"
               value={configName}
               onChange={(e) => setConfigName(e.target.value)}
-              error={configExists && !canOverwrite}
+              error={configExists && !canOverwrite && !isClosing}
               helperText={
-                configExists ? "A setup with this name already exists." : ""
+                configExists && !isClosing
+                  ? "A setup with this name already exists."
+                  : ""
               }
             />
             <FormGroup>
