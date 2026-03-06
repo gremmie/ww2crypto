@@ -233,6 +233,13 @@ export default function EnigmaAbout() {
           below for more information. The steps shown here are sufficient to get
           you started trading messages with friends.
         </Typography>
+        <Typography variant="body1" gutterBottom>
+          In the example below we'll use the default raw input mode. If you are
+          on a mobile device without a physical keyboard, toggle the input to
+          buffered mode. In buffered mode, remember to click or touch "Process
+          Text" when you are ready to process the input data on the Enigma
+          machine.
+        </Typography>
         <Typography
           variant="h6"
           sx={{
