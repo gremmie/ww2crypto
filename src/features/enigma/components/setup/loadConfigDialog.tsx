@@ -37,6 +37,7 @@ export default function LoadConfigDialog() {
   const handleClose = () => {
     setOpen(false);
     setSetupName("");
+    setDeletedConfig(null);
   };
 
   const handleLoad = () => {
