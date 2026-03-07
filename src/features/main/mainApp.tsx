@@ -63,7 +63,12 @@ export function MainApp() {
         onClose={toggleDrawer}
         onChangePage={changePage}
       />
-      <Box sx={{ m: 3 }}>
+      <Box
+        display="flex"
+        width="100%"
+        justifyContent="center"
+        sx={{ mt: 3, pb: 3 }}
+      >
         <CopyrightTag />
       </Box>
     </Box>
