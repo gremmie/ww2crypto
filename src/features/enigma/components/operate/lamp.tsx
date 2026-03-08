@@ -8,6 +8,7 @@ interface LampProperties {
 
 export default function Lamp(props: LampProperties) {
   const activeLamp = useAppSelector(selectActiveLamp);
+  const isActive = props.letter === activeLamp;
 
   return (
     <Box
@@ -19,7 +20,8 @@ export default function Lamp(props: LampProperties) {
         height: { xs: 26, sm: 30 },
         border: { xs: "2px solid black", sm: "4px solid black" },
         borderRadius: "50%",
-        backgroundColor: activeLamp === props.letter ? "yellow" : null,
+        backgroundColor: isActive ? "yellow" : "transparent",
+        color: isActive ? "black" : "inherit",
       }}
     >
       {props.letter}

@@ -1,4 +1,5 @@
 import {
+  createAsyncThunk,
   createEntityAdapter,
   createSelector,
   createSlice,
@@ -247,7 +248,7 @@ export const enigmaSlice = createSlice({
     operatorKeyReleased: (state) => {
       state.activeLamp = "";
     },
-    operatorSentBulkText: (state, action: PayloadAction<string>) => {
+    operatorSentBulkTextInternal: (state, action: PayloadAction<string>) => {
       const machine = createMachine(state);
       if (machine === null) return;
 
@@ -330,6 +331,28 @@ export const enigmaSlice = createSlice({
   },
 });
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export const operatorSentBulkText = createAsyncThunk<
+  void,
+  string,
+  { state: RootState }
+>("enigma/operatorSentBulkText", async (text: string, thunkAPI) => {
+  const dispatch = thunkAPI.dispatch;
+  const isLampPanelOpen = thunkAPI.getState().enigma.isLampPanelOpen;
+
+  if (!isLampPanelOpen) {
+    dispatch(operatorSentBulkTextInternal(text));
+    return;
+  }
+  for (const c of text) {
+    await sleep(100);
+    dispatch(operatorKeyPressed(c));
+    await sleep(250);
+    dispatch(operatorKeyReleased());
+  }
+});
+
 // Actions
 export const {
   modelChanged,
@@ -345,7 +368,6 @@ export const {
   rotorDisplayChanged,
   operatorKeyPressed,
   operatorKeyReleased,
-  operatorSentBulkText,
   operatorClearedInput,
   operatorClearedOutput,
   lampPanelOpenStatusChanged,
@@ -358,6 +380,9 @@ export const {
   bufferedTextChanged,
   keyboardTypeChanged,
 } = enigmaSlice.actions;
+
+// Internal actions
+export const { operatorSentBulkTextInternal } = enigmaSlice.actions;
 
 // Selectors
 

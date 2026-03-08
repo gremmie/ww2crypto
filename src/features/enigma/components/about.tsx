@@ -1,4 +1,5 @@
 import TabPanel from "@mui/lab/TabPanel";
+import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -195,6 +196,12 @@ export default function EnigmaAbout() {
             In either mode you can paste text from your clipboard. In raw mode
             non-letter characters will be ignored.
           </Typography>
+          <Alert variant="outlined" severity="info" sx={{ my: 1.5 }}>
+            When pasting text in raw mode or processing text in buffered mode,
+            key presses will be simulated, causing an animation to play while
+            the text is being processed. If you'd rather not see the animation,
+            simply collapse the lamp panel to hide it.
+          </Alert>
           <Typography variant="body1" gutterBottom>
             Because the Enigma machine only had letter keys, Enigma operators
             often omitted spaces between words, numbers had to be spelled out,

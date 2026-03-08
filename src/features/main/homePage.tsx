@@ -55,6 +55,12 @@ export function HomePage() {
         </Typography>
         <ul>
           <Typography variant="body1" component="li" gutterBottom>
+            <b>March 7, 2026</b> - Added an animation that simulates key presses
+            when text is pasted or entered in buffered mode. This can be turned
+            off by closing the lamp panel. Fixed a few bugs around saving and
+            deleting setups.
+          </Typography>
+          <Typography variant="body1" component="li" gutterBottom>
             <b>March 5, 2026</b> - Created a "buffered" mode so the Enigma
             machine can be operated on a mobile device without a physical
             keyboard.

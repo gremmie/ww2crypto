@@ -9,10 +9,10 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import {
   bufferedTextChanged,
   inputGroupSwitchChanged,
-  operatorSentBulkText,
   operatorClearedInput,
   operatorKeyPressed,
   operatorKeyReleased,
+  operatorSentBulkText,
   selectBufferedText,
   selectInputText,
   selectIsInputGrouped,
