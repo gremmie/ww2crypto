@@ -9,10 +9,16 @@ import { Outlet, useLocation } from "@tanstack/react-router";
 import { RouterTab } from "../../../routerLinkComponents/routerTab.tsx";
 import type { TRoutes } from "../../../routeTypes.ts";
 
-export default function EnigmaMain() {
+interface SimMainProps {
+  simName: string; // example: "M-209"
+  basePath: string; // example: "/m209"
+  setupPath: TRoutes;
+}
+
+export function SimMain(props: SimMainProps) {
   const location = useLocation();
   const currentPath = location.pathname as TRoutes;
-  if (!currentPath.startsWith("/enigma/")) return null;
+  if (!currentPath.startsWith(props.basePath)) return null;
   const currentTab = currentPath.split("/")[2];
 
   return (
@@ -28,32 +34,32 @@ export default function EnigmaMain() {
           ml: 2,
         }}
       >
-        Enigma
+        {props.simName}
       </Typography>
       <Box sx={{ width: "100%", typography: "body1" }}>
         <TabContext value={currentTab}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList aria-label="Enigma Tabs">
+            <TabList aria-label={`${props.simName} Tabs`}>
               <RouterTab
                 label="About"
                 value="about"
                 icon={<InfoOutlineIcon />}
                 iconPosition="start"
-                to="/enigma/about"
+                to={`${props.basePath}/about` as TRoutes}
               />
               <RouterTab
                 label="Setup"
                 value="setup"
                 icon={<SettingsIcon />}
                 iconPosition="start"
-                to="/enigma/setup/model"
+                to={props.setupPath}
               />
               <RouterTab
                 label="Operate"
                 value="operate"
                 icon={<KeyboardIcon />}
                 iconPosition="start"
-                to="/enigma/operate"
+                to={`${props.basePath}/operate` as TRoutes}
               />
             </TabList>
           </Box>

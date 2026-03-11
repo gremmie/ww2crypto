@@ -1,10 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-import EnigmaMain from "../../features/enigma/components/enigmaMain.tsx";
+import { SimMain } from "../../features/common/components/simMain.tsx";
 
 export const Route = createFileRoute("/enigma")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  return <EnigmaMain />;
+  return (
+    <SimMain
+      simName="Enigma"
+      basePath="/enigma"
+      setupPath="/enigma/setup/model"
+    />
+  );
 }

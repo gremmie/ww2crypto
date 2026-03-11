@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import M209Main from "../../features/m209/components/m209Main.tsx";
+import { SimMain } from "../../features/common/components/simMain.tsx";
 
 export const Route = createFileRoute("/m209")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  console.log("Hitting /m209");
-  return <M209Main />;
+  return (
+    <SimMain simName="M-209" basePath="/m209" setupPath="/m209/setup/drum" />
+  );
 }
