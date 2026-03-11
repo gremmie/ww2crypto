@@ -26,7 +26,7 @@ const drawerLabelsByPage: Map<string, string> = new Map([
 const pathsByPage: Map<string, TRoutes> = new Map([
   ["home", "/"],
   ["enigma", "/enigma/about"],
-  ["m209", "/m209"],
+  ["m209", "/m209/about"],
   ["purple", "/purple"],
   ["links", "/links"],
   ["about", "/about"],

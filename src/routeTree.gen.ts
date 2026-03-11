@@ -10,14 +10,19 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PurpleRouteImport } from './routes/purple'
-import { Route as M209RouteImport } from './routes/m209'
 import { Route as LinksRouteImport } from './routes/links'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as M209RouteRouteImport } from './routes/m209/route'
 import { Route as EnigmaRouteRouteImport } from './routes/enigma/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as M209OperateRouteImport } from './routes/m209/operate'
+import { Route as M209AboutRouteImport } from './routes/m209/about'
 import { Route as EnigmaOperateRouteImport } from './routes/enigma/operate'
 import { Route as EnigmaAboutRouteImport } from './routes/enigma/about'
+import { Route as M209SetupRouteRouteImport } from './routes/m209/setup/route'
 import { Route as EnigmaSetupRouteRouteImport } from './routes/enigma/setup/route'
+import { Route as M209SetupWheelsRouteImport } from './routes/m209/setup/wheels'
+import { Route as M209SetupDrumRouteImport } from './routes/m209/setup/drum'
 import { Route as EnigmaSetupRotorsRouteImport } from './routes/enigma/setup/rotors'
 import { Route as EnigmaSetupRingsRouteImport } from './routes/enigma/setup/rings'
 import { Route as EnigmaSetupPlugboardRouteImport } from './routes/enigma/setup/plugboard'
@@ -26,11 +31,6 @@ import { Route as EnigmaSetupModelRouteImport } from './routes/enigma/setup/mode
 const PurpleRoute = PurpleRouteImport.update({
   id: '/purple',
   path: '/purple',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const M209Route = M209RouteImport.update({
-  id: '/m209',
-  path: '/m209',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LinksRoute = LinksRouteImport.update({
@@ -43,6 +43,11 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const M209RouteRoute = M209RouteRouteImport.update({
+  id: '/m209',
+  path: '/m209',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EnigmaRouteRoute = EnigmaRouteRouteImport.update({
   id: '/enigma',
   path: '/enigma',
@@ -52,6 +57,16 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const M209OperateRoute = M209OperateRouteImport.update({
+  id: '/operate',
+  path: '/operate',
+  getParentRoute: () => M209RouteRoute,
+} as any)
+const M209AboutRoute = M209AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => M209RouteRoute,
 } as any)
 const EnigmaOperateRoute = EnigmaOperateRouteImport.update({
   id: '/operate',
@@ -63,10 +78,25 @@ const EnigmaAboutRoute = EnigmaAboutRouteImport.update({
   path: '/about',
   getParentRoute: () => EnigmaRouteRoute,
 } as any)
+const M209SetupRouteRoute = M209SetupRouteRouteImport.update({
+  id: '/setup',
+  path: '/setup',
+  getParentRoute: () => M209RouteRoute,
+} as any)
 const EnigmaSetupRouteRoute = EnigmaSetupRouteRouteImport.update({
   id: '/setup',
   path: '/setup',
   getParentRoute: () => EnigmaRouteRoute,
+} as any)
+const M209SetupWheelsRoute = M209SetupWheelsRouteImport.update({
+  id: '/wheels',
+  path: '/wheels',
+  getParentRoute: () => M209SetupRouteRoute,
+} as any)
+const M209SetupDrumRoute = M209SetupDrumRouteImport.update({
+  id: '/drum',
+  path: '/drum',
+  getParentRoute: () => M209SetupRouteRoute,
 } as any)
 const EnigmaSetupRotorsRoute = EnigmaSetupRotorsRouteImport.update({
   id: '/rotors',
@@ -92,103 +122,133 @@ const EnigmaSetupModelRoute = EnigmaSetupModelRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/enigma': typeof EnigmaRouteRouteWithChildren
+  '/m209': typeof M209RouteRouteWithChildren
   '/about': typeof AboutRoute
   '/links': typeof LinksRoute
-  '/m209': typeof M209Route
   '/purple': typeof PurpleRoute
   '/enigma/setup': typeof EnigmaSetupRouteRouteWithChildren
+  '/m209/setup': typeof M209SetupRouteRouteWithChildren
   '/enigma/about': typeof EnigmaAboutRoute
   '/enigma/operate': typeof EnigmaOperateRoute
+  '/m209/about': typeof M209AboutRoute
+  '/m209/operate': typeof M209OperateRoute
   '/enigma/setup/model': typeof EnigmaSetupModelRoute
   '/enigma/setup/plugboard': typeof EnigmaSetupPlugboardRoute
   '/enigma/setup/rings': typeof EnigmaSetupRingsRoute
   '/enigma/setup/rotors': typeof EnigmaSetupRotorsRoute
+  '/m209/setup/drum': typeof M209SetupDrumRoute
+  '/m209/setup/wheels': typeof M209SetupWheelsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/enigma': typeof EnigmaRouteRouteWithChildren
+  '/m209': typeof M209RouteRouteWithChildren
   '/about': typeof AboutRoute
   '/links': typeof LinksRoute
-  '/m209': typeof M209Route
   '/purple': typeof PurpleRoute
   '/enigma/setup': typeof EnigmaSetupRouteRouteWithChildren
+  '/m209/setup': typeof M209SetupRouteRouteWithChildren
   '/enigma/about': typeof EnigmaAboutRoute
   '/enigma/operate': typeof EnigmaOperateRoute
+  '/m209/about': typeof M209AboutRoute
+  '/m209/operate': typeof M209OperateRoute
   '/enigma/setup/model': typeof EnigmaSetupModelRoute
   '/enigma/setup/plugboard': typeof EnigmaSetupPlugboardRoute
   '/enigma/setup/rings': typeof EnigmaSetupRingsRoute
   '/enigma/setup/rotors': typeof EnigmaSetupRotorsRoute
+  '/m209/setup/drum': typeof M209SetupDrumRoute
+  '/m209/setup/wheels': typeof M209SetupWheelsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/enigma': typeof EnigmaRouteRouteWithChildren
+  '/m209': typeof M209RouteRouteWithChildren
   '/about': typeof AboutRoute
   '/links': typeof LinksRoute
-  '/m209': typeof M209Route
   '/purple': typeof PurpleRoute
   '/enigma/setup': typeof EnigmaSetupRouteRouteWithChildren
+  '/m209/setup': typeof M209SetupRouteRouteWithChildren
   '/enigma/about': typeof EnigmaAboutRoute
   '/enigma/operate': typeof EnigmaOperateRoute
+  '/m209/about': typeof M209AboutRoute
+  '/m209/operate': typeof M209OperateRoute
   '/enigma/setup/model': typeof EnigmaSetupModelRoute
   '/enigma/setup/plugboard': typeof EnigmaSetupPlugboardRoute
   '/enigma/setup/rings': typeof EnigmaSetupRingsRoute
   '/enigma/setup/rotors': typeof EnigmaSetupRotorsRoute
+  '/m209/setup/drum': typeof M209SetupDrumRoute
+  '/m209/setup/wheels': typeof M209SetupWheelsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/enigma'
+    | '/m209'
     | '/about'
     | '/links'
-    | '/m209'
     | '/purple'
     | '/enigma/setup'
+    | '/m209/setup'
     | '/enigma/about'
     | '/enigma/operate'
+    | '/m209/about'
+    | '/m209/operate'
     | '/enigma/setup/model'
     | '/enigma/setup/plugboard'
     | '/enigma/setup/rings'
     | '/enigma/setup/rotors'
+    | '/m209/setup/drum'
+    | '/m209/setup/wheels'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/enigma'
+    | '/m209'
     | '/about'
     | '/links'
-    | '/m209'
     | '/purple'
     | '/enigma/setup'
+    | '/m209/setup'
     | '/enigma/about'
     | '/enigma/operate'
+    | '/m209/about'
+    | '/m209/operate'
     | '/enigma/setup/model'
     | '/enigma/setup/plugboard'
     | '/enigma/setup/rings'
     | '/enigma/setup/rotors'
+    | '/m209/setup/drum'
+    | '/m209/setup/wheels'
   id:
     | '__root__'
     | '/'
     | '/enigma'
+    | '/m209'
     | '/about'
     | '/links'
-    | '/m209'
     | '/purple'
     | '/enigma/setup'
+    | '/m209/setup'
     | '/enigma/about'
     | '/enigma/operate'
+    | '/m209/about'
+    | '/m209/operate'
     | '/enigma/setup/model'
     | '/enigma/setup/plugboard'
     | '/enigma/setup/rings'
     | '/enigma/setup/rotors'
+    | '/m209/setup/drum'
+    | '/m209/setup/wheels'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   EnigmaRouteRoute: typeof EnigmaRouteRouteWithChildren
+  M209RouteRoute: typeof M209RouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   LinksRoute: typeof LinksRoute
-  M209Route: typeof M209Route
   PurpleRoute: typeof PurpleRoute
 }
 
@@ -199,13 +259,6 @@ declare module '@tanstack/react-router' {
       path: '/purple'
       fullPath: '/purple'
       preLoaderRoute: typeof PurpleRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/m209': {
-      id: '/m209'
-      path: '/m209'
-      fullPath: '/m209'
-      preLoaderRoute: typeof M209RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/links': {
@@ -222,6 +275,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/m209': {
+      id: '/m209'
+      path: '/m209'
+      fullPath: '/m209'
+      preLoaderRoute: typeof M209RouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/enigma': {
       id: '/enigma'
       path: '/enigma'
@@ -235,6 +295,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/m209/operate': {
+      id: '/m209/operate'
+      path: '/operate'
+      fullPath: '/m209/operate'
+      preLoaderRoute: typeof M209OperateRouteImport
+      parentRoute: typeof M209RouteRoute
+    }
+    '/m209/about': {
+      id: '/m209/about'
+      path: '/about'
+      fullPath: '/m209/about'
+      preLoaderRoute: typeof M209AboutRouteImport
+      parentRoute: typeof M209RouteRoute
     }
     '/enigma/operate': {
       id: '/enigma/operate'
@@ -250,12 +324,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnigmaAboutRouteImport
       parentRoute: typeof EnigmaRouteRoute
     }
+    '/m209/setup': {
+      id: '/m209/setup'
+      path: '/setup'
+      fullPath: '/m209/setup'
+      preLoaderRoute: typeof M209SetupRouteRouteImport
+      parentRoute: typeof M209RouteRoute
+    }
     '/enigma/setup': {
       id: '/enigma/setup'
       path: '/setup'
       fullPath: '/enigma/setup'
       preLoaderRoute: typeof EnigmaSetupRouteRouteImport
       parentRoute: typeof EnigmaRouteRoute
+    }
+    '/m209/setup/wheels': {
+      id: '/m209/setup/wheels'
+      path: '/wheels'
+      fullPath: '/m209/setup/wheels'
+      preLoaderRoute: typeof M209SetupWheelsRouteImport
+      parentRoute: typeof M209SetupRouteRoute
+    }
+    '/m209/setup/drum': {
+      id: '/m209/setup/drum'
+      path: '/drum'
+      fullPath: '/m209/setup/drum'
+      preLoaderRoute: typeof M209SetupDrumRouteImport
+      parentRoute: typeof M209SetupRouteRoute
     }
     '/enigma/setup/rotors': {
       id: '/enigma/setup/rotors'
@@ -321,12 +416,42 @@ const EnigmaRouteRouteWithChildren = EnigmaRouteRoute._addFileChildren(
   EnigmaRouteRouteChildren,
 )
 
+interface M209SetupRouteRouteChildren {
+  M209SetupDrumRoute: typeof M209SetupDrumRoute
+  M209SetupWheelsRoute: typeof M209SetupWheelsRoute
+}
+
+const M209SetupRouteRouteChildren: M209SetupRouteRouteChildren = {
+  M209SetupDrumRoute: M209SetupDrumRoute,
+  M209SetupWheelsRoute: M209SetupWheelsRoute,
+}
+
+const M209SetupRouteRouteWithChildren = M209SetupRouteRoute._addFileChildren(
+  M209SetupRouteRouteChildren,
+)
+
+interface M209RouteRouteChildren {
+  M209SetupRouteRoute: typeof M209SetupRouteRouteWithChildren
+  M209AboutRoute: typeof M209AboutRoute
+  M209OperateRoute: typeof M209OperateRoute
+}
+
+const M209RouteRouteChildren: M209RouteRouteChildren = {
+  M209SetupRouteRoute: M209SetupRouteRouteWithChildren,
+  M209AboutRoute: M209AboutRoute,
+  M209OperateRoute: M209OperateRoute,
+}
+
+const M209RouteRouteWithChildren = M209RouteRoute._addFileChildren(
+  M209RouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   EnigmaRouteRoute: EnigmaRouteRouteWithChildren,
+  M209RouteRoute: M209RouteRouteWithChildren,
   AboutRoute: AboutRoute,
   LinksRoute: LinksRoute,
-  M209Route: M209Route,
   PurpleRoute: PurpleRoute,
 }
 export const routeTree = rootRouteImport
