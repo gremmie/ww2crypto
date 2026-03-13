@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import configReducer from "../features/config/configSlice";
 import enigmaReducer from "../features/enigma/enigmaSlice";
 import { storageMiddleware } from "../features/enigma/middleware/storageMiddleware.ts";
 
 // Create the root reducer separately so we can extract the RootState type.
 const rootReducer = combineReducers({
   enigma: enigmaReducer,
+  config: configReducer,
 });
 
 export const setupStore = (preloadedState?: Partial<RootState>) => {

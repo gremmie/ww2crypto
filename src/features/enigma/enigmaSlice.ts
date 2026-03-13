@@ -9,7 +9,7 @@ import {
 } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store";
 import { applicationStarted } from "../common/actions.ts";
-import ConfigStorage from "../common/config/configStorage.ts";
+import ConfigStorage from "../config/configStorage.ts";
 import type { KeyboardType } from "./components/operate/keyboardType.ts";
 import type { EnigmaConfig } from "./config/enigmaConfig.ts";
 import EnigmaMachine from "./machine/enigmaMachine.ts";

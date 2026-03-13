@@ -1,17 +1,42 @@
 import type { Middleware } from "@reduxjs/toolkit";
 import type { RootState } from "../../../app/store";
-import ConfigStorage from "../../common/config/configStorage.ts";
+import { applicationStarted } from "../../common/actions.ts";
+import type { MachineConfig } from "../../common/config/machineConfig.ts";
+import ConfigStorage from "../../config/configStorage.ts";
 import type { EnigmaConfig } from "../config/enigmaConfig.ts";
 import { configNameSaved } from "../enigmaSlice";
 
 export const storageMiddleware: Middleware<object, RootState> =
   (storeApi) => (next) => (action) => {
-    // Use the action creator's .match() method as a type guard
-    if (configNameSaved.match(action)) {
+    if (applicationStarted.match(action)) {
+      // Migrate Enigma configs if they already exist.
+      const enigmaConfigStr = localStorage.getItem("ww2crypto-enigma");
+      if (enigmaConfigStr !== null) {
+        const entries = JSON.parse(enigmaConfigStr) as [
+          string,
+          MachineConfig,
+        ][];
+        // Enigma configs didn't always have a type field. Fix that up.
+        const migratedEntries: MachineConfig[] = entries.map(([, config]) => {
+          const uuid = self.crypto.randomUUID();
+          return {
+            ...config,
+            type: "enigma",
+            id: uuid,
+          };
+        });
+        localStorage.setItem(
+          "ww2crypto-configs",
+          JSON.stringify(migratedEntries),
+        );
+        //localStorage.removeItem("ww2crypto-configs");
+      }
+    } else if (configNameSaved.match(action)) {
       const state = storeApi.getState().enigma;
 
       const config: EnigmaConfig = {
         type: "enigma",
+        id: self.crypto.randomUUID(),
         name: action.payload,
         createdAt: new Date().toISOString(),
         reflector: state.reflector as string,

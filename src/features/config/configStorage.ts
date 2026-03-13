@@ -1,4 +1,4 @@
-import type { MachineConfig } from "./machineConfig.ts";
+import type { MachineConfig } from "../common/config/machineConfig.ts";
 
 const storageKeyPrefix = "ww2crypto-";
 
@@ -14,8 +14,16 @@ export default class ConfigStorage {
     if (configType !== "enigma") return new Map(entries);
 
     // Enigma configs didn't always have a type field. Fix that up.
+    let n = 0;
     const fixedEntries: [string, MachineConfig][] = entries.map(
-      ([key, config]) => [key, { ...config, type: "enigma" }],
+      ([key, config]) => [
+        key,
+        {
+          ...config,
+          type: "enigma",
+          id: `${n++}`,
+        },
+      ],
     );
     return new Map(fixedEntries);
   }
