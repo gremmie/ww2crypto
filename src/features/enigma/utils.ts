@@ -1,4 +1,4 @@
-import type { MachineConfig } from "./config/machineConfig.ts";
+import type { EnigmaConfig } from "./config/enigmaConfig.ts";
 
 export const aCode = "A".charCodeAt(0);
 
@@ -136,10 +136,10 @@ export function groupText(s: string, n: number = 5): string {
 /**
  * Returns a summary string for a given MachineConfig.
  *
- * @param config {MachineConfig} - the config to produce the summary for
+ * @param config {EnigmaConfig} - the config to produce the summary for
  * @returns {string} - the summary string
  */
-export function setupSummary(config: MachineConfig): string {
+export function setupSummary(config: EnigmaConfig): string {
   const rotors = config.rotors.join(" ");
 
   const rings = config.rings

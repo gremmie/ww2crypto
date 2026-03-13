@@ -9,9 +9,9 @@ import {
 } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store";
 import { applicationStarted } from "../common/actions.ts";
+import ConfigStorage from "../common/config/configStorage.ts";
 import type { KeyboardType } from "./components/operate/keyboardType.ts";
-import ConfigStorage from "./config/configStorage.ts";
-import type { MachineConfig } from "./config/machineConfig.ts";
+import type { EnigmaConfig } from "./config/enigmaConfig.ts";
 import EnigmaMachine from "./machine/enigmaMachine.ts";
 import Plugboard from "./machine/plugboard.ts";
 import reflectorFactory from "./machine/reflectorFactory.ts";
@@ -24,7 +24,7 @@ export type ReflectorType = "B" | "C" | "B-Thin" | "C-Thin" | null;
 export type NotationType = "letter" | "number";
 
 const configAdapter = createEntityAdapter({
-  selectId: (config: MachineConfig) => config.name,
+  selectId: (config: EnigmaConfig) => config.name,
   sortComparer: (a, b) => a.name.localeCompare(b.name),
 });
 
@@ -48,7 +48,7 @@ export interface EnigmaState {
   activeLamp: string;
   isLampPanelOpen: boolean;
   configName: string;
-  configs: EntityState<MachineConfig, string>;
+  configs: EntityState<EnigmaConfig, string>;
   isInputGrouped: boolean;
   isOutputGrouped: boolean;
   keyboardType: KeyboardType;
@@ -273,7 +273,7 @@ export const enigmaSlice = createSlice({
     configNameSaved: (state, action: PayloadAction<string>) => {
       const configName = action.payload;
 
-      const config = ConfigStorage.getConfig(configName);
+      const config = ConfigStorage.getConfig("enigma", configName);
       if (config !== undefined) {
         state.configName = configName;
         configAdapter.setOne(state.configs, config);
@@ -299,17 +299,14 @@ export const enigmaSlice = createSlice({
     deleteConfigInitiated: (state, action: PayloadAction<string>) => {
       const configName = action.payload;
       configAdapter.removeOne(state.configs, configName);
-      ConfigStorage.removeConfig(configName);
+      ConfigStorage.removeConfig("enigma", configName);
       if (state.configName === configName) {
         state.configName = "";
       }
     },
-    undoDeleteConfigInitiated: (
-      state,
-      action: PayloadAction<MachineConfig>,
-    ) => {
+    undoDeleteConfigInitiated: (state, action: PayloadAction<EnigmaConfig>) => {
       configAdapter.setOne(state.configs, action.payload);
-      ConfigStorage.saveConfig(action.payload);
+      ConfigStorage.saveConfig("enigma", action.payload);
     },
     inputGroupSwitchChanged: (state, action: PayloadAction<boolean>) => {
       state.isInputGrouped = action.payload;
@@ -326,7 +323,7 @@ export const enigmaSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(applicationStarted, (state) => {
-      configAdapter.setAll(state.configs, ConfigStorage.getConfigs());
+      configAdapter.setAll(state.configs, ConfigStorage.getConfigs("enigma"));
     });
   },
 });

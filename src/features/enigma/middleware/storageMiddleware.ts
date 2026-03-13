@@ -1,7 +1,7 @@
 import type { Middleware } from "@reduxjs/toolkit";
 import type { RootState } from "../../../app/store";
-import ConfigStorage from "../config/configStorage.ts";
-import type { MachineConfig } from "../config/machineConfig.ts";
+import ConfigStorage from "../../common/config/configStorage.ts";
+import type { EnigmaConfig } from "../config/enigmaConfig.ts";
 import { configNameSaved } from "../enigmaSlice";
 
 export const storageMiddleware: Middleware<object, RootState> =
@@ -10,7 +10,8 @@ export const storageMiddleware: Middleware<object, RootState> =
     if (configNameSaved.match(action)) {
       const state = storeApi.getState().enigma;
 
-      const config: MachineConfig = {
+      const config: EnigmaConfig = {
+        type: "enigma",
         name: action.payload,
         createdAt: new Date().toISOString(),
         reflector: state.reflector as string,
@@ -21,7 +22,7 @@ export const storageMiddleware: Middleware<object, RootState> =
         plugboardNotation: state.plugboardNotation,
       };
 
-      ConfigStorage.saveConfig(config);
+      ConfigStorage.saveConfig("enigma", config);
     }
 
     return next(action);

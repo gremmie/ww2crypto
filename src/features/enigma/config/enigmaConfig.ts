@@ -1,4 +1,5 @@
-export interface MachineConfig {
+export interface EnigmaConfig {
+  type: "enigma";
   name: string;
   createdAt: string; // ISO 8601 format
   reflector: string;

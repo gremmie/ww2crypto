@@ -12,7 +12,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
-import type { MachineConfig } from "../../config/machineConfig.ts";
+import type { EnigmaConfig } from "../../config/enigmaConfig.ts";
 import {
   deleteConfigInitiated,
   loadConfigInitiated,
@@ -27,8 +27,9 @@ export default function LoadConfigDialog() {
   const [open, setOpen] = React.useState(false);
   const [setupName, setSetupName] = React.useState("");
   const canLoad = setupName.length > 0;
-  const [deletedConfig, setDeletedConfig] =
-    React.useState<MachineConfig | null>(null);
+  const [deletedConfig, setDeletedConfig] = React.useState<EnigmaConfig | null>(
+    null,
+  );
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -46,12 +47,12 @@ export default function LoadConfigDialog() {
     handleClose();
   };
 
-  const handleCardDblClick = (config: MachineConfig) => {
+  const handleCardDblClick = (config: EnigmaConfig) => {
     setSetupName(config.name);
     handleLoad();
   };
 
-  const handleDelete = (config: MachineConfig) => {
+  const handleDelete = (config: EnigmaConfig) => {
     setDeletedConfig(config);
     dispatch(deleteConfigInitiated(config.name));
   };

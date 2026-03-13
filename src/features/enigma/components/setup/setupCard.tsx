@@ -5,15 +5,15 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import type { MachineConfig } from "../../config/machineConfig.ts";
+import type { EnigmaConfig } from "../../config/enigmaConfig.ts";
 import { setupSummary } from "../../utils.ts";
 
 interface SetupCardProps {
-  config: MachineConfig;
+  config: EnigmaConfig;
   isSelected: boolean;
-  clickCallback: (config: MachineConfig) => void;
-  dblClickCallback: (config: MachineConfig) => void;
-  deleteCallback: (config: MachineConfig) => void;
+  clickCallback: (config: EnigmaConfig) => void;
+  dblClickCallback: (config: EnigmaConfig) => void;
+  deleteCallback: (config: EnigmaConfig) => void;
 }
 
 export default function SetupCard(props: SetupCardProps) {
