@@ -1,12 +1,15 @@
 import { Tooltip } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { useAppSelector } from "../../../../app/hooks.ts";
-import { selectConfigName, selectIsConfigModified } from "../../enigmaSlice.ts";
+import { useAppSelector } from "../../../app/hooks.ts";
+import {
+  selectActiveConfig,
+  selectIsActiveConfigModified,
+} from "../../config/configSlice.ts";
 
 export default function SetupName() {
-  const configName = useAppSelector(selectConfigName);
+  const configName = useAppSelector(selectActiveConfig)?.name ?? "";
   const isNotSaved = configName.length === 0;
-  const isModified = useAppSelector(selectIsConfigModified);
+  const isModified = useAppSelector(selectIsActiveConfigModified);
 
   const nameSpan = (
     <Typography

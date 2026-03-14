@@ -4,33 +4,44 @@ import TabPanel from "@mui/lab/TabPanel";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { Outlet, useLocation } from "@tanstack/react-router";
-//import { useAppSelector } from "../../../../app/hooks.ts";
-import { RouterButton } from "../../../../routerLinkComponents/routerButton.tsx";
-import type { TRoutes } from "../../../../routeTypes.ts";
-// import { selectIsSetupComplete } from "../../enigmaSlice.ts";
-// import LoadConfigDialog from "./loadConfigDialog.tsx";
-// import SaveConfigDialog from "./saveConfigDialog.tsx";
-// import SetupCompleteAlert from "./setupCompleteAlert.tsx";
-// import SetupName from "./setupName.tsx";
-import { SetupStepper } from "./setupStepper.tsx";
+import { RouterButton } from "../../../routerLinkComponents/routerButton.tsx";
+import type { TRoutes } from "../../../routeTypes.ts";
+import LoadConfigDialog from "../../enigma/components/setup/loadConfigDialog.tsx";
+import SaveConfigDialog from "../../enigma/components/setup/saveConfigDialog.tsx";
+import { SetupStepper as EnigmaSetupStepper } from "../../enigma/components/setup/setupStepper.tsx";
+import { SetupStepper as M209SetupStepper } from "../../m209/components/setup/setupStepper.tsx";
+import type { MachineType } from "../config/machineType.ts";
+import SetupCompleteAlert from "./setupCompleteAlert.tsx";
+import SetupName from "./setupName.tsx";
 
-export default function M209SetupTab() {
+interface SimSetupTabProps {
+  machineType: MachineType;
+  setupPaths: TRoutes[];
+  operatePath: TRoutes;
+  isSetupComplete: boolean;
+}
+
+export default function SimSetupTab(props: SimSetupTabProps) {
   const location = useLocation();
   const currentPath = location.pathname as TRoutes;
-  const isFirstStep = currentPath === "/m209/setup/drum";
-  const isLastStep = currentPath === "/m209/setup/wheels";
-  const isSetupComplete = false; //useAppSelector(selectIsSetupComplete);
+  const isFirstStep = currentPath === props.setupPaths[0];
+  const isLastStep = currentPath === props.setupPaths[-1];
+  const isSetupComplete = props.isSetupComplete;
   const canJumpToOperate = isSetupComplete && isLastStep;
 
-  const nextPath = () => {
+  const nextPath = (): TRoutes => {
     if (canJumpToOperate) {
-      return "/m209/operate";
+      return props.operatePath;
     }
-    return toNextByLocation.get(location.pathname as TRoutes);
+    const n = props.setupPaths.indexOf(currentPath);
+    return n === -1 || n === props.setupPaths.length - 1
+      ? currentPath
+      : props.setupPaths[n + 1];
   };
 
-  const backPath = () => {
-    return toBackByLocation.get(location.pathname as TRoutes);
+  const backPath = (): TRoutes => {
+    const n = props.setupPaths.indexOf(currentPath);
+    return n === -1 || n === 0 ? currentPath : props.setupPaths[n - 1];
   };
 
   return (
@@ -39,13 +50,17 @@ export default function M209SetupTab() {
         <Stack spacing={2}>
           {isSetupComplete && (
             <Box display="flex" justifyContent="center">
-              {/*<SetupCompleteAlert />*/}
+              <SetupCompleteAlert
+                machineType={props.machineType}
+                operatePath={props.operatePath}
+              />
             </Box>
           )}
           <Box display="flex" justifyContent="center">
-            {/*<SetupName />*/}
+            <SetupName />
           </Box>
-          <SetupStepper />
+          {props.machineType === "enigma" && <EnigmaSetupStepper />}
+          {props.machineType === "m209" && <M209SetupStepper />}
           <Box
             sx={{
               height: {
@@ -71,8 +86,8 @@ export default function M209SetupTab() {
               sx={{ pt: 4 }}
               justifyContent="space-evenly"
             >
-              {/*<LoadConfigDialog />*/}
-              {/*<SaveConfigDialog />*/}
+              <LoadConfigDialog />
+              <SaveConfigDialog />
             </Stack>
             <Box display="flex" justifyContent="space-around" sx={{ pt: 2 }}>
               <RouterButton
@@ -98,11 +113,3 @@ export default function M209SetupTab() {
     </TabPanel>
   );
 }
-
-const toNextByLocation = new Map<TRoutes, TRoutes>([
-  ["/m209/setup/drum", "/m209/setup/wheels"],
-]);
-
-const toBackByLocation = new Map<TRoutes, TRoutes>([
-  ["/m209/setup/wheels", "/m209/setup/drum"],
-]);
