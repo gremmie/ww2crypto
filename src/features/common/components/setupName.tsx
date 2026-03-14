@@ -5,11 +5,20 @@ import {
   selectActiveConfig,
   selectIsActiveConfigModified,
 } from "../../config/configSlice.ts";
+import type { MachineType } from "../config/machineType.ts";
 
-export default function SetupName() {
-  const configName = useAppSelector(selectActiveConfig)?.name ?? "";
+interface SetupNameProps {
+  machineType: MachineType;
+}
+
+export default function SetupName(props: SetupNameProps) {
+  const configName =
+    useAppSelector((state) => selectActiveConfig(state, props.machineType))
+      ?.name ?? "";
   const isNotSaved = configName.length === 0;
-  const isModified = useAppSelector(selectIsActiveConfigModified);
+  const isModified = useAppSelector((state) =>
+    selectIsActiveConfigModified(state, props.machineType),
+  );
 
   const nameSpan = (
     <Typography

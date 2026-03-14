@@ -57,7 +57,7 @@ export default function SimSetupTab(props: SimSetupTabProps) {
             </Box>
           )}
           <Box display="flex" justifyContent="center">
-            <SetupName />
+            <SetupName machineType={props.machineType} />
           </Box>
           {props.machineType === "enigma" && <EnigmaSetupStepper />}
           {props.machineType === "m209" && <M209SetupStepper />}

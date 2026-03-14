@@ -6,6 +6,7 @@ import {
 import type { RootState } from "../../app/store.ts";
 import { applicationStarted } from "../common/actions.ts";
 import type { MachineConfig } from "../common/config/machineConfig.ts";
+import type { MachineType } from "../common/config/machineType.ts";
 import ConfigStorage2 from "./configStorage2.ts";
 
 const configAdapter = createEntityAdapter({
@@ -23,12 +24,16 @@ const configSelectors = configAdapter.getSelectors<RootState>(
 
 export interface ConfigState {
   configs: EntityState<MachineConfig, string>;
-  activeConfig: string | null;
+  loadedConfigs: Record<MachineType, string | undefined>;
 }
 
 const initialState: ConfigState = {
   configs: configAdapter.getInitialState(),
-  activeConfig: null,
+  loadedConfigs: {
+    enigma: undefined,
+    m209: undefined,
+    purple: undefined,
+  },
 };
 
 export const configSlice = createSlice({
@@ -46,15 +51,21 @@ export const configSlice = createSlice({
 
 // Selectors
 
-export const selectActiveConfig = (state: RootState) => {
-  const activeId = state.config.activeConfig;
-  if (activeId === null) return null;
+export const selectActiveConfig = (
+  state: RootState,
+  machineType: MachineType,
+) => {
+  const activeId = state.config.loadedConfigs[machineType];
+  if (activeId === undefined) return undefined;
   return configSelectors.selectById(state, activeId);
 };
 
-export const selectIsActiveConfigModified = (state: RootState) => {
-  const activeConfig = selectActiveConfig(state);
-  if (activeConfig === null) return false;
+export const selectIsActiveConfigModified = (
+  state: RootState,
+  machineType: MachineType,
+) => {
+  const activeConfig = selectActiveConfig(state, machineType);
+  if (activeConfig === undefined) return false;
 
   if (activeConfig.type === "enigma") {
     const enigmaState = state.enigma;
