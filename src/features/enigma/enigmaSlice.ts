@@ -1,15 +1,11 @@
 import {
   createAsyncThunk,
-  createEntityAdapter,
   createSelector,
   createSlice,
-  type EntityState,
   type PayloadAction,
   type WritableDraft,
 } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store";
-import { applicationStarted } from "../common/actions.ts";
-import ConfigStorage from "../config/configStorage.ts";
 import type { KeyboardType } from "./components/operate/keyboardType.ts";
 import type { EnigmaConfig } from "./config/enigmaConfig.ts";
 import EnigmaMachine from "./machine/enigmaMachine.ts";
@@ -22,15 +18,6 @@ import { isValidPlugboardString, normalizePlugboardString } from "./utils.ts";
 export type ReflectorType = "B" | "C" | "B-Thin" | "C-Thin" | null;
 
 export type NotationType = "letter" | "number";
-
-const configAdapter = createEntityAdapter({
-  selectId: (config: EnigmaConfig) => config.name,
-  sortComparer: (a, b) => a.name.localeCompare(b.name),
-});
-
-const configSelectors = configAdapter.getSelectors<RootState>(
-  (state) => state.enigma.configs,
-);
 
 export interface EnigmaState {
   numberOfRotors: number;
@@ -47,8 +34,6 @@ export interface EnigmaState {
   bufferedText: string;
   activeLamp: string;
   isLampPanelOpen: boolean;
-  configName: string;
-  configs: EntityState<EnigmaConfig, string>;
   isInputGrouped: boolean;
   isOutputGrouped: boolean;
   keyboardType: KeyboardType;
@@ -70,8 +55,6 @@ const initialState: EnigmaState = {
   bufferedText: "",
   activeLamp: "",
   isLampPanelOpen: true,
-  configName: "",
-  configs: configAdapter.getInitialState(),
   isInputGrouped: false,
   isOutputGrouped: false,
   keyboardType: "raw",
@@ -110,7 +93,6 @@ export const enigmaSlice = createSlice({
       state.inputText = "";
       state.outputText = "";
       state.bufferedText = "";
-      state.configName = "";
     },
     reflectorChanged: (state, action: PayloadAction<ReflectorType>) => {
       state.reflector = action.payload;
@@ -270,15 +252,6 @@ export const enigmaSlice = createSlice({
     lampPanelOpenStatusChanged: (state, action: PayloadAction<boolean>) => {
       state.isLampPanelOpen = action.payload;
     },
-    configNameSaved: (state, action: PayloadAction<string>) => {
-      const configName = action.payload;
-
-      const config = ConfigStorage.getConfig("enigma", configName);
-      if (config !== undefined) {
-        state.configName = configName;
-        configAdapter.setOne(state.configs, config);
-      }
-    },
     configLoaded: (state, action: PayloadAction<EnigmaConfig>) => {
       const config = action.payload;
       state.numberOfRotors = config.rotors.length;
@@ -290,19 +263,6 @@ export const enigmaSlice = createSlice({
       state.plugboard = config.plugboard;
       state.plugboardNotation = config.plugboardNotation;
       state.plugboardCableCount = config.plugboard.split(" ").length;
-      state.configName = config.name;
-    },
-    deleteConfigInitiated: (state, action: PayloadAction<string>) => {
-      const configName = action.payload;
-      configAdapter.removeOne(state.configs, configName);
-      ConfigStorage.removeConfig("enigma", configName);
-      if (state.configName === configName) {
-        state.configName = "";
-      }
-    },
-    undoDeleteConfigInitiated: (state, action: PayloadAction<EnigmaConfig>) => {
-      configAdapter.setOne(state.configs, action.payload);
-      ConfigStorage.saveConfig("enigma", action.payload);
     },
     inputGroupSwitchChanged: (state, action: PayloadAction<boolean>) => {
       state.isInputGrouped = action.payload;
@@ -316,11 +276,6 @@ export const enigmaSlice = createSlice({
     keyboardTypeChanged: (state, action: PayloadAction<KeyboardType>) => {
       state.keyboardType = action.payload;
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(applicationStarted, (state) => {
-      configAdapter.setAll(state.configs, ConfigStorage.getConfigs("enigma"));
-    });
   },
 });
 
@@ -364,10 +319,7 @@ export const {
   operatorClearedInput,
   operatorClearedOutput,
   lampPanelOpenStatusChanged,
-  configNameSaved,
   configLoaded,
-  deleteConfigInitiated,
-  undoDeleteConfigInitiated,
   inputGroupSwitchChanged,
   outputGroupSwitchChanged,
   bufferedTextChanged,
@@ -475,43 +427,6 @@ export const selectActiveLamp = (state: RootState) => state.enigma.activeLamp;
 
 export const selectIsLampPanelOpen = (state: RootState) =>
   state.enigma.isLampPanelOpen;
-
-export const selectConfigNames = (state: RootState) =>
-  configAdapter.getSelectors().selectIds(state.enigma.configs);
-
-export const selectConfigs = (state: RootState) => {
-  return configSelectors.selectAll(state);
-};
-
-export const selectConfigName = (state: RootState) => state.enigma.configName;
-
-export const selectIsConfigModified = (state: RootState) => {
-  const configName = state.enigma.configName;
-  if (configName === "") return false;
-
-  const config = configSelectors.selectById(state, configName);
-  const enigmaState = state.enigma;
-  if (config.reflector !== enigmaState.reflector) return true;
-  if (config.rotors.length !== enigmaState.rotorTypes.length) return true;
-  if (
-    !config.rotors.every(
-      (value, index) => value == enigmaState.rotorTypes[index],
-    )
-  ) {
-    return true;
-  }
-  if (config.rings.length !== enigmaState.rotorTypes.length) return true;
-  if (
-    !config.rings.every(
-      (value, index) => value == enigmaState.ringSettings[index],
-    )
-  ) {
-    return true;
-  }
-  if (config.ringNotation !== enigmaState.ringSettingsNotation) return true;
-  if (config.plugboard !== enigmaState.plugboard) return true;
-  return config.plugboardNotation !== enigmaState.plugboardNotation;
-};
 
 export const selectIsInputGrouped = (state: RootState) =>
   state.enigma.isInputGrouped;
