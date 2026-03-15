@@ -12,24 +12,30 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
-import type { EnigmaConfig } from "../../config/enigmaConfig.ts";
+import type { MachineConfig } from "../../../common/config/machineConfig.ts";
+import type { MachineType } from "../../../common/config/machineType.ts";
 import {
   deleteConfigInitiated,
   loadConfigInitiated,
-  selectConfigs,
+  selectConfigsByType,
   undoDeleteConfigInitiated,
-} from "../../enigmaSlice.ts";
+} from "../../../config/configSlice.ts";
 import SetupCard from "./setupCard.tsx";
 
-export default function LoadConfigDialog() {
+interface LoadConfigDialogProps {
+  machineType: MachineType;
+}
+
+export default function LoadConfigDialog(props: LoadConfigDialogProps) {
   const dispatch = useAppDispatch();
-  const configs = useAppSelector(selectConfigs);
-  const [open, setOpen] = React.useState(false);
-  const [setupName, setSetupName] = React.useState("");
-  const canLoad = setupName.length > 0;
-  const [deletedConfig, setDeletedConfig] = React.useState<EnigmaConfig | null>(
-    null,
+  const configs = useAppSelector((s) =>
+    selectConfigsByType(s, props.machineType),
   );
+  const [open, setOpen] = React.useState(false);
+  const [selectedConfigId, setSelectedConfigId] = React.useState("");
+  const canLoad = selectedConfigId.length > 0;
+  const [deletedConfig, setDeletedConfig] =
+    React.useState<MachineConfig | null>(null);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,24 +43,24 @@ export default function LoadConfigDialog() {
 
   const handleClose = () => {
     setOpen(false);
-    setSetupName("");
+    setSelectedConfigId("");
     setDeletedConfig(null);
   };
 
   const handleLoad = () => {
-    if (setupName.length === 0) return;
-    dispatch(loadConfigInitiated(setupName));
+    if (selectedConfigId.length === 0) return;
+    dispatch(loadConfigInitiated(selectedConfigId));
     handleClose();
   };
 
-  const handleCardDblClick = (config: EnigmaConfig) => {
-    setSetupName(config.name);
+  const handleCardDblClick = (config: MachineConfig) => {
+    setSelectedConfigId(config.id);
     handleLoad();
   };
 
-  const handleDelete = (config: EnigmaConfig) => {
+  const handleDelete = (config: MachineConfig) => {
     setDeletedConfig(config);
-    dispatch(deleteConfigInitiated(config.name));
+    dispatch(deleteConfigInitiated(config.id));
   };
 
   const handleUndo = () => {
@@ -126,10 +132,10 @@ export default function LoadConfigDialog() {
               <Stack direction="column" spacing={2}>
                 {configs.map((config) => (
                   <SetupCard
-                    key={config.name}
+                    key={config.id}
                     config={config}
-                    isSelected={setupName === config.name}
-                    clickCallback={(config) => setSetupName(config.name)}
+                    isSelected={selectedConfigId === config.id}
+                    clickCallback={(config) => setSelectedConfigId(config.id)}
                     dblClickCallback={handleCardDblClick}
                     deleteCallback={handleDelete}
                   />

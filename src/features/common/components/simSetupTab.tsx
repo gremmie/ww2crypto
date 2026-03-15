@@ -86,8 +86,8 @@ export default function SimSetupTab(props: SimSetupTabProps) {
               sx={{ pt: 4 }}
               justifyContent="space-evenly"
             >
-              <LoadConfigDialog />
-              <SaveConfigDialog />
+              <LoadConfigDialog machineType={props.machineType} />
+              <SaveConfigDialog machineType={props.machineType} />
             </Stack>
             <Box display="flex" justifyContent="space-around" sx={{ pt: 2 }}>
               <RouterButton

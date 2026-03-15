@@ -12,4 +12,16 @@ export default class ConfigStorage2 {
     if (jsonStr === null) return [];
     return JSON.parse(jsonStr) as MachineConfig[];
   }
+
+  static removeConfig(id: string) {
+    const configs = ConfigStorage2.loadConfigs();
+    const newConfigs = configs.filter((config) => config.id !== id);
+    ConfigStorage2.saveConfigs(newConfigs);
+  }
+
+  static saveConfig(config: MachineConfig) {
+    const configs = ConfigStorage2.loadConfigs();
+    configs.push(config);
+    ConfigStorage2.saveConfigs(configs);
+  }
 }

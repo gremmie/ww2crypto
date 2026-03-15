@@ -12,27 +12,43 @@ import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import * as React from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
+import type { MachineType } from "../../../common/config/machineType.ts";
 import {
-  configNameSaved,
-  selectConfigName,
-  selectConfigNames,
-  selectIsConfigModified,
-  selectIsSetupComplete,
-} from "../../enigmaSlice.ts";
+  saveConfigInitiated,
+  selectActiveConfig,
+  selectConfigNamesByType,
+  selectIsActiveConfigModified,
+  selectIsSetupCompleteForType,
+} from "../../../config/configSlice.ts";
 
-export default function SaveConfigDialog() {
+interface SaveConfigDialogProps {
+  machineType: MachineType;
+}
+
+export default function SaveConfigDialog(props: SaveConfigDialogProps) {
   const dispatch = useAppDispatch();
   const [open, setOpen] = React.useState(false);
-  const [configName, setConfigName] = React.useState("");
+
+  const currentConfigName =
+    useAppSelector((s) => selectActiveConfig(s, props.machineType))?.name ?? "";
+
+  const [configName, setConfigName] = React.useState(currentConfigName);
   const [canOverwrite, setCanOverwrite] = React.useState(false);
-  const [isClosing, setIsClosing] = React.useState(false);
-  const configNames = useAppSelector(selectConfigNames);
+
+  const configNames = useAppSelector((s) =>
+    selectConfigNamesByType(s, props.machineType),
+  );
   const configExists = configNames.includes(configName);
+
   const canSave = configName.length !== 0 && (!configExists || canOverwrite);
 
-  const isConfigModified = useAppSelector(selectIsConfigModified);
-  const isSetupComplete = useAppSelector(selectIsSetupComplete);
-  const currentConfigName = useAppSelector(selectConfigName);
+  const isConfigModified = useAppSelector((s) =>
+    selectIsActiveConfigModified(s, props.machineType),
+  );
+  const isSetupComplete = useAppSelector((s) =>
+    selectIsSetupCompleteForType(s, props.machineType),
+  );
+
   const isNotSaved = currentConfigName.length === 0;
   const isSaveEnabled = isSetupComplete && (isNotSaved || isConfigModified);
 
@@ -41,8 +57,8 @@ export default function SaveConfigDialog() {
   };
 
   const handleClose = () => {
-    setIsClosing(true);
     setOpen(false);
+    setCanOverwrite(false);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -51,7 +67,12 @@ export default function SaveConfigDialog() {
     const formData = new FormData(event.currentTarget);
     const formJson = Object.fromEntries(formData.entries());
     const name = formJson.name as string;
-    dispatch(configNameSaved(name.trim()));
+    dispatch(
+      saveConfigInitiated({
+        name: name.trim(),
+        machineType: props.machineType,
+      }),
+    );
   };
 
   return (
@@ -85,7 +106,7 @@ export default function SaveConfigDialog() {
         </IconButton>
         <DialogContent>
           <DialogContentText>Enter a name for this setup:</DialogContentText>
-          <form onSubmit={handleSubmit} id="enigma-save-setup-form">
+          <form onSubmit={handleSubmit} id="save-config-form">
             <TextField
               autoFocus
               required
@@ -97,9 +118,9 @@ export default function SaveConfigDialog() {
               variant="filled"
               value={configName}
               onChange={(e) => setConfigName(e.target.value)}
-              error={configExists && !canOverwrite && !isClosing}
+              error={configExists && !canOverwrite && open}
               helperText={
-                configExists && !isClosing
+                configExists && open
                   ? "A setup with this name already exists."
                   : ""
               }
@@ -125,7 +146,7 @@ export default function SaveConfigDialog() {
           <Button
             variant="contained"
             type="submit"
-            form="enigma-save-setup-form"
+            form="save-config-form"
             disabled={!canSave}
           >
             Save

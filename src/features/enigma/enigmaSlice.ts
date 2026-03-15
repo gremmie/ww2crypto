@@ -279,22 +279,18 @@ export const enigmaSlice = createSlice({
         configAdapter.setOne(state.configs, config);
       }
     },
-    loadConfigInitiated: (state, action: PayloadAction<string>) => {
-      const config = configAdapter
-        .getSelectors()
-        .selectById(state.configs, action.payload);
-      if (config !== undefined) {
-        state.numberOfRotors = config.rotors.length;
-        state.reflector = config.reflector as ReflectorType;
-        state.rotorTypes = config.rotors;
-        state.ringSettings = config.rings;
-        state.rotorDisplays = new Array(state.numberOfRotors).fill("A");
-        state.ringSettingsNotation = config.ringNotation;
-        state.plugboard = config.plugboard;
-        state.plugboardNotation = config.plugboardNotation;
-        state.plugboardCableCount = config.plugboard.split(" ").length;
-        state.configName = config.name;
-      }
+    configLoaded: (state, action: PayloadAction<EnigmaConfig>) => {
+      const config = action.payload;
+      state.numberOfRotors = config.rotors.length;
+      state.reflector = config.reflector as ReflectorType;
+      state.rotorTypes = config.rotors;
+      state.ringSettings = config.rings;
+      state.rotorDisplays = new Array(state.numberOfRotors).fill("A");
+      state.ringSettingsNotation = config.ringNotation;
+      state.plugboard = config.plugboard;
+      state.plugboardNotation = config.plugboardNotation;
+      state.plugboardCableCount = config.plugboard.split(" ").length;
+      state.configName = config.name;
     },
     deleteConfigInitiated: (state, action: PayloadAction<string>) => {
       const configName = action.payload;
@@ -369,7 +365,7 @@ export const {
   operatorClearedOutput,
   lampPanelOpenStatusChanged,
   configNameSaved,
-  loadConfigInitiated,
+  configLoaded,
   deleteConfigInitiated,
   undoDeleteConfigInitiated,
   inputGroupSwitchChanged,
