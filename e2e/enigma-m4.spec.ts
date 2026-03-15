@@ -41,7 +41,7 @@ test("Enigma M4 test", async ({ page }) => {
     .fill("AT CL DH EP FG IO JN KQ MU RX");
   await page.getByRole("button", { name: "Set", exact: true }).click();
 
-  await page.getByRole("link", { name: "Operate", exact: true }).click();
+  await page.getByRole("tab", { name: "Operate", exact: true }).click();
   await page.getByRole("textbox", { name: "rotor window 0" }).click();
   await page.getByRole("textbox", { name: "rotor window 0" }).fill("m");
   await page.getByRole("textbox", { name: "rotor window 0" }).press("Tab");
