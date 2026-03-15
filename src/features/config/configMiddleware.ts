@@ -8,7 +8,7 @@ import {
   saveConfigInitiated,
   selectConfigById,
 } from "./configSlice.ts";
-import ConfigStorage2 from "./configStorage2.ts";
+import ConfigStorage from "./configStorage.ts";
 
 export const configMiddleware: Middleware<object, RootState> =
   (storeApi) => (next) => (action) => {
@@ -33,7 +33,7 @@ export const configMiddleware: Middleware<object, RootState> =
           plugboard: state.plugboard,
           plugboardNotation: state.plugboardNotation,
         };
-        ConfigStorage2.saveConfig(newConfig);
+        ConfigStorage.saveConfig(newConfig);
         storeApi.dispatch(configSaved(newConfig));
       }
     }

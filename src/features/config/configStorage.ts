@@ -2,7 +2,7 @@ import type { MachineConfig } from "../common/config/machineConfig.ts";
 
 const storageKey = "ww2crypto-configs";
 
-export default class ConfigStorage2 {
+export default class ConfigStorage {
   static saveConfigs(configs: MachineConfig[]) {
     self.localStorage.setItem(storageKey, JSON.stringify(configs));
   }
@@ -14,14 +14,14 @@ export default class ConfigStorage2 {
   }
 
   static removeConfig(id: string) {
-    const configs = ConfigStorage2.loadConfigs();
+    const configs = ConfigStorage.loadConfigs();
     const newConfigs = configs.filter((config) => config.id !== id);
-    ConfigStorage2.saveConfigs(newConfigs);
+    ConfigStorage.saveConfigs(newConfigs);
   }
 
   static saveConfig(config: MachineConfig) {
-    const configs = ConfigStorage2.loadConfigs();
+    const configs = ConfigStorage.loadConfigs();
     configs.push(config);
-    ConfigStorage2.saveConfigs(configs);
+    ConfigStorage.saveConfigs(configs);
   }
 }

@@ -10,7 +10,7 @@ import { applicationStarted } from "../common/actions.ts";
 import type { MachineConfig } from "../common/config/machineConfig.ts";
 import type { MachineType } from "../common/config/machineType.ts";
 import { selectIsSetupComplete } from "../enigma/enigmaSlice.ts";
-import ConfigStorage2 from "./configStorage2.ts";
+import ConfigStorage from "./configStorage.ts";
 
 const configAdapter = createEntityAdapter({
   selectId: (config: MachineConfig) => config.id,
@@ -58,14 +58,14 @@ export const configSlice = createSlice({
       if (state.loadedConfigs[config.type] === config.id) {
         state.loadedConfigs[config.type] = null;
       }
-      ConfigStorage2.removeConfig(config.id);
+      ConfigStorage.removeConfig(config.id);
     },
     undoDeleteConfigInitiated: (
       state,
       action: PayloadAction<MachineConfig>,
     ) => {
       configAdapter.setOne(state.configs, action.payload);
-      ConfigStorage2.saveConfig(action.payload);
+      ConfigStorage.saveConfig(action.payload);
     },
     saveConfigInitiated: (
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -81,7 +81,7 @@ export const configSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(applicationStarted, (state) => {
-      configAdapter.setAll(state.configs, ConfigStorage2.loadConfigs());
+      configAdapter.setAll(state.configs, ConfigStorage.loadConfigs());
     });
   },
 });
