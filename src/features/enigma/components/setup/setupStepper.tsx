@@ -19,7 +19,7 @@ export const SetupStepper = () => {
           <SetupStepperStep
             key={index}
             label={step.label}
-            isComplete={status[index]}
+            isComplete={status[index]!}
             routePath={step.path}
           />
         );

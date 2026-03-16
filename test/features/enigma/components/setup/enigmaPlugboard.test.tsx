@@ -75,7 +75,7 @@ describe("EnigmaPlugboard", () => {
       const menuItems = screen.getAllByRole("option");
       const choices = menuItems.map((m) => m.textContent);
       expect(choices).toEqual(expectedChoices);
-      await user.click(menuItems[n]);
+      await user.click(menuItems[n]!);
     }
 
     test("Two cable test with the dropdown controls - letters", async () => {

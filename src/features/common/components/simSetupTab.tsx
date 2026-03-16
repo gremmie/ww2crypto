@@ -36,12 +36,12 @@ export default function SimSetupTab(props: SimSetupTabProps) {
     const n = props.setupPaths.indexOf(currentPath);
     return n === -1 || n === props.setupPaths.length - 1
       ? currentPath
-      : props.setupPaths[n + 1];
+      : props.setupPaths[n + 1]!;
   };
 
   const backPath = (): TRoutes => {
     const n = props.setupPaths.indexOf(currentPath);
-    return n === -1 || n === 0 ? currentPath : props.setupPaths[n - 1];
+    return n === -1 || n === 0 ? currentPath : props.setupPaths[n - 1]!;
   };
 
   return (

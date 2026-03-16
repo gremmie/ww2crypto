@@ -36,7 +36,7 @@ export const DrawerItem = (props: DrawerItemProps) => {
   const currentPage = useLocation({
     select: (location): string => {
       if (location.pathname === "/") return "home";
-      return location.pathname.split("/")[1];
+      return location.pathname.split("/")[1]!;
     },
   });
   const useHomeIcon = props.page === "home";

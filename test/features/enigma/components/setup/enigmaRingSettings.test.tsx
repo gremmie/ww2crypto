@@ -46,7 +46,7 @@ describe("EnigmaRingSettings", () => {
     const ringSelects = screen.getAllByRole("combobox", { name: /Rotor \d/ });
     expect(ringSelects).toHaveLength(numRotors);
     for (let i = 0; i < ringSelects.length; ++i) {
-      await user.click(ringSelects[i]);
+      await user.click(ringSelects[i]!);
       const menuItems = screen.getAllByRole("option");
       const settings = notation === "letter" ? letterSettings : numberSettings;
       expect(menuItems).toHaveLength(settings.length);
@@ -55,7 +55,7 @@ describe("EnigmaRingSettings", () => {
         notation === "letter" ? m.textContent : parseInt(m.textContent),
       );
       expect(rotorLabels).toEqual(settings);
-      await user.click(menuItems[i]);
+      await user.click(menuItems[i]!);
     }
     const expectedRingSettings = numRotors === 3 ? [0, 1, 2] : [0, 1, 2, 3];
     expect(store.getState().enigma.ringSettings).toEqual(expectedRingSettings);

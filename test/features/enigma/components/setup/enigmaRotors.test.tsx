@@ -39,7 +39,7 @@ describe("EnigmaRotors", () => {
     const reflectorChoices = menuItems.map((m) => m.textContent);
     expect(reflectorChoices).toEqual(expectedReflectors.get(numRotors));
 
-    await user.click(menuItems[1]);
+    await user.click(menuItems[1]!);
     expect(store.getState().enigma.reflector).toEqual(
       numRotors === 3 ? "C" : "C-Thin",
     );
@@ -47,14 +47,14 @@ describe("EnigmaRotors", () => {
     const rotorSelects = screen.getAllByRole("combobox", { name: /Rotor \d/ });
     expect(rotorSelects).toHaveLength(numRotors);
     for (let i = 0; i < rotorSelects.length; ++i) {
-      await user.click(rotorSelects[i]);
+      await user.click(rotorSelects[i]!);
       menuItems = screen.getAllByRole("option");
 
       const rotors = expectedRotors.get(numRotors)!;
-      expect(menuItems).toHaveLength(rotors[i].length);
+      expect(menuItems).toHaveLength(rotors[i]!.length);
       const rotorLabels = menuItems.map((m) => m.textContent);
       expect(rotorLabels).toEqual(rotors[i]);
-      await user.click(menuItems[i]);
+      await user.click(menuItems[i]!);
     }
     const expectedRotorTypes =
       numRotors === 3 ? ["I", "II", "III"] : ["Beta", "II", "III", "IV"];

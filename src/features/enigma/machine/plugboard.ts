@@ -46,9 +46,9 @@ export default class Plugboard {
     const pairs = normalizePlugboardString(s).split(" ");
     this.wiringMap = Array.from({ length: 26 }, (_, i) => i);
 
-    for (let i = 0; i < pairs.length; ++i) {
-      const m = pairs[i].charCodeAt(0) - aCode;
-      const n = pairs[i].charCodeAt(1) - aCode;
+    for (const pair of pairs) {
+      const m = pair.charCodeAt(0) - aCode;
+      const n = pair.charCodeAt(1) - aCode;
       this.wiringMap[m] = n;
       this.wiringMap[n] = m;
     }
@@ -68,6 +68,6 @@ export default class Plugboard {
    * @returns {number} - The wire number of the output signal (0-25).
    */
   signal(n: number): number {
-    return this.wiringMap[n];
+    return this.wiringMap[n]!;
   }
 }

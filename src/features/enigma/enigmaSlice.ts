@@ -156,7 +156,8 @@ export const enigmaSlice = createSlice({
         state.plugboard === "" ? [] : state.plugboard.split(" ");
       if (
         connections.every(
-          (c) => !c.includes(newConnection[0]) && !c.includes(newConnection[1]),
+          (c) =>
+            !c.includes(newConnection[0]!) && !c.includes(newConnection[1]!),
         )
       ) {
         connections.push(newConnection.join(""));
@@ -224,7 +225,7 @@ export const enigmaSlice = createSlice({
 
       const newRotorDisplay = machine.getDisplay();
       for (let i = 0; i < newRotorDisplay.length; ++i) {
-        state.rotorDisplays[i] = newRotorDisplay[i];
+        state.rotorDisplays[i] = newRotorDisplay[i]!;
       }
     },
     operatorKeyReleased: (state) => {
@@ -239,7 +240,7 @@ export const enigmaSlice = createSlice({
 
       const newRotorDisplay = machine.getDisplay();
       for (let i = 0; i < newRotorDisplay.length; ++i) {
-        state.rotorDisplays[i] = newRotorDisplay[i];
+        state.rotorDisplays[i] = newRotorDisplay[i]!;
       }
     },
     operatorClearedInput: (state) => {
@@ -464,7 +465,7 @@ function createMachine(state: WritableDraft<EnigmaState>) {
 
   const rotors: Rotor[] = [];
   for (let i = 0; i < state.numberOfRotors; ++i) {
-    rotors.push(rotorFactory(state.rotorTypes[i], state.ringSettings[i])!);
+    rotors.push(rotorFactory(state.rotorTypes[i]!, state.ringSettings[i])!);
   }
   const machine = new EnigmaMachine(reflector, rotors, plugboard);
   machine.setDisplay(state.rotorDisplays.join(""));

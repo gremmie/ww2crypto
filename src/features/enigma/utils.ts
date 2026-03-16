@@ -7,7 +7,7 @@ export function toNumericPlug(c: string) {
 }
 
 export function toNumericConnection(c: string) {
-  return `${toNumericPlug(c[0])}/${toNumericPlug(c[1])}`;
+  return `${toNumericPlug(c[0]!)}/${toNumericPlug(c[1]!)}`;
 }
 
 export function isValidPlugboardString(s: string, cableCount: number) {
@@ -21,7 +21,7 @@ export function isValidPlugboardString(s: string, cableCount: number) {
   const noSpaces = s.replaceAll(/\s/g, "").toUpperCase();
   const plugByCount = new Map<string, number>();
   for (let i = 0; i < noSpaces.length; ++i) {
-    const c = noSpaces[i];
+    const c = noSpaces[i]!;
     const count = plugByCount.get(c) ?? 0;
     plugByCount.set(c, count + 1);
   }
@@ -40,9 +40,9 @@ export function isValidNumericPlugboardString(s: string, cableCount: number) {
   // Every plug has to appear exactly once.
   const numbers = s.replaceAll(/\s/g, "/").split("/");
   const plugByCount = new Map<string, number>();
-  for (let i = 0; i < numbers.length; ++i) {
-    const count = plugByCount.get(numbers[i]) ?? 0;
-    plugByCount.set(numbers[i], count + 1);
+  for (const n of numbers) {
+    const count = plugByCount.get(n) ?? 0;
+    plugByCount.set(n, count + 1);
   }
   const values = Array.from(plugByCount.values());
   return values.every((c) => c === 1);
@@ -72,7 +72,7 @@ export function toNumericPlugboardString(s: string) {
 
   const numeric = alpha.map((c) => {
     const [a, b] = c.split("");
-    return `${toNumericPlug(a)}/${toNumericPlug(b)}`;
+    return `${toNumericPlug(a!)}/${toNumericPlug(b!)}`;
   });
   return numeric.join(" ");
 }
@@ -87,8 +87,8 @@ export function toAlphaPlugboardString(s: string) {
   const connections = s.replaceAll(/\s+/g, " ").split(" ");
   const alpha = connections.map((pair) => {
     const [a, b] = pair.split("/");
-    const m = String.fromCharCode(aCode + parseInt(a) - 1);
-    const n = String.fromCharCode(aCode + parseInt(b) - 1);
+    const m = String.fromCharCode(aCode + parseInt(a!) - 1);
+    const n = String.fromCharCode(aCode + parseInt(b!) - 1);
     return m + n;
   });
   return normalizePlugboardString(alpha.join(" "));

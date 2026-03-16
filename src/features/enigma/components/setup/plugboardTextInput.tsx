@@ -83,8 +83,8 @@ function generateHelpText(cableCount: number, notation: NotationType) {
   const result = new Array<string>();
   let n = 0;
   for (let i = 0; i < cableCount; ++i) {
-    result.push(alphabet[n++]);
-    result.push(alphabet[n++]);
+    result.push(alphabet[n++]!);
+    result.push(alphabet[n++]!);
     result.push(" ");
   }
   let settings = result.join("").trim();

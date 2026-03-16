@@ -14,7 +14,7 @@ export const configMiddleware: Middleware<object, RootState> =
   (storeApi) => (next) => (action) => {
     if (loadConfigInitiated.match(action)) {
       const config = selectConfigById(storeApi.getState(), action.payload);
-      if (config.type === "enigma") {
+      if (config?.type === "enigma") {
         storeApi.dispatch(configLoaded(config));
       }
     }

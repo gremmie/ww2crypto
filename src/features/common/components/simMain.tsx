@@ -20,6 +20,7 @@ export function SimMain(props: SimMainProps) {
   const currentPath = location.pathname as TRoutes;
   if (!currentPath.startsWith(props.basePath)) return null;
   const currentTab = currentPath.split("/")[2];
+  if (!currentTab) return null;
 
   return (
     <>

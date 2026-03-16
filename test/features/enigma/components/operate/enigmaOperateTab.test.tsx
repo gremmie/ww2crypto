@@ -62,7 +62,7 @@ describe("Enigma Operate Tab", () => {
     // Set rotor window 1 to Z by clicking back.
     const backButtons = screen.getAllByRole("button", { name: "Back" });
     expect(backButtons).toHaveLength(3);
-    await user.click(backButtons[1]);
+    await user.click(backButtons[1]!);
     const rotorWindow1 = screen.getByRole("textbox", {
       name: "rotor window 1",
     }) as HTMLInputElement;
@@ -78,7 +78,7 @@ describe("Enigma Operate Tab", () => {
     expect(rotorWindow2).toHaveValue("U");
     const forwardButtons = screen.getAllByRole("button", { name: "Forward" });
     expect(forwardButtons).toHaveLength(3);
-    await user.click(forwardButtons[2]);
+    await user.click(forwardButtons[2]!);
     expect(rotorWindow2).toHaveValue("V");
 
     // Type some plaintext.
@@ -89,13 +89,13 @@ describe("Enigma Operate Tab", () => {
     // Display plaintext in letter groups.
     const groupSwitches = screen.getAllByRole("switch", { name: "Group text" });
     expect(groupSwitches).toHaveLength(2);
-    await user.click(groupSwitches[0]);
+    await user.click(groupSwitches[0]!);
     expect(inputTextField).toHaveValue("STEUE REJTA NAFJO RD".toUpperCase());
 
     // Clear input.
     const clearButtons = screen.getAllByRole("button", { name: "Clear" });
     expect(clearButtons).toHaveLength(2);
-    await user.click(clearButtons[0]);
+    await user.click(clearButtons[0]!);
     expect(inputTextField).toHaveValue("");
 
     // Check ciphertext output.
@@ -103,11 +103,11 @@ describe("Enigma Operate Tab", () => {
     expect(outputTextField).toHaveValue("YKAENZAPMSCHZBFOC");
 
     // Display ciphertext in letter groups.
-    await user.click(groupSwitches[1]);
+    await user.click(groupSwitches[1]!);
     expect(outputTextField).toHaveValue("YKAEN ZAPMS CHZBF OC");
 
     // Clear ciphertext.
-    await user.click(clearButtons[1]);
+    await user.click(clearButtons[1]!);
     expect(outputTextField).toHaveValue("");
   });
 });

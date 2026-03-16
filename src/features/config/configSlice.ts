@@ -54,6 +54,8 @@ export const configSlice = createSlice({
       const config = configAdapter
         .getSelectors()
         .selectById(state.configs, action.payload);
+      if (!config) return;
+
       configAdapter.removeOne(state.configs, config.id);
       if (state.loadedConfigs[config.type] === config.id) {
         state.loadedConfigs[config.type] = null;
@@ -156,7 +158,7 @@ export const selectIsActiveConfigModified = (
   machineType: MachineType,
 ) => {
   const activeConfig = selectActiveConfig(state, machineType);
-  if (activeConfig === null) return false;
+  if (!activeConfig) return false;
 
   if (activeConfig.type === "enigma") {
     const enigmaState = state.enigma;

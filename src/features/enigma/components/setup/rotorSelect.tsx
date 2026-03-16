@@ -25,8 +25,8 @@ export default function RotorSelect(props: RotorSelectProps) {
   const rotorType = useAppSelector((state) =>
     selectRotorTypeForRotor(state, rotorNumber),
   );
-  const rotorTypeChoices = useAppSelector((state) =>
-    selectRotorTypeChoicesForRotor(state, rotorNumber),
+  const rotorTypeChoices = useAppSelector(
+    (state) => selectRotorTypeChoicesForRotor(state, rotorNumber) ?? [],
   );
 
   const handleChange = (event: SelectChangeEvent) => {

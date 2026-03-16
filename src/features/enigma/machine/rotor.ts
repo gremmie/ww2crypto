@@ -181,7 +181,7 @@ export default class Rotor {
     const pin = modulo(n + this.pos, 26);
 
     // Run it through the internal wiring.
-    const contact = this.entryMap[pin];
+    const contact = this.entryMap[pin]!;
 
     // Turn back into a position due to rotation.
     return modulo(contact - this.pos, 26);
@@ -199,7 +199,7 @@ export default class Rotor {
     const contact = modulo(n + this.pos, 26);
 
     // Run it through the internal wiring.
-    const pin = this.exitMap[contact];
+    const pin = this.exitMap[contact]!;
 
     // Turn back into a position due to rotation.
     return modulo(pin - this.pos, 26);

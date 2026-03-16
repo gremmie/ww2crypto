@@ -55,7 +55,7 @@ export default class EnigmaMachine {
       );
     }
     for (let i = 0; i < this.rotors.length; ++i) {
-      this.rotors[i].setDisplay(value[i]);
+      this.rotors[i]!.setDisplay(value[i]!);
     }
   }
 
@@ -139,9 +139,9 @@ export default class EnigmaMachine {
    * does not rotate (they did not add a 4th pawl to the mechanism).
    */
   private stepRotors() {
-    const rotor1 = this.rotors[this.rotors.length - 1];
-    const rotor2 = this.rotors[this.rotors.length - 2];
-    const rotor3 = this.rotors[this.rotors.length - 3];
+    const rotor1 = this.rotors[this.rotors.length - 1]!;
+    const rotor2 = this.rotors[this.rotors.length - 2]!;
+    const rotor3 = this.rotors[this.rotors.length - 3]!;
 
     // Decide which rotors can move.
     const rotate2 = rotor1.isNotchOverPawl() || rotor2.isNotchOverPawl();
@@ -164,7 +164,7 @@ export default class EnigmaMachine {
     let pos = this.plugboard.signal(signalNumber);
 
     for (let i = this.rotors.length - 1; i >= 0; --i) {
-      pos = this.rotors[i].signalIn(pos);
+      pos = this.rotors[i]!.signalIn(pos);
     }
 
     pos = this.reflector.signalIn(pos);

@@ -87,7 +87,7 @@ describe("Rotor tests", () => {
         for (let i = 0; i < 26; ++i) {
           const contact = rotor.signalIn(i);
           const expected = modulo(
-            newWiring[i].charCodeAt(0) - aCode + r - n,
+            newWiring[i]!.charCodeAt(0) - aCode + r - n,
             26,
           );
           expect(contact).toEqual(expected);
