@@ -1,8 +1,9 @@
 import { describe, expect, test } from "vitest";
+import { modulo } from "../../../../src/features/common/utils.ts";
 import Rotor, {
   RotorError,
 } from "../../../../src/features/enigma/machine/rotor.ts";
-import { aCode, modulo } from "../../../../src/features/enigma/utils.ts";
+import { aCode } from "../../../../src/features/enigma/utils.ts";
 import { rotateString } from "../../../utils/test-utils.tsx";
 
 describe("Rotor tests", () => {

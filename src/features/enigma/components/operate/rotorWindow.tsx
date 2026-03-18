@@ -5,8 +5,9 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import React, { useRef } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
+import { modulo } from "../../../common/utils.ts";
 import { rotorDisplayChanged, selectRotorWindow } from "../../enigmaSlice.ts";
-import { aCode, modulo } from "../../utils.ts";
+import { aCode } from "../../utils.ts";
 
 interface RotorWindowProps {
   index: number;

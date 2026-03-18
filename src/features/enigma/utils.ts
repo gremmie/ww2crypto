@@ -108,17 +108,6 @@ export function isValidRotorWiring(wiring: string) {
 }
 
 /**
- * A mathematical modulo function (always returns a non-negative result if the
- * divisor is positive).
- *
- * @param n {number} - dividend
- * @param d {number} - divisor
- */
-export function modulo(n: number, d: number): number {
-  return ((n % d) + d) % d;
-}
-
-/**
  * Groups the given string into n-letter groups, delimited with spaces.
  *
  * @param s {string} - the input string

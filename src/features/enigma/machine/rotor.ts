@@ -1,4 +1,5 @@
-import { aCode, isValidRotorWiring, modulo } from "../utils.ts";
+import { modulo } from "../../common/utils.ts";
+import { aCode, isValidRotorWiring } from "../utils.ts";
 
 export class RotorError extends Error {
   constructor(message: string) {

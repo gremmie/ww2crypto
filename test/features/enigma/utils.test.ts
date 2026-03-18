@@ -4,7 +4,6 @@ import {
   isValidNumericPlugboardString,
   isValidPlugboardString,
   isValidRotorWiring,
-  modulo,
   normalizePlugboardString,
   toAlphaPlugboardString,
   toNumericConnection,
@@ -235,24 +234,6 @@ describe("isValidRotorWiring", () => {
   test("valid cases", () => {
     expect(isValidRotorWiring("ABCDEFGHIJKLMNOPQRSTUVWXYZ")).toBe(true);
     expect(isValidRotorWiring("FKQHTLXOCBJSPDZRAMEWNIUYGV")).toBe(true);
-  });
-});
-
-describe("modulo", () => {
-  test("both dividend and divisor are positive", () => {
-    expect(modulo(5, 1)).toEqual(0);
-    expect(modulo(5, 7)).toEqual(5);
-    expect(modulo(6, 7)).toEqual(6);
-    expect(modulo(7, 7)).toEqual(0);
-    expect(modulo(1, 7)).toEqual(1);
-  });
-
-  test("dividend is negative, divisor is positive", () => {
-    expect(modulo(-5, 1)).toEqual(0);
-    expect(modulo(-5, 7)).toEqual(2);
-    expect(modulo(-6, 7)).toEqual(1);
-    expect(modulo(-7, 7)).toEqual(0);
-    expect(modulo(-1, 7)).toEqual(6);
   });
 });
 
