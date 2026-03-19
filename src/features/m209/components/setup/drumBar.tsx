@@ -1,12 +1,18 @@
 import Slider from "@mui/material/Slider";
-import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../../../app/hooks.ts";
+import { drumBarChanged, selectDrumBarState } from "../../m209Slice.ts";
 
 interface DrumBarProps {
   id: number;
 }
 
 export default function DrumBar(props: DrumBarProps) {
-  const [value, setValue] = useState<number[]>([1, 6]);
+  const dispatch = useDispatch();
+  const lugState = useAppSelector((s) => selectDrumBarState(s, props.id));
+  if (!lugState) return null;
+
+  const sliderValue = toSliderValue(lugState);
 
   const handleChange = (_event: Event, newValue: number | number[]) => {
     if (typeof newValue === "number") return;
@@ -22,14 +28,16 @@ export default function DrumBar(props: DrumBarProps) {
       (newValue[0] === 6 && newValue[1] === 7);
 
     if (!invalidValue) {
-      setValue(newValue);
+      dispatch(
+        drumBarChanged({ barId: props.id, newState: toLugPair(newValue) }),
+      );
     }
   };
 
   return (
     <Slider
       getAriaLabel={() => `Drum Bar ${props.id}`}
-      value={value}
+      value={sliderValue}
       onChange={handleChange}
       valueLabelDisplay="off"
       getAriaValueText={(n) => `${n}`}
@@ -77,3 +85,43 @@ const marks = [
     label: "6",
   },
 ];
+
+const leftLugToSliderValue: Map<number, number> = new Map([
+  [0, 1],
+  [1, 0],
+  [2, 2],
+  [3, 3],
+  [4, 4],
+  [5, 5],
+]);
+
+const rightLugToSliderValue: Map<number, number> = new Map([
+  [0, 6],
+  [2, 2],
+  [3, 3],
+  [4, 4],
+  [5, 5],
+  [6, 7],
+]);
+
+const leftSliderToLug = new Map(
+  Array.from(leftLugToSliderValue, ([key, value]) => [value, key]),
+);
+
+const rightSliderToLug = new Map(
+  Array.from(rightLugToSliderValue, ([key, value]) => [value, key]),
+);
+
+const toSliderValue = (lugState: [number, number]) => {
+  return [
+    leftLugToSliderValue.get(lugState[0])!,
+    rightLugToSliderValue.get(lugState[1])!,
+  ];
+};
+
+const toLugPair = (sliderState: number[]): [number, number] => {
+  return [
+    leftSliderToLug.get(sliderState[0]!)!,
+    rightSliderToLug.get(sliderState[1]!)!,
+  ];
+};
