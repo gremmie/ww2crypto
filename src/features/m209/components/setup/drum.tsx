@@ -23,7 +23,7 @@ export default function Drum() {
   };
 
   return (
-    <>
+    <Stack direction="column" spacing={2} sx={{ pb: 3 }}>
       <DrumRollers handleBack={handleBack} handleForward={handleForward} />
       {visibleBars.map((bar) => (
         <Stack
@@ -36,12 +36,12 @@ export default function Drum() {
           <Box width={300}>
             <DrumBar id={bar} />
           </Box>
-          <Typography variant="h6" component="div">
+          <Typography variant="h6" component="div" sx={{ width: 8 }}>
             {bar}
           </Typography>
         </Stack>
       ))}
       <DrumRollers handleBack={handleBack} handleForward={handleForward} />
-    </>
+    </Stack>
   );
 }

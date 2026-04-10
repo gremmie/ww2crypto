@@ -27,10 +27,21 @@ export const m209Slice = createSlice({
 
       state.drumState[index] = action.payload.newState;
     },
+    resetAllLugs: (state) => {
+      for (const lugs of state.drumState) {
+        lugs[0] = 0;
+        lugs[1] = 0;
+      }
+    },
+    bulkSetLugs: (state, action: PayloadAction<[number, number][]>) => {
+      const newDrumState = action.payload;
+      if (newDrumState.length !== numBars) return;
+      state.drumState = [...newDrumState];
+    },
   },
 });
 
-export const { drumBarChanged } = m209Slice.actions;
+export const { drumBarChanged, resetAllLugs, bulkSetLugs } = m209Slice.actions;
 
 // Selectors
 
@@ -40,6 +51,10 @@ export const selectDrumBarState = (state: RootState, barId: number) => {
     return state.m209.drumState[index];
   }
   throw new RangeError(`barId of ${barId} not in range 1 - ${numBars}`);
+};
+
+export const selectDrumState = (state: RootState) => {
+  return state.m209.drumState;
 };
 
 export default m209Slice.reducer;

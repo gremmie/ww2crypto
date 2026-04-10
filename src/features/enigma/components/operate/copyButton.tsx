@@ -24,13 +24,13 @@ export function CopyButton(props: CopyButtonProps): JSX.Element {
   };
   return (
     <IconButton aria-label="Copy" onClick={handleCopy} disabled={hasCopied}>
-      {hasCopied ? (
-        <CheckIcon sx={{ color: (theme) => theme.palette.success.main }} />
-      ) : (
-        <Tooltip title={copyTooltip}>
+      <Tooltip title={copyTooltip}>
+        {hasCopied ? (
+          <CheckIcon sx={{ color: (theme) => theme.palette.success.main }} />
+        ) : (
           <ContentCopyIcon />
-        </Tooltip>
-      )}
+        )}
+      </Tooltip>
     </IconButton>
   );
 }

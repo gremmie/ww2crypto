@@ -25,7 +25,7 @@ export default function SimSetupTab(props: SimSetupTabProps) {
   const location = useLocation();
   const currentPath = location.pathname as TRoutes;
   const isFirstStep = currentPath === props.setupPaths[0];
-  const isLastStep = currentPath === props.setupPaths[-1];
+  const isLastStep = currentPath === props.setupPaths.at(-1);
   const isSetupComplete = props.isSetupComplete;
   const canJumpToOperate = isSetupComplete && isLastStep;
 
@@ -76,7 +76,7 @@ export default function SimSetupTab(props: SimSetupTabProps) {
               display="flex"
               justifyContent="center"
             >
-              <Box width="80%" display="flex" justifyContent="center">
+              <Box width="90%" display="flex" justifyContent="center">
                 <Outlet />
               </Box>
             </Box>
