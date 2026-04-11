@@ -1,6 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { parseDrumLugStr } from "../../../src/features/m209/utils.ts";
 
+type LugSettings = [left: number, right: number, repeat?: number];
+
 describe("parseDrumLugStr", () => {
   test("empty string", () => {
     expect(parseDrumLugStr("").isValid).toBe(false);
@@ -21,15 +23,16 @@ describe("parseDrumLugStr", () => {
     expect(parseDrumLugStr("5-5").isValid).toBe(false);
   });
 
-  const generateExpected = (settings: [number, number, number][]) => {
+  const generateExpected = (settings: LugSettings[]) => {
     const totalEntries = settings.reduce(
-      (accum, current) => accum + current[2],
+      (accum, current) => accum + (current[2] ?? 1),
       0,
     );
     if (totalEntries > 27) throw new Error("Too many settings values");
     const result = new Array<[number, number]>(0);
     for (const entry of settings) {
-      for (let n = 0; n < entry[2]; ++n) {
+      const repeatCount = entry[2] ?? 1;
+      for (let n = 0; n < repeatCount; ++n) {
         result.push([entry[0], entry[1]]);
       }
     }
@@ -44,9 +47,9 @@ describe("parseDrumLugStr", () => {
     const result = parseDrumLugStr("3-0 4-5 5-6");
     expect(result.isValid).toBe(true);
     const expected = generateExpected([
-      [3, 0, 1],
-      [4, 5, 1],
-      [5, 6, 1],
+      [3, 0],
+      [4, 5],
+      [5, 6],
     ]);
 
     if (result.isValid) {
@@ -59,8 +62,8 @@ describe("parseDrumLugStr", () => {
     expect(result.isValid).toBe(true);
     const expected = generateExpected([
       [0, 4, 4],
-      [0, 5, 1],
-      [0, 6, 1],
+      [0, 5],
+      [0, 6],
       [1, 0, 5],
       [1, 5, 2],
       [2, 0, 12],
@@ -80,15 +83,15 @@ describe("parseDrumLugStr", () => {
     const expected = generateExpected([
       [0, 4, 2],
       [0, 5, 9],
-      [1, 0, 1],
-      [1, 2, 1],
+      [1, 0],
+      [1, 2],
       [2, 0, 4],
-      [2, 3, 1],
+      [2, 3],
       [2, 4, 2],
-      [2, 5, 1],
-      [2, 6, 1],
+      [2, 5],
+      [2, 6],
       [3, 0, 2],
-      [3, 4, 1],
+      [3, 4],
       [4, 5, 2],
     ]);
 
@@ -103,12 +106,12 @@ describe("parseDrumLugStr", () => {
     const expected = generateExpected([
       [0, 5, 8],
       [1, 0, 4],
-      [1, 3, 1],
+      [1, 3],
       [2, 4, 2],
       [3, 0, 8],
-      [3, 4, 1],
+      [3, 4],
       [3, 5, 2],
-      [4, 6, 1],
+      [4, 6],
     ]);
 
     if (result.isValid) {
