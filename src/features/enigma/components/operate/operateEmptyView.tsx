@@ -7,13 +7,15 @@ import { RouterLink } from "../../../../routerLinkComponents/routerLink.tsx";
 export default function OperateEmptyView() {
   return (
     <Box
-      width="100%"
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      sx={{ pt: 10 }}
+      sx={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        pt: 10,
+      }}
     >
-      <Stack spacing={2} alignItems="center">
+      <Stack spacing={2} sx={{ alignItems: "center" }}>
         <Box>
           <SettingsOutlinedIcon sx={{ fontSize: "7rem" }} />
         </Box>

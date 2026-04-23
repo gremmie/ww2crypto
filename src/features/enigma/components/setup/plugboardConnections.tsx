@@ -44,12 +44,10 @@ export default function PlugboardConnections() {
 
   return (
     <div>
-      <Stack spacing={1} alignItems="center">
+      <Stack spacing={1} sx={{ alignItems: "center" }}>
         <Typography
           variant="subtitle1"
-          display="flex"
-          alignItems="center"
-          gap={0.5}
+          sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
         >
           {`Connections (${connectionCount}):`}
           <Tooltip title={helpText} arrow enterTouchDelay={350}>

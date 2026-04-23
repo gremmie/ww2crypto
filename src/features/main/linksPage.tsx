@@ -6,7 +6,7 @@ import { links } from "../common/links.ts";
 
 export function LinksPage() {
   return (
-    <Box display="flex" width="100%" justifyContent="center">
+    <Box sx={{ display: "flex", width: "100%", justifyContent: "center" }}>
       <Paper elevation={2} sx={{ mt: 3, ml: 3, p: 3, maxWidth: 950 }}>
         <Typography
           variant="h4"

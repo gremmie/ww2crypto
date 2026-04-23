@@ -11,8 +11,7 @@ export function CopyrightTag() {
     <Typography
       variant="caption"
       component="div"
-      display="flex"
-      alignItems="center"
+      sx={{ display: "flex", alignItems: "center" }}
     >
       <CopyrightIcon sx={{ fontSize: "inherit", mr: 0.5 }} /> {yearRange} Brian
       Neal. All rights reserved.

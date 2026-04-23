@@ -17,12 +17,14 @@ export default function OperateView() {
 
   return (
     <Box
-      width="100%"
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
+      sx={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
     >
-      <Stack spacing={2} alignItems="center">
+      <Stack spacing={2} sx={{ alignItems: "center" }}>
         <Stack spacing={2} direction="row">
           {rotorWindows}
         </Stack>
@@ -31,7 +33,7 @@ export default function OperateView() {
           spacing={{ xs: 2, md: 4 }}
           direction={{ xs: "column", md: "row" }}
           useFlexGap
-          flexWrap="wrap"
+          sx={{ flexWrap: "wrap" }}
         >
           <OperatorInput />
           <OperatorOutput />

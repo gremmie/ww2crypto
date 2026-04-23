@@ -19,7 +19,7 @@ export default function EnigmaModel() {
   };
 
   return (
-    <Stack spacing={2} alignItems="center">
+    <Stack spacing={2} sx={{ alignItems: "center" }}>
       <Typography variant="h6">Select Model</Typography>
       <FormControl>
         <RadioGroup

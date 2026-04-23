@@ -48,11 +48,13 @@ export default function PlugboardTextInput() {
   return (
     <Stack
       direction="row"
-      alignItems="baseline"
-      justifyContent="center"
       spacing={2}
       useFlexGap
-      flexWrap="wrap"
+      sx={{
+        alignItems: "baseline",
+        justifyContent: "center",
+        flexWrap: "wrap",
+      }}
     >
       <TextField
         id="enigma-plugboard-text-input"

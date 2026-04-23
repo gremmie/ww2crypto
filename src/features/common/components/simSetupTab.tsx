@@ -49,14 +49,14 @@ export default function SimSetupTab(props: SimSetupTabProps) {
       <Box sx={{ width: "100%" }}>
         <Stack spacing={2}>
           {isSetupComplete && (
-            <Box display="flex" justifyContent="center">
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
               <SetupCompleteAlert
                 machineType={props.machineType}
                 operatePath={props.operatePath}
               />
             </Box>
           )}
-          <Box display="flex" justifyContent="center">
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
             <SetupName machineType={props.machineType} />
           </Box>
           {props.machineType === "enigma" && <EnigmaSetupStepper />}
@@ -71,25 +71,30 @@ export default function SimSetupTab(props: SimSetupTabProps) {
             }}
           >
             <Box
-              width="100%"
-              sx={{ pt: 2 }}
-              display="flex"
-              justifyContent="center"
+              sx={{
+                width: "100%",
+                pt: 2,
+                display: "flex",
+                justifyContent: "center",
+              }}
             >
-              <Box width="90%" display="flex" justifyContent="center">
+              <Box
+                sx={{ width: "90%", display: "flex", justifyContent: "center" }}
+              >
                 <Outlet />
               </Box>
             </Box>
             <Stack
               direction="row"
               spacing={2}
-              sx={{ pt: 4 }}
-              justifyContent="space-evenly"
+              sx={{ pt: 4, justifyContent: "space-evenly" }}
             >
               <LoadConfigDialog machineType={props.machineType} />
               <SaveConfigDialog machineType={props.machineType} />
             </Stack>
-            <Box display="flex" justifyContent="space-around" sx={{ pt: 2 }}>
+            <Box
+              sx={{ display: "flex", justifyContent: "space-around", pt: 2 }}
+            >
               <RouterButton
                 variant="text"
                 startIcon={<ChevronLeftIcon />}

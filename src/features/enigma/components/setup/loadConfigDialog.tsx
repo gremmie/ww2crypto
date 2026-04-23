@@ -119,7 +119,7 @@ export default function LoadConfigDialog(props: LoadConfigDialogProps) {
               </Typography>
             </Alert>
           )}
-          <Stack direction="column" spacing={2} alignItems="center">
+          <Stack direction="column" spacing={2} sx={{ alignItems: "center" }}>
             <Box
               sx={{
                 height: { xs: "70vh" },

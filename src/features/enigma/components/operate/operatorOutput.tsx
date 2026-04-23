@@ -23,7 +23,7 @@ export default function OperatorOutput() {
 
   return (
     <Stack direction="column" spacing={1}>
-      <Stack direction="row" justifyContent="space-between">
+      <Stack direction="row" sx={{ justifyContent: "space-between" }}>
         <Button variant="text" onClick={handleClear}>
           Clear
         </Button>

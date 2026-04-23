@@ -5,12 +5,11 @@ import DrumStatus from "./drumStatus.tsx";
 
 export default function DrumSetup() {
   return (
-    <Box display="flex" justifyContent="center" width="100%">
+    <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
       <Stack
         direction={{ sm: "column", md: "row" }}
         spacing={5}
-        display="flex"
-        alignItems="center"
+        sx={{ display: "flex", alignItems: "center" }}
       >
         <Drum />
         <DrumStatus />

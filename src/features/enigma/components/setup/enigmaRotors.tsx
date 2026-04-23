@@ -32,8 +32,11 @@ export default function EnigmaRotors() {
   );
 
   return (
-    <Stack spacing={4} alignItems="center">
-      <Typography variant="h6" display="flex" alignItems="center" gap={0.5}>
+    <Stack spacing={4} sx={{ alignItems: "center" }}>
+      <Typography
+        variant="h6"
+        sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
+      >
         Select reflector, rotors, and rotor order
         <Tooltip title={helpContent} arrow enterTouchDelay={350}>
           <HelpOutlineOutlinedIcon />
@@ -43,8 +46,7 @@ export default function EnigmaRotors() {
         direction={{ xs: "column", sm: "row" }}
         useFlexGap
         spacing={2}
-        sx={{ mt: 4 }}
-        justifyContent="center"
+        sx={{ mt: 4, justifyContent: "center" }}
       >
         {selects}
       </Stack>

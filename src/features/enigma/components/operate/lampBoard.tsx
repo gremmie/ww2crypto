@@ -31,8 +31,7 @@ export default function LampBoard() {
         <Stack
           direction="column"
           spacing={1}
-          alignItems="center"
-          sx={{ pt: 1, pb: 2 }}
+          sx={{ alignItems: "center", pt: 1, pb: 2 }}
         >
           <Stack direction="row" spacing={2}>
             <Lamp letter="Q" />

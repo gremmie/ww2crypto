@@ -1,4 +1,4 @@
-import InfoOutlineIcon from "@mui/icons-material/InfoOutline";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import KeyboardIcon from "@mui/icons-material/Keyboard";
 import SettingsIcon from "@mui/icons-material/Settings";
 import TabContext from "@mui/lab/TabContext";
@@ -44,7 +44,7 @@ export function SimMain(props: SimMainProps) {
               <RouterTab
                 label="About"
                 value="about"
-                icon={<InfoOutlineIcon />}
+                icon={<InfoOutlinedIcon />}
                 iconPosition="start"
                 to={`${props.basePath}/about` as TRoutes}
               />

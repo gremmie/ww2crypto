@@ -44,10 +44,8 @@ export default function PlugboardConnector() {
     <Stack
       spacing={2}
       direction="row"
-      alignItems="center"
-      justifyContent="center"
       useFlexGap
-      flexWrap="wrap"
+      sx={{ alignItems: "center", justifyContent: "center", flexWrap: "wrap" }}
     >
       <PlugboardSelect
         label="Plug 1"

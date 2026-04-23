@@ -30,10 +30,9 @@ export default function Drum() {
           key={bar}
           direction="row"
           spacing={2}
-          display="flex"
-          justifyContent="space-between"
+          sx={{ display: "flex", justifyContent: "space-between" }}
         >
-          <Box width={300}>
+          <Box sx={{ width: 300 }}>
             <DrumBar id={bar} />
           </Box>
           <Typography variant="h6" component="div" sx={{ width: 8 }}>

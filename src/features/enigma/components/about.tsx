@@ -9,7 +9,7 @@ import { links } from "../../common/links.ts";
 export default function EnigmaAbout() {
   return (
     <TabPanel value="about">
-      <Box display="flex" width="100%" justifyContent="center">
+      <Box sx={{ display: "flex", width: "100%", justifyContent: "center" }}>
         <Paper elevation={2} sx={{ p: 3, maxWidth: 950 }}>
           <Typography
             variant="h3"

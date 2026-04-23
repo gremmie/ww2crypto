@@ -105,9 +105,11 @@ export default function OperatorInput() {
     <Stack direction="column" spacing={1}>
       <Stack
         direction="row"
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
       >
         <Button variant="text" onClick={handleClear}>
           Clear

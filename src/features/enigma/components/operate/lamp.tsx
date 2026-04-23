@@ -12,10 +12,10 @@ export default function Lamp(props: LampProperties) {
 
   return (
     <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
       sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
         width: { xs: 26, sm: 30 },
         height: { xs: 26, sm: 30 },
         border: { xs: "2px solid black", sm: "4px solid black" },

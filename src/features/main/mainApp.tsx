@@ -64,10 +64,13 @@ export function MainApp() {
         onChangePage={changePage}
       />
       <Box
-        display="flex"
-        width="100%"
-        justifyContent="center"
-        sx={{ mt: 3, pb: 3 }}
+        sx={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "center",
+          mt: 3,
+          pb: 3,
+        }}
       >
         <CopyrightTag />
       </Box>

@@ -24,7 +24,7 @@ export default function EnigmaPlugboard() {
   };
 
   return (
-    <Stack spacing={2} alignItems="center">
+    <Stack spacing={2} sx={{ alignItems: "center" }}>
       <Typography
         variant="h6"
         sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
@@ -37,7 +37,7 @@ export default function EnigmaPlugboard() {
       <Stack
         direction={{ xs: "column", sm: "row" }}
         spacing={2}
-        alignItems={"center"}
+        sx={{ alignItems: "center" }}
       >
         <PlugboardCableCountSelect />
         <NotationSelector

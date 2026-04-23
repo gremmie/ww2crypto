@@ -10,7 +10,11 @@ export interface DrumRollerProps {
 
 export default function DrumRollers(props: DrumRollerProps) {
   return (
-    <Stack direction="row" spacing={2} display="flex" justifyContent="center">
+    <Stack
+      direction="row"
+      spacing={2}
+      sx={{ display: "flex", justifyContent: "center" }}
+    >
       <IconButton aria-label="roll drum back" onClick={props.handleBack}>
         <KeyboardArrowUpIcon />
       </IconButton>

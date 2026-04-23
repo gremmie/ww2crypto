@@ -23,13 +23,15 @@ export default function ComingSoon(props: ComingSoonProps) {
         {props.pageTitle}
       </Typography>
       <Box
-        width="100%"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ pt: 10 }}
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          pt: 10,
+        }}
       >
-        <Stack spacing={2} alignItems="center">
+        <Stack spacing={2} sx={{ alignItems: "center" }}>
           <Box>
             <ConstructionOutlinedIcon sx={{ fontSize: "7rem" }} />
           </Box>
