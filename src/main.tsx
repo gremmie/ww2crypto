@@ -6,11 +6,8 @@ import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { setupStore } from "./app/store";
 import { applicationStarted } from "./features/common/actions.ts";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
-import "@fontsource/special-elite/400.css";
+import "@fontsource-variable/roboto/index.css";
+import "@fontsource/special-elite/latin.css";
 import { routeTree } from "./routeTree.gen";
 
 const store = setupStore();
