@@ -11,10 +11,20 @@ import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
-import { bulkSetLugs, resetAllLugs, selectDrumState } from "../../m209Slice.ts";
-import { drumLugStateToStr, parseDrumLugStr } from "../../utils.ts";
+import {
+  bulkSetLugs,
+  resetAllLugs,
+  selectDrumState,
+  sortAllLugs,
+} from "../../m209Slice.ts";
+import {
+  drumLugStateToStr,
+  parseDrumLugStr,
+  sortDrumState,
+} from "../../utils.ts";
+import Divider from "@mui/material/Divider";
 
-export default function DrumStatus() {
+export default function DrumSetupControls() {
   const dispatch = useAppDispatch();
   const drumState = useAppSelector(selectDrumState);
   const lugSettings = drumLugStateToStr(drumState);
@@ -25,6 +35,15 @@ export default function DrumStatus() {
   const [hasPasted, setHasPasted] = useState(false);
   const pasteTooltip = hasPasted ? "Pasted!" : "Paste from clipboard";
   const [lugText, setLugText] = useState("");
+
+  const allLugsZero = drumState.every(
+    (setting) => setting[0] === 0 && setting[1] === 0,
+  );
+  const sortedDrumState = sortDrumState(drumState);
+  const allLugsSorted = drumState.every((pair, index) => {
+    const sortedPair = sortedDrumState[index];
+    return sortedPair && pair[0] == sortedPair[0] && pair[1] === sortedPair[1];
+  });
 
   const handleLugTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLugText(e.target.value);
@@ -89,15 +108,8 @@ export default function DrumStatus() {
           }
         />
       </FormControl>
-      <Button
-        variant="text"
-        sx={{ alignSelf: "center" }}
-        onClick={() => dispatch(resetAllLugs())}
-      >
-        Reset all lugs
-      </Button>
       <FormControl fullWidth variant="filled">
-        <InputLabel htmlFor="set-lugs-input">Bulk Set Lugs Input</InputLabel>
+        <InputLabel htmlFor="set-lugs-input">Bulk Set Lugs</InputLabel>
         <FilledInput
           id="set-lugs-input"
           type="text"
@@ -126,13 +138,34 @@ export default function DrumStatus() {
         />
       </FormControl>
       <Button
-        variant="text"
-        sx={{ alignSelf: "center" }}
+        variant="outlined"
+        sx={{ alignSelf: "self-end" }}
         disabled={!lugTextResult.isValid}
         onClick={handleBulkSetLugs}
       >
         Bulk Set Lugs
       </Button>
+      <Divider variant="middle" />
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{ justifyContent: "space-evenly" }}
+      >
+        <Button
+          variant="outlined"
+          disabled={allLugsZero}
+          onClick={() => dispatch(resetAllLugs())}
+        >
+          Reset all lugs
+        </Button>
+        <Button
+          variant="outlined"
+          disabled={allLugsSorted}
+          onClick={() => dispatch(sortAllLugs())}
+        >
+          Sort lugs
+        </Button>
+      </Stack>
     </Stack>
   );
 }

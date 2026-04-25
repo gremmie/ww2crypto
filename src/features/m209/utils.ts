@@ -69,3 +69,22 @@ export const drumLugStateToStr = (state: [number, number][]): string => {
     )
     .join(" ");
 };
+
+export const sortDrumState = (state: [number, number][]): [number, number][] => {
+  return state.toSorted((a, b) => {
+    // If both left & right are the same.
+    if (a[0] === b[0] && a[1] === b[1]) return 0;
+
+    // Left & right are not the same.
+    // Move [0, 0] to the end.
+    if (a[0] === 0 && a[1] === 0) return 1;
+    if (b[0] === 0 && b[1] === 0) return -1;
+
+    // Sort by left first.
+    const leftCmp = a[0] - b[0];
+    if (leftCmp !== 0) return leftCmp;
+
+    // Lefts are equal, sort by right.
+    return a[1] - b[1];
+  });
+};

@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Drum from "./drum.tsx";
-import DrumStatus from "./drumStatus.tsx";
+import DrumSetupControls from "./drumSetupControls.tsx";
 
 export default function DrumSetup() {
   return (
@@ -12,7 +12,7 @@ export default function DrumSetup() {
         sx={{ display: "flex", alignItems: "center" }}
       >
         <Drum />
-        <DrumStatus />
+        <DrumSetupControls />
       </Stack>
     </Box>
   );

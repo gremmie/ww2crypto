@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store.ts";
+import { sortDrumState } from "./utils.ts";
 
 const numBars = 27;
 
@@ -38,10 +39,14 @@ export const m209Slice = createSlice({
       if (newDrumState.length !== numBars) return;
       state.drumState = [...newDrumState];
     },
+    sortAllLugs: (state) => {
+      state.drumState = sortDrumState(state.drumState);
+    },
   },
 });
 
-export const { drumBarChanged, resetAllLugs, bulkSetLugs } = m209Slice.actions;
+export const { drumBarChanged, resetAllLugs, bulkSetLugs, sortAllLugs } =
+  m209Slice.actions;
 
 // Selectors
 

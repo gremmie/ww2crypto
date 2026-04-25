@@ -2,6 +2,7 @@ import { describe, expect, test } from "vitest";
 import {
   drumLugStateToStr,
   parseDrumLugStr,
+  sortDrumState,
 } from "../../../src/features/m209/utils.ts";
 
 type LugSettings = [left: number, right: number, repeat?: number];
@@ -188,5 +189,58 @@ describe("parseDrumLugStr", () => {
     if (result.isValid) {
       expect(drumLugStateToStr(result.drumState)).toBe(settings);
     }
+  });
+});
+
+describe("sortDrumState", () => {
+  test("no changes", () => {
+    const result = parseDrumLugStr("0-5*8 1-0*4 1-3 2-4*2 3-0*8 3-4 3-5*2 4-6");
+    expect(result.isValid).toBe(true);
+    if (result.isValid) {
+      const sorted = sortDrumState(result.drumState);
+      expect(sorted).toEqual(result.drumState);
+    }
+  });
+
+  test("sort case 1", () => {
+    const result = parseDrumLugStr("4-6 1-0*4 0-5*8 0-0 3-4 3-5*2 2-4*2 3-0*8");
+    expect(result.isValid).toBe(true);
+    if (result.isValid) {
+      const sorted = sortDrumState(result.drumState);
+      const expected = parseDrumLugStr(
+        "0-5*8 1-0*4 2-4*2 3-0*8 3-4 3-5*2 4-6 0-0",
+      );
+      expect(expected.isValid).toBe(true);
+      if (expected.isValid) {
+        expect(sorted).toEqual(expected.drumState);
+      }
+    }
+  });
+
+  const testShuffle = (settings: string) => {
+    const result = parseDrumLugStr(settings);
+    expect(result.isValid).toBe(true);
+    if (!result.isValid) return;
+    const shuffled = result.drumState
+      .map((pair) => ({
+        pair,
+        sort: Math.random(),
+      }))
+      .toSorted((a, b) => a.sort - b.sort)
+      .map(({ pair }) => pair);
+    const sorted = sortDrumState(shuffled);
+    expect(sorted).toEqual(result.drumState);
+  };
+
+  test("shuffle case 1", () => {
+    testShuffle("0-5*8 1-0*4 1-3 2-4*2 3-0*8 3-4 3-5*2 4-6");
+  });
+
+  test("shuffle case 2", () => {
+    testShuffle("0-4*7 0-5*2 0-6*8 1-0 2-4 2-5*2 2-6 3-4 3-5 4-6*2 5-6");
+  });
+
+  test("all zeros get put to the end", () => {
+    testShuffle("1-0*4 1-3 2-4*2 3-0*8 3-4 3-5*2 4-6 0-0*8");
   });
 });
