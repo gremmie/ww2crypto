@@ -12,14 +12,12 @@ import Tooltip from "@mui/material/Tooltip";
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import { bulkSetLugs, resetAllLugs, selectDrumState } from "../../m209Slice.ts";
-import { parseDrumLugStr } from "../../utils.ts";
+import { drumLugStateToStr, parseDrumLugStr } from "../../utils.ts";
 
 export default function DrumStatus() {
   const dispatch = useAppDispatch();
-  const lugSettings = useAppSelector(selectDrumState)
-    .filter((barState) => barState[0] !== 0 || barState[1] !== 0)
-    .map((barState) => `${barState[0]}-${barState[1]}`)
-    .join(" ");
+  const drumState = useAppSelector(selectDrumState);
+  const lugSettings = drumLugStateToStr(drumState);
 
   const [hasCopied, setHasCopied] = useState(false);
   const copyTooltip = hasCopied ? "Copied!" : "Copy to clipboard";

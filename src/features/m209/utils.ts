@@ -43,3 +43,29 @@ export const parseDrumLugStr = (s: string): ParseDrumLugStrResult => {
   }
   return { isValid: true, drumState: drumState };
 };
+
+export const drumLugStateToStr = (state: [number, number][]): string => {
+  const settings: [left: number, right: number, count: number][] = [];
+  for (const pair of state) {
+    if (pair[0] === 0 && pair[1] === 0) continue;
+    let isDuplicate = false;
+
+    if (settings.length > 0) {
+      const last = settings.at(-1);
+      if (last && pair[0] === last[0] && pair[1] === last[1]) {
+        ++last[2];
+        isDuplicate = true;
+      }
+    }
+    if (!isDuplicate) {
+      settings.push([...pair, 1]);
+    }
+  }
+  return settings
+    .map((item) =>
+      item[2] > 1
+        ? `${item[0]}-${item[1]}*${item[2]}`
+        : `${item[0]}-${item[1]}`,
+    )
+    .join(" ");
+};

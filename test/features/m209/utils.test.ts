@@ -1,5 +1,8 @@
 import { describe, expect, test } from "vitest";
-import { parseDrumLugStr } from "../../../src/features/m209/utils.ts";
+import {
+  drumLugStateToStr,
+  parseDrumLugStr,
+} from "../../../src/features/m209/utils.ts";
 
 type LugSettings = [left: number, right: number, repeat?: number];
 
@@ -132,5 +135,58 @@ describe("parseDrumLugStr", () => {
       parseDrumLugStr("0-5*8 1-0*4 1-3 2-4*2 3-0*8 3-4 3-5*2 4-6 1-0 2-0")
         .isValid,
     ).toBe(false);
+  });
+});
+
+describe("parseDrumLugStr", () => {
+  test("all zero", () => {
+    const result = parseDrumLugStr("0-0*27");
+    expect(result.isValid).toBe(true);
+    if (result.isValid) {
+      expect(drumLugStateToStr(result.drumState)).toBe("");
+    }
+  });
+
+  test("empty settings", () => {
+    expect(drumLugStateToStr([])).toBe("");
+  });
+
+  test("simple test case", () => {
+    expect(
+      drumLugStateToStr([
+        [1, 2],
+        [2, 3],
+        [2, 3],
+        [1, 2],
+        [4, 6],
+      ]),
+    ).toBe("1-2 2-3*2 1-2 4-6");
+  });
+
+  test("realistic case 1", () => {
+    const settings = "0-4 0-5*4 1-0*8 1-3*4 1-6 2-0*2 3-0*4 5-6*3";
+    const result = parseDrumLugStr(settings);
+    expect(result.isValid).toBe(true);
+    if (result.isValid) {
+      expect(drumLugStateToStr(result.drumState)).toBe(settings);
+    }
+  });
+
+  test("realistic case 2", () => {
+    const settings = "0-5 0-6*10 1-0*2 1-4 2-0*3 2-3*2 2-4 3-0*6 3-6";
+    const result = parseDrumLugStr(settings);
+    expect(result.isValid).toBe(true);
+    if (result.isValid) {
+      expect(drumLugStateToStr(result.drumState)).toBe(settings);
+    }
+  });
+
+  test("realistic case 3", () => {
+    const settings = "0-4*2 1-0*11 2-0*8 2-5 3-0*4 5-6";
+    const result = parseDrumLugStr(settings);
+    expect(result.isValid).toBe(true);
+    if (result.isValid) {
+      expect(drumLugStateToStr(result.drumState)).toBe(settings);
+    }
   });
 });
