@@ -29,6 +29,6 @@ export const SetupStepper = () => {
 };
 
 const stepData = [
-  { label: "Drum", path: "/m209/setup/drum" },
-  { label: "Wheels", path: "/m209/setup/wheels" },
+  { label: "Drum Lugs", path: "/m209/setup/drum" },
+  { label: "Wheel Pins", path: "/m209/setup/wheels" },
 ] as const;
