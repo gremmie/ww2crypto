@@ -5,14 +5,14 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import {
   selectedWheelPinsChanged,
   selectSelectedWheel,
-  selectWheelState,
+  selectSelectedWheelState,
 } from "../../m209Slice.ts";
 import { KEY_WHEEL_DATA } from "../../machine/wheelData.ts";
 
 export const WheelPins = () => {
   const dispatch = useAppDispatch();
   const selectedWheel = useAppSelector(selectSelectedWheel);
-  const pinSettings = useAppSelector((s) => selectWheelState(s, selectedWheel));
+  const pinSettings = useAppSelector(selectSelectedWheelState);
   const pinSet = new Set(pinSettings);
   const wheelData = KEY_WHEEL_DATA[selectedWheel];
   if (!wheelData) return null;

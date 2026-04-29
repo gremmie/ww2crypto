@@ -54,7 +54,10 @@ export const m209Slice = createSlice({
       }
     },
     selectedWheelPinsChanged: (state, action: PayloadAction<string>) => {
-      state.wheelState[state.selectedWheel] = action.payload;
+      const deduplicatedPins = new Set(action.payload.toUpperCase());
+      state.wheelState[state.selectedWheel] = Array.from(deduplicatedPins)
+        .toSorted()
+        .join("");
     },
   },
 });
@@ -90,6 +93,16 @@ export const selectWheelState = (state: RootState, wheelId: number): string => {
     throw new Error(`Programming error: no wheel state for wheelId ${wheelId}`);
   }
   return state.m209.wheelState[wheelId];
+};
+
+export const selectSelectedWheelState = (state: RootState): string => {
+  const wheelState = state.m209.wheelState[state.m209.selectedWheel];
+  if (wheelState === undefined) {
+    throw new Error(
+      `Programming error: no wheel state for selected wheelId ${state.m209.selectedWheel}`,
+    );
+  }
+  return wheelState;
 };
 
 export const selectSelectedWheel = (state: RootState) => {

@@ -8,11 +8,14 @@ import InputLabel from "@mui/material/InputLabel";
 import Tooltip from "@mui/material/Tooltip";
 import React from "react";
 import { useAppSelector } from "../../../../app/hooks.ts";
-import { selectSelectedWheel, selectWheelState } from "../../m209Slice.ts";
+import {
+  selectSelectedWheel,
+  selectSelectedWheelState,
+} from "../../m209Slice.ts";
 
 export const WheelStatus = () => {
   const selectedWheel = useAppSelector(selectSelectedWheel);
-  const wheelState = useAppSelector((s) => selectWheelState(s, selectedWheel));
+  const wheelState = useAppSelector(selectSelectedWheelState);
   const [hasCopied, setHasCopied] = React.useState(false);
   const copyTooltip = hasCopied ? "Copied!" : "Copy to clipboard";
 

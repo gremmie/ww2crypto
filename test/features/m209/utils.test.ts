@@ -1,6 +1,8 @@
 import { describe, expect, test } from "vitest";
+import { KEY_WHEEL_DATA } from "../../../src/features/m209/machine/wheelData.ts";
 import {
   drumLugStateToStr,
+  isValidWheelPins,
   parseDrumLugStr,
   sortDrumState,
 } from "../../../src/features/m209/utils.ts";
@@ -242,5 +244,66 @@ describe("sortDrumState", () => {
 
   test("all zeros get put to the end", () => {
     testShuffle("1-0*4 1-3 2-4*2 3-0*8 3-4 3-5*2 4-6 0-0*8");
+  });
+});
+
+describe("isValidWheelPins", () => {
+  test("invalid wheel number", () => {
+    expect(isValidWheelPins(-1, "ABC")).toBe(false);
+    expect(isValidWheelPins(6, "ABC")).toBe(false);
+  });
+
+  test("invalid pins", () => {
+    expect(isValidWheelPins(1, "ABC ")).toBe(false);
+    expect(isValidWheelPins(2, "AB3C")).toBe(false);
+    expect(isValidWheelPins(2, "0ABC")).toBe(false);
+    expect(isValidWheelPins(2, "ABC!")).toBe(false);
+  });
+
+  test("trivial valid cases", () => {
+    for (let i = 0; i < 6; ++i) {
+      expect(isValidWheelPins(i, "ABC")).toBe(true);
+    }
+  });
+
+  test("trivial valid lower cases", () => {
+    for (let i = 0; i < 6; ++i) {
+      expect(isValidWheelPins(i, "abc")).toBe(true);
+    }
+  });
+
+  test("duplicates are ok", () => {
+    const wheelData = KEY_WHEEL_DATA[3];
+    expect(wheelData).toBeDefined();
+    if (wheelData) {
+      const letters = wheelData.letters;
+      expect(isValidWheelPins(3, letters + letters)).toBe(true);
+    }
+  });
+
+  for (let n = 0; n < 6; ++n) {
+    test(`test wheel ${n + 1}`, () => {
+      const wheelData = KEY_WHEEL_DATA[n];
+      expect(wheelData).toBeDefined();
+      if (wheelData) {
+        expect(isValidWheelPins(n, wheelData.letters)).toBe(true);
+      }
+    });
+  }
+
+  test("shuffled is ok", () => {
+    const wheelData = KEY_WHEEL_DATA[3];
+    expect(wheelData).toBeDefined();
+    if (wheelData) {
+      const shuffled = Array.from(wheelData.letters)
+        .map((pin) => ({
+          pin,
+          sort: Math.random(),
+        }))
+        .toSorted((a, b) => a.sort - b.sort)
+        .map(({ pin }) => pin)
+        .join("");
+      expect(isValidWheelPins(3, shuffled)).toBe(true);
+    }
   });
 });

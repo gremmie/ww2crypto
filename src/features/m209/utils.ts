@@ -1,3 +1,5 @@
+import { KEY_WHEEL_DATA } from "./machine/wheelData.ts";
+
 const lugStrRegex = /^(\d-\d(\*\d\d?)?)(\s+\d-\d(\*\d\d?)?){0,26}$/;
 const repeatRegex = /^\d-\d\*(\d\d?)$/;
 
@@ -70,7 +72,9 @@ export const drumLugStateToStr = (state: [number, number][]): string => {
     .join(" ");
 };
 
-export const sortDrumState = (state: [number, number][]): [number, number][] => {
+export const sortDrumState = (
+  state: [number, number][],
+): [number, number][] => {
   return state.toSorted((a, b) => {
     // If both left & right are the same.
     if (a[0] === b[0] && a[1] === b[1]) return 0;
@@ -87,4 +91,15 @@ export const sortDrumState = (state: [number, number][]): [number, number][] => 
     // Lefts are equal, sort by right.
     return a[1] - b[1];
   });
+};
+
+export const isValidWheelPins = (wheelNumber: number, pins: string) => {
+  const wheelData = KEY_WHEEL_DATA[wheelNumber];
+  if (!wheelData) return false;
+
+  const pinSet = new Set(wheelData.letters);
+  for (const pin of pins.toUpperCase()) {
+    if (!pinSet.has(pin)) return false;
+  }
+  return true;
 };
