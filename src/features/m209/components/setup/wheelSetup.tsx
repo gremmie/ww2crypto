@@ -11,7 +11,7 @@ export const WheelSetup = (): ReactElement => {
   return (
     <Stack direction="column" spacing={2} sx={{ alignItems: "center" }}>
       <WheelSelect />
-      <Stack direction="row" spacing={4}>
+      <Stack direction={{ xs: "column", sm: "row" }} spacing={4}>
         <WheelPins />
         <Stack direction="column" spacing={2}>
           <WheelStatus />

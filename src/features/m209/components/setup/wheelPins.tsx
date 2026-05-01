@@ -52,8 +52,12 @@ export const WheelPins = () => {
 
   return (
     <Stack direction="column" spacing={2}>
-      <Rollers handleBack={handleBack} handleForward={handleForward} />
-      <FormGroup sx={{ pl: 2.5 }}>
+      <Rollers
+        handleUp={handleBack}
+        handleDown={handleForward}
+        hideDown={true}
+      />
+      <FormGroup sx={{ alignItems: "center" }}>
         {Array.from(visiblePins, (pin) => {
           const isEffective = pinSet.has(pin);
           return (
@@ -70,7 +74,7 @@ export const WheelPins = () => {
           );
         })}
       </FormGroup>
-      <Rollers handleBack={handleBack} handleForward={handleForward} />
+      <Rollers handleUp={handleBack} handleDown={handleForward} hideUp={true} />
     </Stack>
   );
 };

@@ -4,23 +4,31 @@ import { IconButton } from "@mui/material";
 import Stack from "@mui/material/Stack";
 
 export interface RollerProps {
-  handleBack: () => void;
-  handleForward: () => void;
+  handleUp: () => void;
+  handleDown: () => void;
+  hideUp?: boolean;
+  hideDown?: boolean;
 }
 
 export default function Rollers(props: RollerProps) {
+  const hideUp = props.hideUp ?? false;
+  const hideDown = props.hideDown ?? false;
   return (
     <Stack
       direction="row"
       spacing={2}
       sx={{ display: "flex", justifyContent: "center" }}
     >
-      <IconButton aria-label="roll drum back" onClick={props.handleBack}>
-        <KeyboardArrowUpIcon />
-      </IconButton>
-      <IconButton aria-label="roll drum forward" onClick={props.handleForward}>
-        <KeyboardArrowDownIcon />
-      </IconButton>
+      {!hideUp && (
+        <IconButton aria-label="roll drum back" onClick={props.handleUp}>
+          <KeyboardArrowUpIcon />
+        </IconButton>
+      )}
+      {!hideDown && (
+        <IconButton aria-label="roll drum forward" onClick={props.handleDown}>
+          <KeyboardArrowDownIcon />
+        </IconButton>
+      )}
     </Stack>
   );
 }

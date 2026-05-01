@@ -24,7 +24,7 @@ export default function Drum() {
 
   return (
     <Stack direction="column" spacing={2} sx={{ pb: 3 }}>
-      <Rollers handleBack={handleBack} handleForward={handleForward} />
+      <Rollers handleUp={handleBack} handleDown={handleForward} />
       {visibleBars.map((bar) => (
         <Stack
           key={bar}
@@ -40,7 +40,7 @@ export default function Drum() {
           </Typography>
         </Stack>
       ))}
-      <Rollers handleBack={handleBack} handleForward={handleForward} />
+      <Rollers handleUp={handleBack} handleDown={handleForward} />
     </Stack>
   );
 }
