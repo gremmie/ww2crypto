@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { modulo } from "../../../common/utils.ts";
 import DrumBar from "./drumBar.tsx";
-import DrumRollers from "./drumRollers.tsx";
+import Rollers from "./rollers.tsx";
 
 export default function Drum() {
   const [bottomBar, setBottomBar] = useState<number>(0);
@@ -24,7 +24,7 @@ export default function Drum() {
 
   return (
     <Stack direction="column" spacing={2} sx={{ pb: 3 }}>
-      <DrumRollers handleBack={handleBack} handleForward={handleForward} />
+      <Rollers handleBack={handleBack} handleForward={handleForward} />
       {visibleBars.map((bar) => (
         <Stack
           key={bar}
@@ -40,7 +40,7 @@ export default function Drum() {
           </Typography>
         </Stack>
       ))}
-      <DrumRollers handleBack={handleBack} handleForward={handleForward} />
+      <Rollers handleBack={handleBack} handleForward={handleForward} />
     </Stack>
   );
 }

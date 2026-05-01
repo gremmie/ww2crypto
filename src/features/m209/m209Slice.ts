@@ -9,12 +9,14 @@ export interface M209State {
   drumState: [number, number][];
   wheelState: string[];
   selectedWheel: number;
+  wheelPositions: number[];
 }
 
 const initialState: M209State = {
   drumState: Array.from({ length: numBars }, () => [0, 0]),
   wheelState: Array.from({ length: numWheels }, () => ""),
   selectedWheel: 0,
+  wheelPositions: Array.from({ length: numWheels }, () => 0),
 };
 
 export interface DrumBarChangedPayload {
@@ -59,6 +61,9 @@ export const m209Slice = createSlice({
         .toSorted()
         .join("");
     },
+    selectedWheelPositionChanged: (state, action: PayloadAction<number>) => {
+      state.wheelPositions[state.selectedWheel] = action.payload;
+    },
   },
 });
 
@@ -69,6 +74,7 @@ export const {
   sortAllLugs,
   wheelSelected,
   selectedWheelPinsChanged,
+  selectedWheelPositionChanged,
 } = m209Slice.actions;
 
 // Selectors
@@ -107,6 +113,14 @@ export const selectSelectedWheelState = (state: RootState): string => {
 
 export const selectSelectedWheel = (state: RootState) => {
   return state.m209.selectedWheel;
+};
+
+export const selectSelectedWheelPosition = (state: RootState) => {
+  const position = state.m209.wheelPositions[state.m209.selectedWheel];
+  if (position !== undefined) return position;
+  throw new Error(
+    `Programming error: no wheel position for wheelId ${state.m209.selectedWheel}`,
+  );
 };
 
 export default m209Slice.reducer;

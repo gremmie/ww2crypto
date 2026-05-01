@@ -3,12 +3,12 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IconButton } from "@mui/material";
 import Stack from "@mui/material/Stack";
 
-export interface DrumRollerProps {
+export interface RollerProps {
   handleBack: () => void;
   handleForward: () => void;
 }
 
-export default function DrumRollers(props: DrumRollerProps) {
+export default function Rollers(props: RollerProps) {
   return (
     <Stack
       direction="row"
