@@ -1,12 +1,14 @@
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import { CardActionArea, CardHeader, Tooltip } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import type { MachineConfig } from "../../../common/config/machineConfig.ts";
-import { setupSummary } from "../../utils.ts";
+import type { MachineConfig } from "../../common/config/machineConfig.ts";
+import { setupSummary } from "../../enigma/utils.ts";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardHeader from "@mui/material/CardHeader";
 
 interface SetupCardProps {
   config: MachineConfig;
@@ -41,9 +43,12 @@ export default function SetupCard(props: SetupCardProps) {
           subheader={createdAt.toLocaleString()}
         />
         <CardContent sx={{ pt: 0 }}>
-          <Typography variant="body1" sx={{ color: "text.secondary" }}>
-            {setupSummary(props.config)}
-          </Typography>
+          {/* Temporary until we sort out M209. */}
+          {props.config.type === "enigma" && (
+            <Typography variant="body1" sx={{ color: "text.secondary" }}>
+              {setupSummary(props.config)}
+            </Typography>
+          )}
         </CardContent>
       </CardActionArea>
       <CardActions disableSpacing>

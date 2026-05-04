@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store.ts";
+import type { M209Config } from "./config/m209Config.ts";
 import { sortDrumState } from "./utils.ts";
 
 const numBars = 27;
@@ -64,6 +65,10 @@ export const m209Slice = createSlice({
     selectedWheelPositionChanged: (state, action: PayloadAction<number>) => {
       state.wheelPositions[state.selectedWheel] = action.payload;
     },
+    configLoaded: (state, action: PayloadAction<M209Config>) => {
+      state.drumState = action.payload.drumState;
+      state.wheelState = action.payload.wheelState;
+    },
   },
 });
 
@@ -75,6 +80,7 @@ export const {
   wheelSelected,
   selectedWheelPinsChanged,
   selectedWheelPositionChanged,
+  configLoaded,
 } = m209Slice.actions;
 
 // Selectors

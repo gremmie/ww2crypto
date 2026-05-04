@@ -3,7 +3,7 @@ import {
   createSelector,
   createSlice,
   type EntityState,
-  type PayloadAction,
+  type PayloadAction
 } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store.ts";
 import { applicationStarted } from "../common/actions.ts";
@@ -148,6 +148,8 @@ export const selectIsSetupCompleteForType = (
   switch (machineType) {
     case "enigma":
       return selectIsSetupComplete(state);
+    case "m209":
+      return true;
     default:
       return false;
   }
@@ -185,7 +187,24 @@ export const selectIsActiveConfigModified = (
       return true;
     if (activeConfig.plugboard !== enigmaState.plugboard) return true;
     return activeConfig.plugboardNotation !== enigmaState.plugboardNotation;
+  } else if (activeConfig.type === "m209") {
+    const m209State = state.m209;
+    if (
+      !m209State.drumState.every((pins, n) => {
+        const active = activeConfig.drumState[n];
+        if (!active) return false;
+        return pins[0] === active[0] && pins[1] === active[1];
+      })
+    ) {
+      return false;
+    }
+    return !m209State.wheelState.every((pins, n) => {
+      const active = activeConfig.wheelState[n];
+      if (!active) return false;
+      return pins === active;
+    });
   }
+
   return false;
 };
 

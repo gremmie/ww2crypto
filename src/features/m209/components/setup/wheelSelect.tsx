@@ -12,7 +12,6 @@ export const WheelSelect = () => {
   const selectedWheel = useAppSelector(selectSelectedWheel);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  console.log(`isExtraSmall: ${isMobile}`);
 
   const idToButton = (label: number, n: number) => {
     return (

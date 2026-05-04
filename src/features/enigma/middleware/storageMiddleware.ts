@@ -15,19 +15,16 @@ export const storageMiddleware: Middleware<object, RootState> =
           MachineConfig,
         ][];
         // Enigma configs didn't always have a type field. Fix that up.
-        const migratedEntries: MachineConfig[] = entries.map(([, config]) => {
-          const uuid = self.crypto.randomUUID();
-          return {
-            ...config,
-            type: "enigma",
-            id: uuid,
-          };
-        });
+        const migratedEntries = entries.map(([, config]) => ({
+          ...config,
+          type: "enigma",
+          id: self.crypto.randomUUID(),
+        })) as MachineConfig[];
         localStorage.setItem(
           "ww2crypto-configs",
           JSON.stringify(migratedEntries),
         );
-        //localStorage.removeItem("ww2crypto-configs");
+        localStorage.removeItem("ww2crypto-enigma");
       }
     }
 

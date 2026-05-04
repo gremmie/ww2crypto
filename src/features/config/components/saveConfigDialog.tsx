@@ -1,5 +1,4 @@
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import { Switch } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -10,16 +9,17 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
-import * as React from "react";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
-import type { MachineType } from "../../../common/config/machineType.ts";
+import React from "react";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks.ts";
+import type { MachineType } from "../../common/config/machineType.ts";
 import {
   saveConfigInitiated,
   selectActiveConfig,
   selectConfigNamesByType,
   selectIsActiveConfigModified,
   selectIsSetupCompleteForType,
-} from "../../../config/configSlice.ts";
+} from "../configSlice.ts";
+import Switch from "@mui/material/Switch";
 
 interface SaveConfigDialogProps {
   machineType: MachineType;
@@ -61,7 +61,7 @@ export default function SaveConfigDialog(props: SaveConfigDialogProps) {
     setCanOverwrite(false);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleClose();
     const formData = new FormData(event.currentTarget);

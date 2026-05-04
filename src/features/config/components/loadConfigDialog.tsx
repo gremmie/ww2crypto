@@ -11,15 +11,15 @@ import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
-import type { MachineConfig } from "../../../common/config/machineConfig.ts";
-import type { MachineType } from "../../../common/config/machineType.ts";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks.ts";
+import type { MachineConfig } from "../../common/config/machineConfig.ts";
+import type { MachineType } from "../../common/config/machineType.ts";
 import {
   deleteConfigInitiated,
   loadConfigInitiated,
   selectConfigsByType,
   undoDeleteConfigInitiated,
-} from "../../../config/configSlice.ts";
+} from "../configSlice.ts";
 import SetupCard from "./setupCard.tsx";
 
 interface LoadConfigDialogProps {
