@@ -3,7 +3,7 @@ import {
   createSelector,
   createSlice,
   type EntityState,
-  type PayloadAction
+  type PayloadAction,
 } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store.ts";
 import { applicationStarted } from "../common/actions.ts";
