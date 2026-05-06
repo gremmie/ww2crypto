@@ -1,12 +1,12 @@
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import type { MachineConfig } from "../../common/config/machineConfig.ts";
-import CardActionArea from "@mui/material/CardActionArea";
-import CardHeader from "@mui/material/CardHeader";
 import { ConfigSummary } from "./configSummary.tsx";
 
 interface SetupCardProps {
@@ -41,10 +41,10 @@ export default function SetupCard(props: SetupCardProps) {
           title={props.config.name}
           subheader={createdAt.toLocaleString()}
         />
-        <CardContent sx={{ pt: 0 }}>
-          <ConfigSummary config={props.config} />
-        </CardContent>
       </CardActionArea>
+      <CardContent sx={{ pt: 0 }}>
+        <ConfigSummary config={props.config} />
+      </CardContent>
       <CardActions disableSpacing>
         <Tooltip title="Delete Setup" arrow>
           <IconButton
