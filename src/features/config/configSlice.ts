@@ -196,7 +196,7 @@ export const selectIsActiveConfigModified = (
         return pins[0] === active[0] && pins[1] === active[1];
       })
     ) {
-      return false;
+      return true;
     }
     return !m209State.wheelState.every((pins, n) => {
       const active = activeConfig.wheelState[n];
