@@ -34,6 +34,7 @@ export const WheelStatus = () => {
       <FilledInput
         id={htmlId}
         type="text"
+        disabled
         slotProps={{
           input: {
             readOnly: true,

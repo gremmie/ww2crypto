@@ -81,6 +81,7 @@ export default function DrumSetupControls() {
           id="lug-settings-display"
           type="text"
           multiline
+          disabled
           slotProps={{
             input: {
               readOnly: true,

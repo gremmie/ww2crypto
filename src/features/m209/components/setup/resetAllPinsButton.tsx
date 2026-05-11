@@ -15,7 +15,12 @@ export const ResetAllPinsButton = () => {
   };
 
   return (
-    <Button variant="outlined" disabled={isDisabled} onClick={handleClick}>
+    <Button
+      variant="outlined"
+      disabled={isDisabled}
+      onClick={handleClick}
+      sx={{ alignSelf: "center" }}
+    >
       Reset all pins
     </Button>
   );
