@@ -175,6 +175,8 @@ describe("DrumSetup", () => {
     expect(bulkSetButton).toBeDisabled();
     const sortButton = screen.getByRole("button", { name: "Sort Lugs" });
     expect(sortButton).toBeDisabled();
+    const resetButton = screen.getByRole("button", { name: "Reset All Lugs" });
+    expect(resetButton).toBeDisabled();
 
     await user.click(bulkSetInput);
     await user.type(
@@ -206,5 +208,10 @@ describe("DrumSetup", () => {
     expect(status).toHaveValue(
       "0-4*7 0-5*2 0-6*2 1-0 2-0 2-4*2 3-0*9 3-4 4-6*2",
     );
+
+    expect(resetButton).toBeEnabled();
+    await user.click(resetButton);
+    expect(status).toHaveValue("");
+    expect(resetButton).toBeDisabled();
   });
 });
