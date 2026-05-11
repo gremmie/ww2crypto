@@ -156,14 +156,14 @@ export default function DrumSetupControls() {
           disabled={allLugsZero}
           onClick={() => dispatch(resetAllLugs())}
         >
-          Reset all lugs
+          Reset All Lugs
         </Button>
         <Button
           variant="outlined"
           disabled={allLugsSorted}
           onClick={() => dispatch(sortAllLugs())}
         >
-          Sort lugs
+          Sort Lugs
         </Button>
       </Stack>
     </Stack>

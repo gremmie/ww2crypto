@@ -36,11 +36,13 @@ export default function DrumBar(props: DrumBarProps) {
 
   return (
     <Slider
-      getAriaLabel={() => `Drum Bar ${props.id}`}
+      getAriaLabel={(index) =>
+        index === 0 ? `bar ${props.id} left lug` : `bar ${props.id} right lug`
+      }
       value={sliderValue}
       onChange={handleChange}
       valueLabelDisplay="off"
-      getAriaValueText={(n) => `${n}`}
+      getAriaValueText={(_, index) => marks[index]?.label ?? "?"}
       shiftStep={1}
       step={1}
       marks={marks}
@@ -84,7 +86,7 @@ const marks = [
     value: 7,
     label: "6",
   },
-];
+] as const;
 
 const leftLugToSliderValue: Map<number, number> = new Map([
   [0, 1],
