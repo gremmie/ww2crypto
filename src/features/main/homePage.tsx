@@ -4,6 +4,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { RouterLink } from "../../routerLinkComponents/routerLink.tsx";
 import { ThemeSelect } from "../../themeSelect.tsx";
+import ExternalLink from "../common/components/externalLink.tsx";
 
 export function HomePage() {
   return (
@@ -54,6 +55,18 @@ export function HomePage() {
           News
         </Typography>
         <ul>
+          <Typography variant="body1" component="li" gutterBottom>
+            <b>May 11, 2026</b> - Work is proceeding on the M-209 simulation!
+            I've posted some screenshots of the setup screens at{" "}
+            <ExternalLink
+              url="https://ko-fi.com/brianneal2026"
+              name="my Ko-Fi page"
+              showArrow={true}
+            ></ExternalLink>
+            . I'll be updating my progress over there if you'd like to follow
+            along. I'll be working on the actual M-209 simulation next and I
+            hope to finish it in the next few months.
+          </Typography>
           <Typography variant="body1" component="li" gutterBottom>
             <b>March 7, 2026</b> - Added an animation that simulates key presses
             when text is pasted or entered in buffered mode. This can be turned
