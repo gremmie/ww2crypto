@@ -15,7 +15,7 @@ export const WheelSelect = () => {
 
   const idToButton = (label: number, n: number) => {
     return (
-      <ToggleButton key={n} value={n}>
+      <ToggleButton key={n} value={n} aria-label={`wheel ${label}`}>
         <SettingsIcon fontSize={isMobile ? "medium" : "large"} sx={{ pr: 1 }} />
         <Typography variant={isMobile ? "body1" : "h6"} component="span">
           {label}
@@ -24,8 +24,10 @@ export const WheelSelect = () => {
     );
   };
 
-  const handleSelect = (newWheel: number) => {
-    dispatch(wheelSelected(newWheel));
+  const handleSelect = (newWheel: number | null) => {
+    if (newWheel !== null) {
+      dispatch(wheelSelected(newWheel));
+    }
   };
 
   return (

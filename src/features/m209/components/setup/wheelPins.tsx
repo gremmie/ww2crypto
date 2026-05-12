@@ -56,6 +56,7 @@ export const WheelPins = () => {
         handleUp={handleBack}
         handleDown={handleForward}
         hideDown={true}
+        upLabel="roll wheel back"
       />
       <FormGroup sx={{ alignItems: "center" }}>
         {Array.from(visiblePins, (pin) => {
@@ -74,7 +75,12 @@ export const WheelPins = () => {
           );
         })}
       </FormGroup>
-      <Rollers handleUp={handleBack} handleDown={handleForward} hideUp={true} />
+      <Rollers
+        handleUp={handleBack}
+        handleDown={handleForward}
+        hideUp={true}
+        downLabel="roll wheel forward"
+      />
     </Stack>
   );
 };

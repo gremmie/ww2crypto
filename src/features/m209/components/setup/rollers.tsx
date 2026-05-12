@@ -8,6 +8,8 @@ export interface RollerProps {
   handleDown: () => void;
   hideUp?: boolean;
   hideDown?: boolean;
+  upLabel?: string;
+  downLabel?: string;
 }
 
 export default function Rollers(props: RollerProps) {
@@ -20,12 +22,15 @@ export default function Rollers(props: RollerProps) {
       sx={{ display: "flex", justifyContent: "center" }}
     >
       {!hideUp && (
-        <IconButton aria-label="roll drum back" onClick={props.handleUp}>
+        <IconButton aria-label={props.upLabel ?? "up"} onClick={props.handleUp}>
           <KeyboardArrowUpIcon />
         </IconButton>
       )}
       {!hideDown && (
-        <IconButton aria-label="roll drum forward" onClick={props.handleDown}>
+        <IconButton
+          aria-label={props.downLabel ?? "down"}
+          onClick={props.handleDown}
+        >
           <KeyboardArrowDownIcon />
         </IconButton>
       )}

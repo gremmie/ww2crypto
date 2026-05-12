@@ -21,7 +21,7 @@ export const ResetAllPinsButton = () => {
       onClick={handleClick}
       sx={{ alignSelf: "center" }}
     >
-      Reset all pins
+      Reset All Pins
     </Button>
   );
 };
