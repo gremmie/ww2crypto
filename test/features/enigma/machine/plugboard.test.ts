@@ -5,13 +5,13 @@ import Plugboard, {
 
 describe("Plugboard", () => {
   test("Bad constructor input", () => {
-    expect(() => new Plugboard("123")).toThrowError(PlugboardError);
-    expect(() => new Plugboard("ABCD")).toThrowError(PlugboardError);
+    expect(() => new Plugboard("123")).toThrow(PlugboardError);
+    expect(() => new Plugboard("ABCD")).toThrow(PlugboardError);
     expect(
       () => new Plugboard("AB CD EF GH IJ KL MN OP QR ST UV WX YZ EH"),
-    ).toThrowError(PlugboardError);
-    expect(() => new Plugboard("AB CD AB")).toThrowError(PlugboardError);
-    expect(() => new Plugboard("A/B CX")).toThrowError(PlugboardError);
+    ).toThrow(PlugboardError);
+    expect(() => new Plugboard("AB CD AB")).toThrow(PlugboardError);
+    expect(() => new Plugboard("A/B CX")).toThrow(PlugboardError);
   });
 
   test("No connections", () => {

@@ -13,24 +13,24 @@ describe("Rotor tests", () => {
     .join("");
 
   test("Invalid wiring", () => {
-    expect(() => new Rotor("I", "")).toThrowError(RotorError);
-    expect(() => new Rotor("I", "ABC")).toThrowError(RotorError);
-    expect(() => new Rotor("I", "123")).toThrowError(RotorError);
+    expect(() => new Rotor("I", "")).toThrow(RotorError);
+    expect(() => new Rotor("I", "ABC")).toThrow(RotorError);
+    expect(() => new Rotor("I", "123")).toThrow(RotorError);
 
     const s = "ABCD".repeat(7);
-    expect(() => new Rotor("I", s)).toThrowError(RotorError);
-    expect(() => new Rotor("I", s.slice(0, 26))).toThrowError(RotorError);
+    expect(() => new Rotor("I", s)).toThrow(RotorError);
+    expect(() => new Rotor("I", s.slice(0, 26))).toThrow(RotorError);
   });
 
   test("Invalid ring setting", () => {
-    expect(() => new Rotor("I", wiring, -1)).toThrowError(RotorError);
-    expect(() => new Rotor("I", wiring, 26)).toThrowError(RotorError);
+    expect(() => new Rotor("I", wiring, -1)).toThrow(RotorError);
+    expect(() => new Rotor("I", wiring, 26)).toThrow(RotorError);
   });
 
   test("Invalid stepping", () => {
-    expect(() => new Rotor("I", wiring, 0, ["1"])).toThrowError(RotorError);
-    expect(() => new Rotor("I", wiring, 26, [""])).toThrowError(RotorError);
-    expect(() => new Rotor("I", wiring, 26, ["A", "%", "14"])).toThrowError(
+    expect(() => new Rotor("I", wiring, 0, ["1"])).toThrow(RotorError);
+    expect(() => new Rotor("I", wiring, 26, [""])).toThrow(RotorError);
+    expect(() => new Rotor("I", wiring, 26, ["A", "%", "14"])).toThrow(
       RotorError,
     );
   });
