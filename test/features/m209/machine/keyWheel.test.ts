@@ -1,7 +1,5 @@
 import { describe, expect, test } from "vitest";
-import KeyWheel, {
-  KeyWheelError,
-} from "../../../../src/features/m209/machine/keyWheel.ts";
+import { KeyWheel, KeyWheelError } from "../../../../src/features/m209/machine/keyWheel.ts";
 
 describe("KeyWheel", () => {
   test("Constructor throws for invalid letters", () => {

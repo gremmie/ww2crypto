@@ -1,6 +1,6 @@
 import { modulo } from "../../common/utils.ts";
-import type Drum from "./drum.ts";
-import KeyWheel, { KeyWheelError } from "./keyWheel.ts";
+import type { Drum } from "./drum.ts";
+import { KeyWheel, KeyWheelError } from "./keyWheel.ts";
 
 export type ModeType = "cipher" | "decipher";
 

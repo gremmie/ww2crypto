@@ -9,7 +9,7 @@ export class KeyWheelError extends Error {
 /**
  * Simulates a key wheel in a M-209 converter.
  */
-export default class KeyWheel {
+export class KeyWheel {
   readonly letters: string;
   readonly guideLetter: string;
   readonly numPins: number;

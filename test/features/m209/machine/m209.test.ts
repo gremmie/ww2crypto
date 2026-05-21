@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, test } from "vitest";
-import Drum from "../../../../src/features/m209/machine/drum.ts";
-import KeyWheel, {
+import { Drum } from "../../../../src/features/m209/machine/drum.ts";
+import {
+  KeyWheel,
   KeyWheelError,
 } from "../../../../src/features/m209/machine/keyWheel.ts";
 import { M209 } from "../../../../src/features/m209/machine/m209.ts";

@@ -27,7 +27,7 @@
  * The order of the bars list is not relevant as we only need to simulate
  * complete revolutions of the drum cage.
  */
-export default class Drum {
+export class Drum {
   readonly drumState: ([number, number] | [number])[];
   /**
    * Constructor for the Drum class.

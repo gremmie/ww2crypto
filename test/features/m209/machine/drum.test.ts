@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import Drum from "../../../../src/features/m209/machine/drum.ts";
+import { Drum } from "../../../../src/features/m209/machine/drum.ts";
 import { parseDrumLugStr } from "../../../../src/features/m209/utils.ts";
 
 describe("Drum", () => {
