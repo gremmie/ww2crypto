@@ -1,5 +1,7 @@
 import { describe, expect, test } from "vitest";
-import KeyWheel, { KeyWheelError } from "../../../../src/features/m209/machine/keyWheel.ts";
+import KeyWheel, {
+  KeyWheelError,
+} from "../../../../src/features/m209/machine/keyWheel.ts";
 
 describe("KeyWheel", () => {
   test("Constructor throws for invalid letters", () => {
@@ -57,5 +59,16 @@ describe("KeyWheel", () => {
     }
     expect(wheel.display()).toBe("A");
     expect(wheel.isEffective()).toBe(false);
+  });
+
+  test("setLetter testing", () => {
+    const wheel = new KeyWheel("ABCDEF", "C", "BCE");
+    expect(wheel.display()).toBe("A");
+    wheel.setLetter("B");
+    expect(wheel.display()).toBe("B");
+    wheel.setLetter("F");
+    expect(wheel.display()).toBe("F");
+
+    expect(() => wheel.setLetter("X")).toThrow(KeyWheelError);
   });
 });

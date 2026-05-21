@@ -104,6 +104,20 @@ export default class KeyWheel {
   }
 
   /**
+   * Sets the position of the key wheel such that the given letter is shown to
+   * the operator.
+   *
+   * @param letter {string} - the letter to rotate the key wheel to
+   */
+  setLetter(letter: string): void {
+    const pos = this.offsetByLetter.get(letter);
+    if (pos === undefined) {
+      throw new KeyWheelError(`Invalid letter ${letter}`);
+    }
+    this.pos = pos;
+  }
+
+  /**
    * Rotates the wheel the given number of steps.
    * @param steps {number|null} - The number of steps to rotate. If negative, indicates the key wheel should be rolled
    * backwards. If not supplied, the key wheel is rotated one step forward.
