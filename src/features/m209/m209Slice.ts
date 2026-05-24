@@ -1,6 +1,8 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store.ts";
+import { modulo } from "../common/utils.ts";
 import type { M209Config } from "./config/m209Config.ts";
+import { KEY_WHEEL_DATA } from "./machine/wheelData.ts";
 import { sortDrumState } from "./utils.ts";
 
 const numBars = 27;
@@ -24,6 +26,11 @@ export interface DrumBarChangedPayload {
   // 1-based bar number (1-27)
   barId: number;
   newState: [number, number];
+}
+
+export interface WheelLetterChangedPayload {
+  wheelId: number;
+  letter: string;
 }
 
 export const m209Slice = createSlice({
@@ -69,8 +76,40 @@ export const m209Slice = createSlice({
       state.drumState = action.payload.drumState;
       state.wheelState = action.payload.wheelState;
     },
+    wheelAdvanced: (state, action: PayloadAction<number>) => {
+      const wheelId = action.payload;
+      checkWheelId(wheelId);
+      const numLetters = KEY_WHEEL_DATA[wheelId]!.letters.length;
+      const curPos = state.wheelPositions[wheelId]!;
+      state.wheelPositions[wheelId] = modulo(curPos + 1, numLetters);
+    },
+    wheelReversed: (state, action: PayloadAction<number>) => {
+      const wheelId = action.payload;
+      checkWheelId(wheelId);
+      const numLetters = KEY_WHEEL_DATA[wheelId]!.letters.length;
+      const curPos = state.wheelPositions[wheelId]!;
+      state.wheelPositions[wheelId] = modulo(curPos - 1, numLetters);
+    },
+    wheelLetterChanged: (
+      state,
+      action: PayloadAction<WheelLetterChangedPayload>,
+    ) => {
+      const { wheelId, letter } = action.payload;
+      checkWheelId(wheelId);
+      const validChoices = KEY_WHEEL_DATA[wheelId]!.letters;
+      const newPos = validChoices.indexOf(letter.toUpperCase());
+      if (newPos !== -1) {
+        state.wheelPositions[wheelId] = newPos;
+      }
+    },
   },
 });
+
+const checkWheelId = (id: number): void => {
+  if (id < 0 || id >= numWheels) {
+    throw new RangeError(`Invalid wheel id ${id}`);
+  }
+};
 
 export const {
   drumBarChanged,
@@ -81,6 +120,9 @@ export const {
   selectedWheelPinsChanged,
   selectedWheelPositionChanged,
   configLoaded,
+  wheelAdvanced,
+  wheelReversed,
+  wheelLetterChanged,
 } = m209Slice.actions;
 
 // Selectors
@@ -127,6 +169,17 @@ export const selectSelectedWheelPosition = (state: RootState) => {
   throw new Error(
     `Programming error: no wheel position for wheelId ${state.m209.selectedWheel}`,
   );
+};
+
+export const selectWheelLetter = (
+  state: RootState,
+  wheelId: number,
+): string => {
+  if (wheelId < 0 || wheelId >= numWheels) {
+    throw new RangeError(`Invalid wheelId ${wheelId}`);
+  }
+  const wheelPos = state.m209.wheelPositions[wheelId]!;
+  return KEY_WHEEL_DATA[wheelId]!.letters[wheelPos]!;
 };
 
 export default m209Slice.reducer;
