@@ -2,6 +2,7 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store.ts";
 import { modulo } from "../common/utils.ts";
 import type { M209Config } from "./config/m209Config.ts";
+import type { ModeType } from "./machine/m209.ts";
 import { KEY_WHEEL_DATA } from "./machine/wheelData.ts";
 import { sortDrumState } from "./utils.ts";
 
@@ -13,6 +14,8 @@ export interface M209State {
   wheelState: string[];
   selectedWheel: number;
   wheelPositions: number[];
+  mode: ModeType;
+  counter: number;
 }
 
 const initialState: M209State = {
@@ -20,6 +23,8 @@ const initialState: M209State = {
   wheelState: Array.from({ length: numWheels }, () => ""),
   selectedWheel: 0,
   wheelPositions: Array.from({ length: numWheels }, () => 0),
+  mode: "cipher",
+  counter: 0,
 };
 
 export interface DrumBarChangedPayload {
@@ -102,6 +107,9 @@ export const m209Slice = createSlice({
         state.wheelPositions[wheelId] = newPos;
       }
     },
+    toggleMode: (state) => {
+      state.mode = state.mode === "cipher" ? "decipher" : "cipher";
+    },
   },
 });
 
@@ -123,6 +131,7 @@ export const {
   wheelAdvanced,
   wheelReversed,
   wheelLetterChanged,
+  toggleMode,
 } = m209Slice.actions;
 
 // Selectors
@@ -180,6 +189,14 @@ export const selectWheelLetter = (
   }
   const wheelPos = state.m209.wheelPositions[wheelId]!;
   return KEY_WHEEL_DATA[wheelId]!.letters[wheelPos]!;
+};
+
+export const selectMode = (state: RootState): ModeType => {
+  return state.m209.mode;
+};
+
+export const selectCounter = (state: RootState): number => {
+  return state.m209.counter;
 };
 
 export default m209Slice.reducer;
