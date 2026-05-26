@@ -1,5 +1,8 @@
 import { describe, expect, test } from "vitest";
-import { KeyWheel, KeyWheelError } from "../../../../src/features/m209/machine/keyWheel.ts";
+import {
+  KeyWheel,
+  KeyWheelError,
+} from "../../../../src/features/m209/machine/keyWheel.ts";
 
 describe("KeyWheel", () => {
   test("Constructor throws for invalid letters", () => {
@@ -20,15 +23,18 @@ describe("KeyWheel", () => {
     expect(wheel.guideLetter).toBe("C");
     expect(wheel.numPins).toBe(6);
     expect(wheel.display()).toBe("A");
+    expect(wheel.position()).toBe(0);
     expect(wheel.guideArmLetter()).toBe("C");
     expect(wheel.isEffective()).toBe(false);
 
-    for (const letter of wheel.letters) {
+    for (const [pos, letter] of Array.from(wheel.letters).entries()) {
       expect(wheel.display()).toBe(letter);
+      expect(wheel.position()).toBe(pos);
       expect(wheel.isEffective()).toBe(false);
       wheel.rotate();
     }
     expect(wheel.display()).toBe("A");
+    expect(wheel.position()).toBe(0);
   });
 
   test("Constructor builds object as expected - effective pins", () => {
@@ -64,8 +70,10 @@ describe("KeyWheel", () => {
     expect(wheel.display()).toBe("A");
     wheel.setLetter("B");
     expect(wheel.display()).toBe("B");
+    expect(wheel.position()).toBe(1);
     wheel.setLetter("F");
     expect(wheel.display()).toBe("F");
+    expect(wheel.position()).toBe(5);
 
     expect(() => wheel.setLetter("X")).toThrow(KeyWheelError);
   });

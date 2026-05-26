@@ -104,6 +104,13 @@ export class KeyWheel {
   }
 
   /**
+   * Returns the integer wheel position.
+   */
+  position(): number {
+    return this.pos;
+  }
+
+  /**
    * Sets the position of the key wheel such that the given letter is shown to
    * the operator.
    *

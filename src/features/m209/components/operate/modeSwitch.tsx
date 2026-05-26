@@ -21,17 +21,13 @@ export const ModeSwitch = () => {
         alignItems: "center",
       }}
     >
-      <Typography color={isCipherMode ? "primary" : "secondary"}>
-        Cipher
-      </Typography>
+      <Typography color={isCipherMode ? "primary" : "secondary"}>C</Typography>
       <Switch
         checked={!isCipherMode}
         onChange={handleChange}
         slotProps={{ input: { "aria-label": "Cipher/Decipher" } }}
       />
-      <Typography color={!isCipherMode ? "primary" : "secondary"}>
-        Decipher
-      </Typography>
+      <Typography color={!isCipherMode ? "primary" : "secondary"}>D</Typography>
     </Stack>
   );
 };

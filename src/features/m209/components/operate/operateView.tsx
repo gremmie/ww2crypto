@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { KeyWheel } from "./keyWheel.tsx";
+import { MainAxle } from "./mainAxle.tsx";
 import { ModeSwitch } from "./modeSwitch.tsx";
 
 export const OperateView = () => {
@@ -30,6 +31,7 @@ export const OperateView = () => {
         >
           <ModeSwitch />
           <p>counter</p>
+          <MainAxle />
         </Stack>
         <Stack
           spacing={{ xs: 2, md: 4 }}

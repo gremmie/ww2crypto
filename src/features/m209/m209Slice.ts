@@ -1,8 +1,12 @@
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  type PayloadAction,
+  type WritableDraft,
+} from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store.ts";
 import { modulo } from "../common/utils.ts";
 import type { M209Config } from "./config/m209Config.ts";
-import type { ModeType } from "./machine/m209.ts";
+import { M209, type ModeType } from "./machine/m209.ts";
 import { KEY_WHEEL_DATA } from "./machine/wheelData.ts";
 import { sortDrumState } from "./utils.ts";
 
@@ -110,8 +114,23 @@ export const m209Slice = createSlice({
     toggleMode: (state) => {
       state.mode = state.mode === "cipher" ? "decipher" : "cipher";
     },
+    mainAxleRotated: (state, action: PayloadAction<number>) => {
+      const m209 = buildM209(state);
+      m209.rotateMainAxle(action.payload);
+      state.wheelPositions = m209.wheelPositions();
+      state.counter = m209.letterCount;
+    },
   },
 });
+
+const buildM209 = (state: WritableDraft<M209State>): M209 => {
+  return M209.factory({
+    bars: state.drumState,
+    pinList: state.wheelState,
+    counter: state.counter,
+    initialPositions: state.wheelPositions,
+  });
+};
 
 const checkWheelId = (id: number): void => {
   if (id < 0 || id >= numWheels) {
@@ -132,6 +151,7 @@ export const {
   wheelReversed,
   wheelLetterChanged,
   toggleMode,
+  mainAxleRotated,
 } = m209Slice.actions;
 
 // Selectors

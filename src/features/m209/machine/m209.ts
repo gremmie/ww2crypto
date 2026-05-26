@@ -1,8 +1,17 @@
 import { modulo } from "../../common/utils.ts";
-import type { Drum } from "./drum.ts";
+import { Drum } from "./drum.ts";
 import { KeyWheel, KeyWheelError } from "./keyWheel.ts";
+import { KEY_WHEEL_DATA } from "./wheelData.ts";
 
 export type ModeType = "cipher" | "decipher";
+
+export interface M209FactoryParams {
+  bars: [number, number][];
+  pinList: string[];
+  initialPositions?: number[];
+  counter?: number;
+  mode?: ModeType;
+}
 
 /**
  * The M209 class is the top-level class in the M-209 simulation. It
@@ -19,11 +28,81 @@ export class M209 {
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
   ).reverse();
   private static aCode = "A".charCodeAt(0);
+  private static maxCounter = 10000;
+  private static numBars = 27;
+  private static numWheels = 6;
 
-  constructor(keyWheels: KeyWheel[], drum: Drum) {
+  /**
+   * Factory constructor for building a M209 from Redux state.
+   *
+   * @param params - M209FactoryParams object with bars, pinList, counter, initialPositions, and mode
+   */
+  static factory = ({
+    bars,
+    pinList,
+    counter,
+    initialPositions,
+    mode,
+  }: M209FactoryParams) => {
+    if (bars.length !== M209.numBars) {
+      throw new RangeError(
+        `Invalid number of bars (${bars.length}), expected ${M209.numBars}`,
+      );
+    }
+    if (pinList.length !== M209.numWheels) {
+      throw new RangeError(
+        `Invalid number of pin lists (${pinList.length}), expected ${M209.numWheels}`,
+      );
+    }
+    const initPositions = initialPositions ?? [0, 0, 0, 0, 0, 0];
+    if (initPositions.length !== M209.numWheels) {
+      throw new RangeError(
+        `Invalid number of initial positions (${initPositions.length}), expected ${M209.numWheels}`,
+      );
+    }
+
+    const keyWheels = Array.from(
+      { length: 6 },
+      (_, i) =>
+        new KeyWheel(
+          KEY_WHEEL_DATA[i]!.letters,
+          KEY_WHEEL_DATA[i]!.guideLetter,
+        ),
+    );
+    for (const [n, pins] of pinList.entries()) {
+      keyWheels[n]!.setPins(pins);
+    }
+
+    const drum = new Drum(bars);
+    const m209 = new M209(keyWheels, drum, counter, mode);
+
+    const display: string[] = [];
+    for (const [n, pos] of initPositions.entries()) {
+      display.push(KEY_WHEEL_DATA[n]!.letters[pos]!);
+    }
+    m209.setKeyWheels(display.join(""));
+
+    return m209;
+  };
+
+  /**
+   * M209 constructor
+   *
+   * @param keyWheels - 6 element array of KeyWheels
+   * @param drum - the drum cage
+   * @param counter - initial counter value
+   * @param mode - initial cipher/decipher mode
+   */
+  constructor(
+    keyWheels: KeyWheel[],
+    drum: Drum,
+    counter?: number,
+    mode?: ModeType,
+  ) {
     this.keyWheels = keyWheels;
     this.drum = drum;
-    this.counter = 0;
+    this.counter = counter ?? 0;
+    this.mode = mode ?? "cipher";
 
     if (keyWheels.length !== 6) {
       throw new RangeError("Must have 6 key wheels");
@@ -77,6 +156,17 @@ export class M209 {
   }
 
   /**
+   * Returns the current key wheel positions as a 6-element number array.
+   */
+  wheelPositions(): number[] {
+    const result: number[] = [];
+    for (const wheel of this.keyWheels) {
+      result.push(wheel.position());
+    }
+    return result;
+  }
+
+  /**
    * Gets the current letter counter value.
    *
    * @returns {number} - the current number of letters that have been enciphered
@@ -87,10 +177,31 @@ export class M209 {
   }
 
   /**
-   * Resets the current letter counter to zero.
+   * Resets the current letter counter to zero by rotating the main axle.
    */
   resetLetterCounter(): void {
-    this.counter = 0;
+    const steps =
+      this.counter <= M209.maxCounter / 2
+        ? -this.counter
+        : M209.maxCounter - this.counter + 1;
+    this.rotateMainAxle(steps);
+  }
+
+  /**
+   * Rotates the main axle the given number of steps.
+   *
+   * @param steps {number|undefined} - The number of steps to rotate. If negative,
+   * indicates the main axle should be rolled backwards. If not supplied, the main
+   * axle is rotated one step forward.
+   */
+  rotateMainAxle(steps?: number): void {
+    if (steps === 0) return;
+
+    const n = steps ?? 1;
+    for (const wheel of this.keyWheels) {
+      wheel.rotate(n);
+    }
+    this.counter = modulo(this.counter + n, M209.maxCounter);
   }
 
   /**
@@ -161,7 +272,7 @@ export class M209 {
     for (const wheel of this.keyWheels) {
       wheel.rotate();
     }
-    ++this.counter;
+    this.counter = modulo(this.counter + 1, M209.maxCounter);
 
     return M209.cipherTable[modulo(c.charCodeAt(0) - M209.aCode - count, 26)]!;
   }

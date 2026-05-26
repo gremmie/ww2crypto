@@ -55,6 +55,19 @@ describe("M209", () => {
       expect(m209.letterCount).toBe(0);
       expect(m209.mode).toBe("cipher");
       expect(m209.display()).toBe("AAAAAA");
+      expect(m209.wheelPositions()).toEqual([0, 0, 0, 0, 0, 0]);
+    });
+
+    test("sets expected defaults - w/counter", () => {
+      const keyWheels = Array.from(
+        { length: 6 },
+        () => new KeyWheel("ABC", "B"),
+      );
+      const m209 = new M209(keyWheels, new Drum([]), 42);
+      expect(m209.letterCount).toBe(42);
+      expect(m209.mode).toBe("cipher");
+      expect(m209.display()).toBe("AAAAAA");
+      expect(m209.wheelPositions()).toEqual([0, 0, 0, 0, 0, 0]);
     });
   });
 
@@ -63,6 +76,7 @@ describe("M209", () => {
     expect(m209.display()).toBe("AAAAAA");
     m209.setKeyWheels("SZKJEI");
     expect(m209.display()).toBe("SZKJEI");
+    expect(m209.wheelPositions()).toEqual([18, 24, 10, 9, 4, 8]);
   });
 
   test("Setting key wheel to invalid letter throws", () => {
@@ -90,7 +104,7 @@ describe("M209", () => {
 
       m209.resetLetterCounter();
       expect(m209.letterCount).toBe(0);
-      m209.setKeyWheels("AAAAAA");
+      expect(m209.display()).toBe("AAAAAA");
       m209.mode = "decipher";
       const decrypt = m209.convert(check.replaceAll(" ", ""));
       expect(decrypt).toBe(pt);
@@ -187,6 +201,7 @@ describe("M209", () => {
       m209.mode = "cipher";
       const intMsgIndicator = m209.convert(sysIndicator.repeat(12));
       expect(intMsgIndicator).toBe("HKJBB RSQOT DK");
+      m209.resetLetterCounter();
 
       // Set key wheels to internal message indicator.
       // If a wheel doesn't have a letter from the indicator, we cross it off and
@@ -195,7 +210,6 @@ describe("M209", () => {
       m209.setKeyWheels("HKJBBQ");
 
       // Encrypt the message.
-      m209.resetLetterCounter();
       m209.mode = "cipher";
       const ciphertext = m209.convert(
         "THE PIZZA HAS ARRIVED STOP NO SIGN OF ENEMY FORCES STOP".replaceAll(
@@ -228,6 +242,7 @@ describe("M209", () => {
       // Generate internal message indicator.
       const intMsgIndicator = m209.convert(sysIndicator.repeat(12));
       expect(intMsgIndicator).toBe("HKJBB RSQOT DK");
+      m209.resetLetterCounter();
 
       // Set key wheels to internal message indicator.
       // If a wheel doesn't have a letter from the indicator, we cross it off and
@@ -235,7 +250,6 @@ describe("M209", () => {
       // so we use Q.
       m209.setKeyWheels("HKJBBQ");
 
-      m209.resetLetterCounter();
       m209.mode = "decipher";
       const plaintext = m209.convert(
         "CHDSI GVPIQ YVCJQ YWLVV JTXCT QHXKW TIJVA DBYSB OVBKU LGEYK QHHBI".replaceAll(
@@ -251,14 +265,25 @@ describe("M209", () => {
   });
 
   test("Blair decrypt", () => {
-    const m209 = buildM209("1-0 2-0*8 0-3*7 0-4*5 0-5*2 1-5 1-6 3-4 4-5", [
-      "BCEJOPSTUVXY",
-      "ACDHJLMNOQRUYZ",
-      "AEHJLOQRUV",
-      "DFGILMNPQS",
-      "CEHIJLNPS",
-      "ACDFHIMN",
-    ]);
+    const parseResult = parseDrumLugStr(
+      "1-0 2-0*8 0-3*7 0-4*5 0-5*2 1-5 1-6 3-4 4-5",
+    );
+    if (!parseResult.isValid) {
+      expect.fail("Invalid drum lug string");
+    }
+    const bars = parseResult.drumState;
+
+    const m209 = M209.factory({
+      bars: bars,
+      pinList: [
+        "BCEJOPSTUVXY",
+        "ACDHJLMNOQRUYZ",
+        "AEHJLOQRUV",
+        "DFGILMNPQS",
+        "CEHIJLNPS",
+        "ACDFHIMN",
+      ],
+    });
 
     const sysIndicator = "D";
     const extMsgIndicator = "GPDUCO";
@@ -275,10 +300,10 @@ describe("M209", () => {
     m209.setKeyWheels(extMsgIndicator);
     const intMsgIndicator = m209.convert(sysIndicator.repeat(12));
     expect(intMsgIndicator).toBe("PLIHK WZVIH JE");
+    m209.resetLetterCounter();
 
     // Last wheel doesn't have W, Z, or V, so use I.
     m209.setKeyWheels("PLIHKI");
-    m209.resetLetterCounter();
     m209.mode = "decipher";
     const plaintext = m209.convert(
       ciphertext.replaceAll(" ", "").slice(10, 10 + 24 * 5),
@@ -288,5 +313,50 @@ describe("M209", () => {
         "CASUALTIES X EIGHT PRISONERS TAKEN X AWAITING FURTHER ORDERSO",
     );
     expect(m209.letterCount).toBe(24 * 5);
+  });
+
+  describe("factory constructor", () => {
+    let bars: [number, number][];
+    let pinList: string[];
+
+    beforeEach(() => {
+      const parseResult = parseDrumLugStr(
+        "1-0 2-0*8 0-3*7 0-4*5 0-5*2 1-5 1-6 3-4 4-5",
+      );
+      if (!parseResult.isValid) {
+        expect.fail("Invalid drum lug string");
+      }
+      bars = parseResult.drumState;
+      pinList = [
+        "BCEJOPSTUVXY",
+        "ACDHJLMNOQRUYZ",
+        "AEHJLOQRUV",
+        "DFGILMNPQS",
+        "CEHIJLNPS",
+        "ACDFHIMN",
+      ];
+    });
+
+    test("throws if given invalid drum lug list", () => {
+      expect(() => M209.factory({ bars: [], pinList: pinList })).toThrow(
+        RangeError,
+      );
+    });
+
+    test("throws if given invalid pin list", () => {
+      expect(() => M209.factory({ bars: bars, pinList: [] })).toThrow(
+        RangeError,
+      );
+    });
+
+    test("throws if given invalid initial position list", () => {
+      expect(() =>
+        M209.factory({
+          bars: bars,
+          pinList: pinList,
+          initialPositions: [1, 2, 3, 4, 5, 6, 7],
+        }),
+      ).toThrow(RangeError);
+    });
   });
 });
