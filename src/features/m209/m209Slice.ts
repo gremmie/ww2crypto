@@ -120,6 +120,12 @@ export const m209Slice = createSlice({
       state.wheelPositions = m209.wheelPositions();
       state.counter = m209.letterCount;
     },
+    resetCounter: (state) => {
+      const m209 = buildM209(state);
+      m209.resetLetterCounter();
+      state.wheelPositions = m209.wheelPositions();
+      state.counter = m209.letterCount;
+    },
   },
 });
 
@@ -152,6 +158,7 @@ export const {
   wheelLetterChanged,
   toggleMode,
   mainAxleRotated,
+  resetCounter,
 } = m209Slice.actions;
 
 // Selectors

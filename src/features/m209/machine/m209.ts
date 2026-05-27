@@ -180,10 +180,12 @@ export class M209 {
    * Resets the current letter counter to zero by rotating the main axle.
    */
   resetLetterCounter(): void {
+    // Figure out which direction to turn the main axle. We want to do the
+    // least amount of turns as we have to.
     const steps =
       this.counter <= M209.maxCounter / 2
         ? -this.counter
-        : M209.maxCounter - this.counter + 1;
+        : M209.maxCounter - this.counter;
     this.rotateMainAxle(steps);
   }
 
