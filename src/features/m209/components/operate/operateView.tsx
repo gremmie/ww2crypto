@@ -4,6 +4,7 @@ import { Counter } from "./counter.tsx";
 import { KeyWheel } from "./keyWheel.tsx";
 import { MainAxle } from "./mainAxle.tsx";
 import { ModeSwitch } from "./modeSwitch.tsx";
+import { OperatorInput } from "./operatorInput.tsx";
 
 export const OperateView = () => {
   return (
@@ -40,7 +41,7 @@ export const OperateView = () => {
           useFlexGap
           sx={{ flexWrap: "wrap" }}
         >
-          <p>Operator Input goes here</p>
+          <OperatorInput />
           <p>Operator Output goes here</p>
         </Stack>
       </Stack>

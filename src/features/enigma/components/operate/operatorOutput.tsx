@@ -2,6 +2,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
+import { CopyButton } from "../../../common/components/copyButton.tsx";
 import {
   operatorClearedOutput,
   outputGroupSwitchChanged,
@@ -9,7 +10,6 @@ import {
   selectOutputText,
 } from "../../enigmaSlice.ts";
 import { groupText } from "../../utils.ts";
-import { CopyButton } from "./copyButton.tsx";
 import GroupTextSwitch from "./groupTextSwitch.tsx";
 
 export default function OperatorOutput() {

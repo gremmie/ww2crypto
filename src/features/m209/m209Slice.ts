@@ -20,6 +20,8 @@ export interface M209State {
   wheelPositions: number[];
   mode: ModeType;
   counter: number;
+  inputText: string;
+  outputText: string;
 }
 
 const initialState: M209State = {
@@ -29,6 +31,8 @@ const initialState: M209State = {
   wheelPositions: Array.from({ length: numWheels }, () => 0),
   mode: "cipher",
   counter: 0,
+  inputText: "",
+  outputText: "",
 };
 
 export interface DrumBarChangedPayload {
@@ -126,6 +130,28 @@ export const m209Slice = createSlice({
       state.wheelPositions = m209.wheelPositions();
       state.counter = m209.letterCount;
     },
+    inputTextChanged: (state, action: PayloadAction<string>) => {
+      state.inputText = action.payload;
+    },
+    formatInputText: (state) => {
+      const uppercase = state.inputText.toUpperCase();
+      let s =
+        state.mode === "cipher"
+          ? uppercase.replaceAll(/\s/g, "Z")
+          : uppercase.replaceAll(/\s/g, "");
+      if (state.mode === "cipher") {
+        for (const [digit, word] of digitToWord) {
+          s = s.replaceAll(digit, word);
+        }
+      }
+      state.inputText = s.replaceAll(/[^A-Z]/g, "");
+    },
+    convertInputText: (state) => {
+      const m209 = buildM209(state);
+      state.outputText = state.outputText + m209.convert(state.inputText);
+      state.wheelPositions = m209.wheelPositions();
+      state.counter = m209.letterCount;
+    },
   },
 });
 
@@ -135,6 +161,7 @@ const buildM209 = (state: WritableDraft<M209State>): M209 => {
     pinList: state.wheelState,
     counter: state.counter,
     initialPositions: state.wheelPositions,
+    mode: state.mode,
   });
 };
 
@@ -159,6 +186,9 @@ export const {
   toggleMode,
   mainAxleRotated,
   resetCounter,
+  inputTextChanged,
+  formatInputText,
+  convertInputText,
 } = m209Slice.actions;
 
 // Selectors
@@ -226,4 +256,21 @@ export const selectCounter = (state: RootState): number => {
   return state.m209.counter;
 };
 
+export const selectInputText = (state: RootState): string => {
+  return state.m209.inputText;
+};
+
 export default m209Slice.reducer;
+
+const digitToWord: [string, string][] = [
+  ["0", "ZERO"],
+  ["1", "ONE"],
+  ["2", "TWO"],
+  ["3", "THREE"],
+  ["4", "FOUR"],
+  ["5", "FIVE"],
+  ["6", "SIX"],
+  ["7", "SEVEN"],
+  ["8", "EIGHT"],
+  ["9", "NINE"],
+] as const;

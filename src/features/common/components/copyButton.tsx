@@ -3,11 +3,11 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import { type JSX, useState } from "react";
-import { groupText } from "../../utils.ts";
+import { groupText } from "../../enigma/utils.ts";
 
 interface CopyButtonProps {
   textToCopy: string;
-  isGrouped: boolean;
+  isGrouped?: boolean;
 }
 
 export function CopyButton(props: CopyButtonProps): JSX.Element {
@@ -15,9 +15,10 @@ export function CopyButton(props: CopyButtonProps): JSX.Element {
   const copyTooltip = hasCopied ? "Copied!" : "Copy to clipboard";
 
   const handleCopy = async () => {
-    const copyText = props.isGrouped
-      ? groupText(props.textToCopy)
-      : props.textToCopy;
+    const copyText =
+      (props.isGrouped ?? false)
+        ? groupText(props.textToCopy)
+        : props.textToCopy;
     await navigator.clipboard.writeText(copyText);
     setHasCopied(true);
     setTimeout(() => setHasCopied(false), 1500);

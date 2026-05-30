@@ -1,11 +1,10 @@
-import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import Tooltip from "@mui/material/Tooltip";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
+import { CopyButton } from "../../../common/components/copyButton.tsx";
+import { PasteButton } from "../../../common/components/pasteButton.tsx";
 import {
   bufferedTextChanged,
   inputGroupSwitchChanged,
@@ -19,7 +18,6 @@ import {
   selectKeyboardType,
 } from "../../enigmaSlice.ts";
 import { groupText } from "../../utils.ts";
-import { CopyButton } from "./copyButton.tsx";
 import GroupTextSwitch from "./groupTextSwitch.tsx";
 import { KeyboardTypeToggle } from "./keyboardTypeToggle.tsx";
 
@@ -81,11 +79,6 @@ export default function OperatorInput() {
     processPaste(pastedText);
   };
 
-  const handlePasteClick = async () => {
-    const pastedText = await navigator.clipboard.readText();
-    processPaste(pastedText);
-  };
-
   const processPaste = (text: string) => {
     const validText = filterInputText(text);
     if (keyboardType === "raw" && validText.length !== 0) {
@@ -121,11 +114,7 @@ export default function OperatorInput() {
         />
         <div>
           <CopyButton textToCopy={inputText} isGrouped={isGrouped} />
-          <Tooltip title="Paste from clipboard" arrow>
-            <IconButton aria-label="Paste" onClick={handlePasteClick}>
-              <ContentPasteIcon />
-            </IconButton>
-          </Tooltip>
+          <PasteButton processPaste={processPaste} />
         </div>
       </Stack>
       <TextField
