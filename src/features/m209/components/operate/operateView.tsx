@@ -5,6 +5,7 @@ import { KeyWheel } from "./keyWheel.tsx";
 import { MainAxle } from "./mainAxle.tsx";
 import { ModeSwitch } from "./modeSwitch.tsx";
 import { OperatorInput } from "./operatorInput.tsx";
+import { OperatorOutput } from "./operatorOutput.tsx";
 
 export const OperateView = () => {
   return (
@@ -27,7 +28,7 @@ export const OperateView = () => {
           direction="row"
           sx={{
             alignItems: "center",
-            justifyContent: "space-between",
+            justifyContent: "space-around",
             width: "100%",
           }}
         >
@@ -42,7 +43,7 @@ export const OperateView = () => {
           sx={{ flexWrap: "wrap" }}
         >
           <OperatorInput />
-          <p>Operator Output goes here</p>
+          <OperatorOutput />
         </Stack>
       </Stack>
     </Box>

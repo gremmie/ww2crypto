@@ -1,8 +1,4 @@
-import {
-  createSlice,
-  type PayloadAction,
-  type WritableDraft,
-} from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction, type WritableDraft } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store.ts";
 import { modulo } from "../common/utils.ts";
 import type { M209Config } from "./config/m209Config.ts";
@@ -133,6 +129,9 @@ export const m209Slice = createSlice({
     inputTextChanged: (state, action: PayloadAction<string>) => {
       state.inputText = action.payload;
     },
+    outputTextCleared: (state) => {
+      state.outputText = "";
+    },
     formatInputText: (state) => {
       const uppercase = state.inputText.toUpperCase();
       let s =
@@ -187,6 +186,7 @@ export const {
   mainAxleRotated,
   resetCounter,
   inputTextChanged,
+  outputTextCleared,
   formatInputText,
   convertInputText,
 } = m209Slice.actions;
@@ -258,6 +258,10 @@ export const selectCounter = (state: RootState): number => {
 
 export const selectInputText = (state: RootState): string => {
   return state.m209.inputText;
+};
+
+export const selectOutputText = (state: RootState): string => {
+  return state.m209.outputText;
 };
 
 export default m209Slice.reducer;
