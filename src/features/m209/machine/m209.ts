@@ -240,14 +240,49 @@ export class M209 {
    * @returns {string} the converted text
    */
   convert(text: string): string {
-    const convertedText: string[] = [];
-    for (const c of text) {
-      convertedText.push(this.cipher(c));
-    }
+    return this.currentMode === "cipher"
+      ? this.convertCipherMode(text)
+      : this.convertDecipherMode(text);
+  }
 
-    return this.currentMode == "cipher"
-      ? M209.groupText(convertedText)
-      : convertedText.join("").replaceAll("Z", " ");
+  /**
+   * Converts the supplied text in cipher mode by performing the mechanical
+   * substitution cipher over it. The returned string will be in 5-letter groups
+   * according to the converter's letter counter.
+   *
+   * @param text - the text to be converted in cipher mode
+   */
+  private convertCipherMode(text: string): string {
+    const convertedText: string[] = [];
+    for (const letter of text) {
+      const c = this.cipher(letter);
+
+      // In cipher mode, make 5-letter groups by advancing the tape with spaces.
+      const shouldPrintSpace =
+        this.letterCount >= 5 && modulo(this.letterCount - 1, 5) === 0;
+
+      if (shouldPrintSpace) {
+        convertedText.push(" ");
+      }
+      convertedText.push(c);
+    }
+    return convertedText.join("");
+  }
+
+  /**
+   * Converts the supplied text in decipher mode by performing the mechanical
+   * substitution cipher over it. In decipher mode any plaintext Z letters will
+   * be replaced with spaces.
+   *
+   * @param text - the text to be converted in decipher mode
+   */
+  private convertDecipherMode(text: string): string {
+    const convertedText: string[] = [];
+    for (const letter of text) {
+      const c = this.cipher(letter);
+      convertedText.push(c === "Z" ? " " : c);
+    }
+    return convertedText.join("");
   }
 
   /**
@@ -277,19 +312,5 @@ export class M209 {
     this.counter = modulo(this.counter + 1, M209.maxCounter);
 
     return M209.cipherTable[modulo(c.charCodeAt(0) - M209.aCode - count, 26)]!;
-  }
-
-  /**
-   * Converts an array of letters into a string of 5-letter groups.
-   *
-   * @param text {string[]} - the text to group
-   * @returns {string} - the text as a string in 5-letter, space-delimited groups
-   */
-  private static groupText(text: string[]): string {
-    const groups: string[] = [];
-    for (let i = 0; i < text.length; i += 5) {
-      groups.push(text.slice(i, i + 5).join(""));
-    }
-    return groups.join(" ");
   }
 }
