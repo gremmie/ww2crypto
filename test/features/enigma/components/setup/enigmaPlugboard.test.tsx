@@ -1,11 +1,13 @@
 import { screen, within } from "@testing-library/react";
 import { type UserEvent } from "@testing-library/user-event";
 import { beforeEach, describe, expect, test } from "vitest";
-import { setupStore } from "../../../../../src/app/store.ts";
 import EnigmaPlugboard from "../../../../../src/features/enigma/components/setup/enigmaPlugboard.tsx";
 import { modelChanged } from "../../../../../src/features/enigma/enigmaSlice.ts";
 import { aCode } from "../../../../../src/features/enigma/utils.ts";
-import { renderWithProviders } from "../../../../utils/test-utils.tsx";
+import {
+  renderWithProviders,
+  setupTestStore,
+} from "../../../../utils/test-utils.tsx";
 
 describe("EnigmaPlugboard", () => {
   function testDefaultCableCount() {
@@ -15,7 +17,7 @@ describe("EnigmaPlugboard", () => {
   }
 
   test("Three rotor defaults to alpha plugboard", () => {
-    const store = setupStore();
+    const store = setupTestStore();
     store.dispatch(modelChanged(3));
 
     renderWithProviders(<EnigmaPlugboard />, { store });
@@ -31,7 +33,7 @@ describe("EnigmaPlugboard", () => {
   });
 
   test("Four rotor defaults to numeric plugboard", () => {
-    const store = setupStore();
+    const store = setupTestStore();
     store.dispatch(modelChanged(4));
 
     renderWithProviders(<EnigmaPlugboard />, { store });
@@ -58,7 +60,7 @@ describe("EnigmaPlugboard", () => {
     });
 
     function setup(numRotors: number) {
-      const store = setupStore();
+      const store = setupTestStore();
       store.dispatch(modelChanged(numRotors));
       return {
         ...renderWithProviders(<EnigmaPlugboard />, { store }),

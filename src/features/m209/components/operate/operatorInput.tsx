@@ -6,11 +6,11 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import { CopyButton } from "../../../common/components/copyButton.tsx";
 import { PasteButton } from "../../../common/components/pasteButton.tsx";
 import {
-  convertInputText,
   formatInputText,
   inputTextChanged,
   selectInputText,
 } from "../../m209Slice.ts";
+import { convertInputText } from "../../m209Thunks.ts";
 
 const validTextRegex = /^[a-zA-Z]*$/;
 

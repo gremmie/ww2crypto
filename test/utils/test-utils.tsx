@@ -3,9 +3,11 @@ import { render } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import React, { type JSX, type PropsWithChildren } from "react";
 import { Provider } from "react-redux";
+import { vi } from "vitest";
 
-import type { AppStore, RootState } from "../../src/app/store";
-import { setupStore } from "../../src/app/store";
+import type { AppStore, RootState } from "../../src/app/setupStore.ts";
+import { setupStore } from "../../src/app/setupStore.ts";
+import type { StoreDependencies } from "../../src/app/storeDependencies.ts";
 
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.
@@ -14,12 +16,28 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {
   store?: AppStore;
 }
 
+export const setupTestStore = (preloadedState?: Partial<RootState>) => {
+  const mockM209 = {
+    factory: vi.fn().mockReturnValue({
+      rotateMainAxle: vi.fn(),
+      resetLetterCounter: vi.fn(),
+      convert: vi.fn().mockReturnValue(""),
+      wheelPositions: vi.fn().mockReturnValue([0, 0, 0, 0, 0, 0]),
+      letterCount: 0,
+    }),
+  } as never;
+  const deps: StoreDependencies = {
+    M209: mockM209,
+  };
+  return setupStore(deps, preloadedState);
+};
+
 export function renderWithProviders(
   ui: React.ReactElement,
   {
     preloadedState = {},
     // Automatically create a store instance if no store was passed in.
-    store = setupStore(preloadedState),
+    store = setupTestStore(preloadedState),
     ...renderOptions
   }: ExtendedRenderOptions = {},
 ) {

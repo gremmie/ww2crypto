@@ -1,13 +1,15 @@
 import { screen } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
-import { setupStore } from "../../../../../src/app/store.ts";
 import EnigmaRingSettings from "../../../../../src/features/enigma/components/setup/enigmaRingSettings.tsx";
 import {
   modelChanged,
   type NotationType,
 } from "../../../../../src/features/enigma/enigmaSlice.ts";
 import { aCode } from "../../../../../src/features/enigma/utils.ts";
-import { renderWithProviders } from "../../../../utils/test-utils.tsx";
+import {
+  renderWithProviders,
+  setupTestStore,
+} from "../../../../utils/test-utils.tsx";
 
 describe("EnigmaRingSettings", () => {
   const numberSettings = Array.from({ length: 26 }, (_, i) => i + 1);
@@ -19,7 +21,7 @@ describe("EnigmaRingSettings", () => {
     numRotors: number,
     notation: NotationType,
   ) => {
-    const store = setupStore();
+    const store = setupTestStore();
     store.dispatch(modelChanged(numRotors));
 
     const { user } = renderWithProviders(<EnigmaRingSettings />, { store });

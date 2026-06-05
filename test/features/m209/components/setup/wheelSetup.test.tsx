@@ -1,8 +1,10 @@
 import { screen } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
-import { setupStore } from "../../../../../src/app/store.ts";
 import { WheelSetup } from "../../../../../src/features/m209/components/setup/wheelSetup.tsx";
-import { renderWithProviders } from "../../../../utils/test-utils.tsx";
+import {
+  renderWithProviders,
+  setupTestStore,
+} from "../../../../utils/test-utils.tsx";
 
 describe("WheelSetup", () => {
   const expectPins = (pins: string) => {
@@ -13,7 +15,7 @@ describe("WheelSetup", () => {
   };
 
   test("Expected controls are present", () => {
-    const store = setupStore();
+    const store = setupTestStore();
     renderWithProviders(<WheelSetup />, { store });
 
     const wheelToggleButtons = screen.getAllByRole("button", {
@@ -50,7 +52,7 @@ describe("WheelSetup", () => {
   });
 
   test("Wheel 1 can be rolled", async () => {
-    const store = setupStore();
+    const store = setupTestStore();
     const { user } = renderWithProviders(<WheelSetup />, { store });
 
     const rollBackButton = screen.getByLabelText("roll wheel back");
@@ -75,7 +77,7 @@ describe("WheelSetup", () => {
   });
 
   test("Wheel 2 can be rolled", async () => {
-    const store = setupStore();
+    const store = setupTestStore();
     const { user } = renderWithProviders(<WheelSetup />, { store });
 
     const wheel2Select = screen.getByRole("button", { name: "wheel 2" });
@@ -100,7 +102,7 @@ describe("WheelSetup", () => {
   });
 
   test("Wheel 3 can be rolled", async () => {
-    const store = setupStore();
+    const store = setupTestStore();
     const { user } = renderWithProviders(<WheelSetup />, { store });
 
     const wheel3Select = screen.getByRole("button", { name: "wheel 3" });
@@ -125,7 +127,7 @@ describe("WheelSetup", () => {
   });
 
   test("Wheel 4 can be rolled", async () => {
-    const store = setupStore();
+    const store = setupTestStore();
     const { user } = renderWithProviders(<WheelSetup />, { store });
 
     const wheel4Select = screen.getByRole("button", { name: "wheel 4" });
@@ -150,7 +152,7 @@ describe("WheelSetup", () => {
   });
 
   test("Wheel 5 can be rolled", async () => {
-    const store = setupStore();
+    const store = setupTestStore();
     const { user } = renderWithProviders(<WheelSetup />, { store });
 
     const wheel5Select = screen.getByRole("button", { name: "wheel 5" });
@@ -175,7 +177,7 @@ describe("WheelSetup", () => {
   });
 
   test("Wheel 6 can be rolled", async () => {
-    const store = setupStore();
+    const store = setupTestStore();
     const { user } = renderWithProviders(<WheelSetup />, { store });
 
     const wheel6Select = screen.getByRole("button", { name: "wheel 6" });
@@ -201,7 +203,7 @@ describe("WheelSetup", () => {
 
   for (let i = 0; i < 6; ++i) {
     test(`Wheel ${i + 1} - setting pins updates status`, async () => {
-      const store = setupStore();
+      const store = setupTestStore();
       const { user } = renderWithProviders(<WheelSetup />, { store });
 
       const wheelSelect = screen.getByRole("button", {
@@ -218,7 +220,7 @@ describe("WheelSetup", () => {
     });
 
     test(`Wheel ${i + 1} - can bulk set pins`, async () => {
-      const store = setupStore();
+      const store = setupTestStore();
       const { user } = renderWithProviders(<WheelSetup />, { store });
 
       const wheelSelect = screen.getByRole("button", {

@@ -1,8 +1,13 @@
-import { createSlice, type PayloadAction, type WritableDraft } from "@reduxjs/toolkit";
-import type { RootState } from "../../app/store.ts";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { RootState } from "../../app/setupStore.ts";
 import { modulo } from "../common/utils.ts";
 import type { M209Config } from "./config/m209Config.ts";
-import { M209, type ModeType } from "./machine/m209.ts";
+import {
+  convertInputText,
+  mainAxleRotated,
+  resetCounter,
+} from "./m209Thunks.ts";
+import type { ModeType } from "./machine/modeType.ts";
 import { KEY_WHEEL_DATA } from "./machine/wheelData.ts";
 import { sortDrumState } from "./utils.ts";
 
@@ -114,18 +119,6 @@ export const m209Slice = createSlice({
     toggleMode: (state) => {
       state.mode = state.mode === "cipher" ? "decipher" : "cipher";
     },
-    mainAxleRotated: (state, action: PayloadAction<number>) => {
-      const m209 = buildM209(state);
-      m209.rotateMainAxle(action.payload);
-      state.wheelPositions = m209.wheelPositions();
-      state.counter = m209.letterCount;
-    },
-    resetCounter: (state) => {
-      const m209 = buildM209(state);
-      m209.resetLetterCounter();
-      state.wheelPositions = m209.wheelPositions();
-      state.counter = m209.letterCount;
-    },
     inputTextChanged: (state, action: PayloadAction<string>) => {
       state.inputText = action.payload;
     },
@@ -145,24 +138,26 @@ export const m209Slice = createSlice({
       }
       state.inputText = s.replaceAll(/[^A-Z]/g, "");
     },
-    convertInputText: (state) => {
-      const m209 = buildM209(state);
-      state.outputText = state.outputText + m209.convert(state.inputText);
+  },
+  extraReducers: (builder) => {
+    builder.addCase(mainAxleRotated.fulfilled, (state, action) => {
+      const m209 = action.payload;
       state.wheelPositions = m209.wheelPositions();
       state.counter = m209.letterCount;
-    },
+    });
+    builder.addCase(resetCounter.fulfilled, (state, action) => {
+      const m209 = action.payload;
+      state.wheelPositions = m209.wheelPositions();
+      state.counter = m209.letterCount;
+    });
+    builder.addCase(convertInputText.fulfilled, (state, action) => {
+      const [output, m209] = action.payload;
+      state.outputText = state.outputText + output;
+      state.wheelPositions = m209.wheelPositions();
+      state.counter = m209.letterCount;
+    });
   },
 });
-
-const buildM209 = (state: WritableDraft<M209State>): M209 => {
-  return M209.factory({
-    bars: state.drumState,
-    pinList: state.wheelState,
-    counter: state.counter,
-    initialPositions: state.wheelPositions,
-    mode: state.mode,
-  });
-};
 
 const checkWheelId = (id: number): void => {
   if (id < 0 || id >= numWheels) {
@@ -183,12 +178,9 @@ export const {
   wheelReversed,
   wheelLetterChanged,
   toggleMode,
-  mainAxleRotated,
-  resetCounter,
   inputTextChanged,
   outputTextCleared,
   formatInputText,
-  convertInputText,
 } = m209Slice.actions;
 
 // Selectors

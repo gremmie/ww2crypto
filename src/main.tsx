@@ -4,13 +4,14 @@ import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
-import { setupStore } from "./app/store";
+import { setupStore } from "./app/setupStore.ts";
 import { applicationStarted } from "./features/common/actions.ts";
 import "@fontsource-variable/roboto/index.css";
 import "@fontsource/special-elite/latin.css";
+import { M209 } from "./features/m209/machine/m209.ts";
 import { routeTree } from "./routeTree.gen";
 
-const store = setupStore();
+const store = setupStore({ M209 });
 store.dispatch(applicationStarted());
 
 export const router = createRouter({ routeTree });

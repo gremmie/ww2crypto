@@ -1,5 +1,5 @@
 import type { Middleware } from "@reduxjs/toolkit";
-import type { RootState } from "../../../app/store";
+import type { RootState } from "../../../app/setupStore.ts";
 import { applicationStarted } from "../../common/actions.ts";
 import type { MachineConfig } from "../../common/config/machineConfig.ts";
 

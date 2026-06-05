@@ -1,9 +1,11 @@
 import { screen } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
-import { setupStore } from "../../../../../src/app/store.ts";
 import EnigmaRotors from "../../../../../src/features/enigma/components/setup/enigmaRotors.tsx";
 import { modelChanged } from "../../../../../src/features/enigma/enigmaSlice.ts";
-import { renderWithProviders } from "../../../../utils/test-utils.tsx";
+import {
+  renderWithProviders,
+  setupTestStore,
+} from "../../../../utils/test-utils.tsx";
 
 describe("EnigmaRotors", () => {
   const expectedReflectors = new Map<number, string[]>([
@@ -22,7 +24,7 @@ describe("EnigmaRotors", () => {
   ]);
 
   const testRotorSetup = async (numRotors: number) => {
-    const store = setupStore();
+    const store = setupTestStore();
     store.dispatch(modelChanged(numRotors));
 
     const { user } = renderWithProviders(<EnigmaRotors />, {

@@ -1,10 +1,11 @@
+import RestartAlt from "@mui/icons-material/RestartAlt";
 import FormControl from "@mui/material/FormControl";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
-import { resetCounter, selectCounter } from "../../m209Slice.ts";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import RestartAlt from "@mui/icons-material/RestartAlt";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
+import { selectCounter } from "../../m209Slice.ts";
+import { resetCounter } from "../../m209Thunks.ts";
 
 export const Counter = () => {
   const dispatch = useAppDispatch();

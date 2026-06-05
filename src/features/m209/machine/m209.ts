@@ -1,9 +1,8 @@
 import { modulo } from "../../common/utils.ts";
 import { Drum } from "./drum.ts";
 import { KeyWheel, KeyWheelError } from "./keyWheel.ts";
+import type { ModeType } from "./modeType.ts";
 import { KEY_WHEEL_DATA } from "./wheelData.ts";
-
-export type ModeType = "cipher" | "decipher";
 
 export interface M209FactoryParams {
   bars: [number, number][];

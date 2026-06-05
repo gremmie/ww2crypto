@@ -5,7 +5,7 @@ import {
   type EntityState,
   type PayloadAction,
 } from "@reduxjs/toolkit";
-import type { RootState } from "../../app/store.ts";
+import type { RootState } from "../../app/setupStore.ts";
 import { applicationStarted } from "../common/actions.ts";
 import type { MachineConfig } from "../common/config/machineConfig.ts";
 import type { MachineType } from "../common/config/machineType.ts";

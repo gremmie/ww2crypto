@@ -1,8 +1,10 @@
 import { screen, waitFor } from "@testing-library/react";
 import { beforeAll, describe, expect, test } from "vitest";
-import { setupStore } from "../../../../../src/app/store.ts";
 import DrumSetup from "../../../../../src/features/m209/components/setup/drumSetup.tsx";
-import { renderWithProviders } from "../../../../utils/test-utils.tsx";
+import {
+  renderWithProviders,
+  setupTestStore,
+} from "../../../../utils/test-utils.tsx";
 
 // Pointer events aren't supported in the JSDOM environment used for testing.
 // This causes errors when the DrumSetup component tries to use the lug sliders.
@@ -31,7 +33,7 @@ beforeAll(() => {
 
 describe("DrumSetup", () => {
   test("Expected controls present", () => {
-    const store = setupStore();
+    const store = setupTestStore();
 
     renderWithProviders(<DrumSetup />, { store });
     const settingsDisplay = screen.getByLabelText<HTMLInputElement>(
@@ -58,7 +60,7 @@ describe("DrumSetup", () => {
   });
 
   test("Drum can be rolled", async () => {
-    const store = setupStore();
+    const store = setupTestStore();
 
     const { user } = renderWithProviders(<DrumSetup />, { store });
 
@@ -123,7 +125,7 @@ describe("DrumSetup", () => {
   });
 
   test("Changing lug sliders updates state", async () => {
-    const store = setupStore();
+    const store = setupTestStore();
 
     const { user } = renderWithProviders(<DrumSetup />, { store });
 
@@ -164,7 +166,7 @@ describe("DrumSetup", () => {
   });
 
   test("Can bulk set lugs, sort, and reset", async () => {
-    const store = setupStore();
+    const store = setupTestStore();
     const { user } = renderWithProviders(<DrumSetup />, { store });
 
     const status = screen.getByLabelText("Current Lug Settings");

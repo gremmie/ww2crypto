@@ -3,11 +3,11 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useDispatch } from "react-redux";
-import { mainAxleRotated } from "../../m209Slice.ts";
+import { useAppDispatch } from "../../../../app/hooks.ts";
+import { mainAxleRotated } from "../../m209Thunks.ts";
 
 export const MainAxle = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleBack = () => {
     dispatch(mainAxleRotated(-1));

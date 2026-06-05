@@ -1,5 +1,5 @@
 import type { Middleware } from "@reduxjs/toolkit";
-import type { RootState } from "../../app/store.ts";
+import type { RootState } from "../../app/setupStore.ts";
 import type { EnigmaConfig } from "../enigma/config/enigmaConfig.ts";
 import { configLoaded as enigmaConfigLoaded } from "../enigma/enigmaSlice.ts";
 import type { M209Config } from "../m209/config/m209Config.ts";

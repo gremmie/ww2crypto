@@ -5,7 +5,7 @@ import {
   type PayloadAction,
   type WritableDraft,
 } from "@reduxjs/toolkit";
-import type { RootState } from "../../app/store";
+import type { RootState } from "../../app/setupStore.ts";
 import type { KeyboardType } from "./components/operate/keyboardType.ts";
 import type { EnigmaConfig } from "./config/enigmaConfig.ts";
 import EnigmaMachine from "./machine/enigmaMachine.ts";

@@ -1,7 +1,6 @@
 import TabContext from "@mui/lab/TabContext";
 import { screen } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
-import { setupStore } from "../../../../../src/app/store.ts";
 import { EnigmaOperateTab } from "../../../../../src/features/enigma/components/setup/enigmaOperateTab.tsx";
 import {
   modelChanged,
@@ -14,7 +13,10 @@ import {
   selectIsSetupComplete,
 } from "../../../../../src/features/enigma/enigmaSlice.ts";
 import { aCode } from "../../../../../src/features/enigma/utils.ts";
-import { renderWithProviders } from "../../../../utils/test-utils.tsx";
+import {
+  renderWithProviders,
+  setupTestStore,
+} from "../../../../utils/test-utils.tsx";
 
 describe("Enigma Operate Tab", () => {
   function getComponent() {
@@ -26,7 +28,7 @@ describe("Enigma Operate Tab", () => {
   }
 
   test("Smoke testing basic operation of setup machine", async () => {
-    const store = setupStore();
+    const store = setupTestStore();
     store.dispatch(modelChanged(3));
     store.dispatch(reflectorChanged("B"));
     for (const [index, rotor] of ["III", "VI", "VIII"].entries()) {
