@@ -23,6 +23,7 @@ export interface M209State {
   counter: number;
   inputText: string;
   outputText: string;
+  animateFlag: boolean;
 }
 
 const initialState: M209State = {
@@ -34,6 +35,7 @@ const initialState: M209State = {
   counter: 0,
   inputText: "",
   outputText: "",
+  animateFlag: true,
 };
 
 export interface DrumBarChangedPayload {
@@ -138,6 +140,9 @@ export const m209Slice = createSlice({
       }
       state.inputText = s.replaceAll(/[^A-Z]/g, "");
     },
+    toggleAnimateFlag: (state) => {
+      state.animateFlag = !state.animateFlag;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(mainAxleRotated.fulfilled, (state, action) => {
@@ -181,6 +186,7 @@ export const {
   inputTextChanged,
   outputTextCleared,
   formatInputText,
+  toggleAnimateFlag,
 } = m209Slice.actions;
 
 // Selectors
@@ -195,16 +201,6 @@ export const selectDrumBarState = (state: RootState, barId: number) => {
 
 export const selectDrumState = (state: RootState) => {
   return state.m209.drumState;
-};
-
-export const selectWheelState = (state: RootState, wheelId: number): string => {
-  if (wheelId < 0 || wheelId >= numWheels) {
-    throw new RangeError(`Invalid wheelId ${wheelId}`);
-  }
-  if (state.m209.wheelState[wheelId] === undefined) {
-    throw new Error(`Programming error: no wheel state for wheelId ${wheelId}`);
-  }
-  return state.m209.wheelState[wheelId];
 };
 
 export const selectSelectedWheelState = (state: RootState): string => {
@@ -254,6 +250,10 @@ export const selectInputText = (state: RootState): string => {
 
 export const selectOutputText = (state: RootState): string => {
   return state.m209.outputText;
+};
+
+export const selectAnimateFlag = (state: RootState) => {
+  return state.m209.animateFlag;
 };
 
 export default m209Slice.reducer;

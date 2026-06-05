@@ -10,9 +10,9 @@ import {
   inputTextChanged,
   selectInputText,
 } from "../../m209Slice.ts";
-import { convertInputText } from "../../m209Thunks.ts";
+import { ConvertButton } from "./convertButton.tsx";
 
-const validTextRegex = /^[a-zA-Z]*$/;
+const validTextRegex = /^[A-Z]*$/;
 
 export const OperatorInput = () => {
   const dispatch = useAppDispatch();
@@ -32,9 +32,6 @@ export const OperatorInput = () => {
   };
   const handleFormatText = () => {
     dispatch(formatInputText());
-  };
-  const handleConvert = () => {
-    dispatch(convertInputText());
   };
 
   return (
@@ -79,13 +76,7 @@ export const OperatorInput = () => {
         >
           Format
         </Button>
-        <Button
-          variant="contained"
-          disabled={inputEmpty || !inputValid}
-          onClick={handleConvert}
-        >
-          Convert
-        </Button>
+        <ConvertButton />
       </Stack>
     </Stack>
   );
