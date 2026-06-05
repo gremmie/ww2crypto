@@ -1,4 +1,5 @@
 import { modulo } from "../../common/utils.ts";
+import { numBars, numWheels } from "./constants.ts";
 import { Drum } from "./drum.ts";
 import { KeyWheel, KeyWheelError } from "./keyWheel.ts";
 import type { ModeType } from "./modeType.ts";
@@ -28,8 +29,6 @@ export class M209 {
   ).reverse();
   private static aCode = "A".charCodeAt(0);
   private static maxCounter = 10000;
-  private static numBars = 27;
-  private static numWheels = 6;
 
   /**
    * Factory constructor for building a M209 from Redux state.
@@ -43,20 +42,20 @@ export class M209 {
     initialPositions,
     mode,
   }: M209FactoryParams) => {
-    if (bars.length !== M209.numBars) {
+    if (bars.length !== numBars) {
       throw new RangeError(
-        `Invalid number of bars (${bars.length}), expected ${M209.numBars}`,
+        `Invalid number of bars (${bars.length}), expected ${numBars}`,
       );
     }
-    if (pinList.length !== M209.numWheels) {
+    if (pinList.length !== numWheels) {
       throw new RangeError(
-        `Invalid number of pin lists (${pinList.length}), expected ${M209.numWheels}`,
+        `Invalid number of pin lists (${pinList.length}), expected ${numWheels}`,
       );
     }
     const initPositions = initialPositions ?? [0, 0, 0, 0, 0, 0];
-    if (initPositions.length !== M209.numWheels) {
+    if (initPositions.length !== numWheels) {
       throw new RangeError(
-        `Invalid number of initial positions (${initPositions.length}), expected ${M209.numWheels}`,
+        `Invalid number of initial positions (${initPositions.length}), expected ${numWheels}`,
       );
     }
 

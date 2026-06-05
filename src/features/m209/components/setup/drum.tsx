@@ -3,12 +3,12 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { modulo } from "../../../common/utils.ts";
+import { numBars } from "../../machine/constants.ts";
 import DrumBar from "./drumBar.tsx";
 import Rollers from "./rollers.tsx";
 
 export default function Drum() {
   const [bottomBar, setBottomBar] = useState<number>(0);
-  const numBars = 27;
   const numVisibleBars = 4;
   const visibleBars = Array.from(
     { length: numVisibleBars },

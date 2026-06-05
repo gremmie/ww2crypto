@@ -2,17 +2,11 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/setupStore.ts";
 import { modulo } from "../common/utils.ts";
 import type { M209Config } from "./config/m209Config.ts";
-import {
-  convertInputText,
-  mainAxleRotated,
-  resetCounter,
-} from "./m209Thunks.ts";
+import { convertInputText, mainAxleRotated, resetCounter } from "./m209Thunks.ts";
+import { numBars, numWheels } from "./machine/constants.ts";
 import type { ModeType } from "./machine/modeType.ts";
 import { KEY_WHEEL_DATA } from "./machine/wheelData.ts";
 import { sortDrumState } from "./utils.ts";
-
-const numBars = 27;
-const numWheels = 6;
 
 export interface M209State {
   drumState: [number, number][];

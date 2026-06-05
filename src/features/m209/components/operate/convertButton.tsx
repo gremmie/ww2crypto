@@ -15,9 +15,9 @@ import {
   toggleAnimateFlag,
 } from "../../m209Slice.ts";
 import { convertInputText } from "../../m209Thunks.ts";
+import { validTextRegex } from "../../machine/constants.ts";
 
 const options = ["Convert", "Fast Convert"] as const;
-const validTextRegex = /^[A-Z]*$/;
 
 export const ConvertButton = () => {
   const dispatch = useAppDispatch();
