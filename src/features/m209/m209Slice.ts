@@ -2,7 +2,12 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/setupStore.ts";
 import { modulo } from "../common/utils.ts";
 import type { M209Config } from "./config/m209Config.ts";
-import { convertInputText, mainAxleRotated, resetCounter } from "./m209Thunks.ts";
+import {
+  convertInputText,
+  machineUpdate,
+  mainAxleRotated,
+  resetCounter,
+} from "./m209Thunks.ts";
 import { numBars, numWheels } from "./machine/constants.ts";
 import type { ModeType } from "./machine/modeType.ts";
 import { KEY_WHEEL_DATA } from "./machine/wheelData.ts";
@@ -150,6 +155,14 @@ export const m209Slice = createSlice({
       state.counter = update.counter;
     });
     builder.addCase(convertInputText.fulfilled, (state, action) => {
+      const update = action.payload;
+      if (update.outputText) {
+        state.outputText = state.outputText + update.outputText;
+      }
+      state.wheelPositions = update.wheels;
+      state.counter = update.counter;
+    });
+    builder.addCase(machineUpdate, (state, action) => {
       const update = action.payload;
       if (update.outputText) {
         state.outputText = state.outputText + update.outputText;

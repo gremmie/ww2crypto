@@ -14,7 +14,10 @@ import {
   selectInputText,
   toggleAnimateFlag,
 } from "../../m209Slice.ts";
-import { convertInputText } from "../../m209Thunks.ts";
+import {
+  convertInputText,
+  convertInputTextWithAnimation,
+} from "../../m209Thunks.ts";
 import { validTextRegex } from "../../machine/constants.ts";
 
 const options = ["Convert", "Fast Convert"] as const;
@@ -31,7 +34,11 @@ export const ConvertButton = () => {
   const inputValid = validTextRegex.test(inputText);
 
   const handleClick = () => {
-    dispatch(convertInputText());
+    if (showAnimation) {
+      dispatch(convertInputTextWithAnimation());
+    } else {
+      dispatch(convertInputText());
+    }
   };
 
   const handleMenuItemClick = (index: number) => {
