@@ -140,20 +140,22 @@ export const m209Slice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(mainAxleRotated.fulfilled, (state, action) => {
-      const m209 = action.payload;
-      state.wheelPositions = m209.wheelPositions();
-      state.counter = m209.letterCount;
+      const update = action.payload;
+      state.wheelPositions = update.wheels;
+      state.counter = update.counter;
     });
     builder.addCase(resetCounter.fulfilled, (state, action) => {
-      const m209 = action.payload;
-      state.wheelPositions = m209.wheelPositions();
-      state.counter = m209.letterCount;
+      const update = action.payload;
+      state.wheelPositions = update.wheels;
+      state.counter = update.counter;
     });
     builder.addCase(convertInputText.fulfilled, (state, action) => {
-      const [output, m209] = action.payload;
-      state.outputText = state.outputText + output;
-      state.wheelPositions = m209.wheelPositions();
-      state.counter = m209.letterCount;
+      const update = action.payload;
+      if (update.outputText) {
+        state.outputText = state.outputText + update.outputText;
+      }
+      state.wheelPositions = update.wheels;
+      state.counter = update.counter;
     });
   },
 });
