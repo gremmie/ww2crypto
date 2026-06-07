@@ -74,7 +74,7 @@ export const ConvertButton = () => {
           size="small"
           aria-controls={open ? "split-button-menu" : undefined}
           aria-expanded={open ? "true" : undefined}
-          aria-label="select merge strategy"
+          aria-label="select convert style"
           aria-haspopup="menu"
           onClick={handleToggle}
         >
