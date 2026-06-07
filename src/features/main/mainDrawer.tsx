@@ -12,7 +12,11 @@ interface MainDrawerProps {
 
 export default function MainDrawer(props: MainDrawerProps) {
   return (
-    <Drawer open={props.isOpen} onClose={() => props.onClose()}>
+    <Drawer
+      open={props.isOpen}
+      onClose={() => props.onClose()}
+      disableRestoreFocus
+    >
       <Box sx={{ width: 250 }} role="presentation">
         <List>
           <DrawerItem page="home" onChangePage={props.onChangePage} />
