@@ -11,16 +11,21 @@ import { renderWithProviders } from "../../../../utils/test-utils.tsx";
 describe("operateView", () => {
   let mockM209: never;
   let mockRotateMainAxle: Mock;
+  let mockResetCounter: Mock;
+  let mockConvert: Mock;
 
   beforeAll(() => {
     mockRotateMainAxle = vi.fn();
+    mockResetCounter = vi.fn();
+    mockConvert = vi.fn();
+    mockConvert.mockReturnValue("MYSTERY");
     mockM209 = {
       factory: vi.fn().mockReturnValue({
         rotateMainAxle: mockRotateMainAxle,
-        resetLetterCounter: vi.fn(),
-        convert: vi.fn().mockReturnValue(""),
-        wheelPositions: vi.fn().mockReturnValue([0, 0, 0, 0, 0, 0]),
-        letterCount: 0,
+        resetLetterCounter: mockResetCounter,
+        convert: mockConvert,
+        wheelPositions: vi.fn().mockReturnValue([0, 1, 2, 3, 4, 5]),
+        letterCount: 42,
       }),
     } as never;
   });
@@ -42,6 +47,8 @@ describe("operateView", () => {
     await user.click(axleForward);
 
     expect(mockRotateMainAxle).toHaveBeenCalledWith(1);
+    expect(store.getState().m209.wheelPositions).toEqual([0, 1, 2, 3, 4, 5]);
+    expect(store.getState().m209.counter).toBe(42);
   });
 
   test("can rotate main axle backward", async () => {
@@ -54,5 +61,55 @@ describe("operateView", () => {
     await user.click(axleBackward);
 
     expect(mockRotateMainAxle).toHaveBeenCalledWith(-1);
+    expect(store.getState().m209.wheelPositions).toEqual([0, 1, 2, 3, 4, 5]);
+    expect(store.getState().m209.counter).toBe(42);
+  });
+
+  test("reset counter", async () => {
+    const store = setupTestStore();
+    const { user } = renderWithProviders(<OperateView />, { store });
+
+    const resetButton = screen.getByRole("button", { name: "reset" });
+    await user.click(resetButton);
+
+    expect(mockResetCounter).toHaveBeenCalled();
+    expect(store.getState().m209.wheelPositions).toEqual([0, 1, 2, 3, 4, 5]);
+    expect(store.getState().m209.counter).toBe(42);
+  });
+
+  test("convert text", async () => {
+    const store = setupTestStore();
+    const { user } = renderWithProviders(<OperateView />, { store });
+
+    const input = screen.getByRole("textbox", { name: "Input" });
+    await user.type(input, "TEST");
+
+    const convertDropdown = screen.getByRole("button", {
+      name: "select convert style",
+    });
+    await user.click(convertDropdown);
+    const fastMenuItem = screen.getByRole("menuitem", { name: "Fast Convert" });
+    await user.click(fastMenuItem);
+    const fastButton = screen.getByRole("button", { name: "Fast Convert" });
+    await user.click(fastButton);
+
+    expect(store.getState().m209.wheelPositions).toEqual([0, 1, 2, 3, 4, 5]);
+    expect(store.getState().m209.counter).toBe(42);
+    expect(store.getState().m209.outputText).toBe("MYSTERY");
+  });
+
+  test("convert text with animation", async () => {
+    const store = setupTestStore();
+    const { user } = renderWithProviders(<OperateView />, { store });
+
+    const input = screen.getByRole("textbox", { name: "Input" });
+    await user.type(input, "HI");
+
+    const convert = screen.getByRole("button", { name: "Convert" });
+    await user.click(convert);
+
+    expect(store.getState().m209.wheelPositions).toEqual([0, 1, 2, 3, 4, 5]);
+    expect(store.getState().m209.counter).toBe(42);
+    expect(store.getState().m209.outputText).toBe("MYSTERY");
   });
 });
