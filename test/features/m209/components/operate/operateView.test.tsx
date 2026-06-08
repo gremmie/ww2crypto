@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react";
-import { beforeAll, describe, expect, type Mock, test, vi } from "vitest";
+import { beforeEach, describe, expect, type Mock, test, vi } from "vitest";
 import {
   type RootState,
   setupStore,
@@ -14,7 +14,7 @@ describe("operateView", () => {
   let mockResetCounter: Mock;
   let mockConvert: Mock;
 
-  beforeAll(() => {
+  beforeEach(() => {
     mockRotateMainAxle = vi.fn();
     mockResetCounter = vi.fn();
     mockConvert = vi.fn();

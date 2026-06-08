@@ -359,4 +359,42 @@ describe("M209", () => {
       ).toThrow(RangeError);
     });
   });
+
+  describe("setKeyWheel", () => {
+    let m209: M209;
+
+    beforeEach(() => {
+      m209 = buildM209();
+    });
+
+    test("throws if given invalid keyWheel index", () => {
+      expect(() => m209.setKeyWheel(-1, "A")).toThrow(RangeError);
+      expect(() => m209.setKeyWheel(6, "A")).toThrow(RangeError);
+    });
+
+    test("valid case - set all to M", () => {
+      for (let i = 0; i < 6; ++i) {
+        m209.setKeyWheel(i, "M");
+      }
+      expect(m209.display()).toBe("MMMMMM");
+    });
+
+    test("valid cases ", () => {
+      for (let i = 0; i < 6; ++i) {
+        const letters = KEY_WHEEL_DATA[i]!.letters;
+        for (const letter of letters) {
+          m209.setKeyWheel(i, letter);
+          expect(m209.display()[i]).toBe(letter);
+        }
+      }
+    });
+
+    test("invalid cases", () => {
+      expect(() => m209.setKeyWheel(1, "W")).toThrow(KeyWheelError);
+      expect(() => m209.setKeyWheel(2, "Z")).toThrow(KeyWheelError);
+      expect(() => m209.setKeyWheel(3, "V")).toThrow(KeyWheelError);
+      expect(() => m209.setKeyWheel(4, "T")).toThrow(KeyWheelError);
+      expect(() => m209.setKeyWheel(5, "R")).toThrow(KeyWheelError);
+    });
+  });
 });
