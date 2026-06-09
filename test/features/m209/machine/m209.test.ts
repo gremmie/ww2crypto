@@ -1,9 +1,6 @@
 import { beforeEach, describe, expect, test } from "vitest";
 import { Drum } from "../../../../src/features/m209/machine/drum.ts";
-import {
-  KeyWheel,
-  KeyWheelError,
-} from "../../../../src/features/m209/machine/keyWheel.ts";
+import { KeyWheel, KeyWheelError } from "../../../../src/features/m209/machine/keyWheel.ts";
 import { M209 } from "../../../../src/features/m209/machine/m209.ts";
 import { KEY_WHEEL_DATA } from "../../../../src/features/m209/machine/wheelData.ts";
 import { parseDrumLugStr } from "../../../../src/features/m209/utils.ts";
@@ -395,6 +392,58 @@ describe("M209", () => {
       expect(() => m209.setKeyWheel(3, "V")).toThrow(KeyWheelError);
       expect(() => m209.setKeyWheel(4, "T")).toThrow(KeyWheelError);
       expect(() => m209.setKeyWheel(5, "R")).toThrow(KeyWheelError);
+    });
+  });
+
+  describe("convert edge cases", () => {
+    let m209: M209;
+
+    beforeEach(() => {
+      m209 = buildM209();
+    });
+
+    test("empty string", () => {
+      expect(m209.convert("")).toBe("");
+    });
+
+    test("invalid input throws RangeError", () => {
+      expect(() => m209.convert("abc!")).toThrow(RangeError);
+    });
+  });
+
+  describe("rotateMainAxle", () => {
+    let m209: M209;
+
+    beforeEach(() => {
+      m209 = buildM209();
+    });
+
+    test("can rotate forward", () => {
+      expect(m209.display()).toBe("AAAAAA");
+      m209.rotateMainAxle(1);
+      expect(m209.display()).toBe("BBBBBB");
+      m209.rotateMainAxle(2);
+      expect(m209.display()).toBe("DDDDDD");
+      m209.rotateMainAxle(0);
+      expect(m209.display()).toBe("DDDDDD");
+      m209.rotateMainAxle(18);
+      expect(m209.display()).toBe("VVVACE");
+
+      m209.setKeyWheels("ABCUSQ");
+      m209.rotateMainAxle(1);
+      expect(m209.display()).toBe("BCDAAA");
+    });
+
+    test("can rotate backward", () => {
+      expect(m209.display()).toBe("AAAAAA");
+      m209.rotateMainAxle(-1);
+      expect(m209.display()).toBe("ZZXUSQ");
+      m209.rotateMainAxle(-2);
+      expect(m209.display()).toBe("XXUSQO");
+
+      m209.setKeyWheels("ABCUSQ");
+      m209.rotateMainAxle(-1);
+      expect(m209.display()).toBe("ZABTRP");
     });
   });
 });
