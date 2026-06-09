@@ -1,4 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { audioMiddleware } from "../features/common/middleware/audioMiddleware.ts";
 import { configMiddleware } from "../features/config/configMiddleware.ts";
 import configReducer from "../features/config/configSlice";
 import enigmaReducer from "../features/enigma/enigmaSlice";
@@ -24,7 +25,7 @@ export const setupStore = (
         thunk: {
           extraArgument: deps,
         },
-      }).concat(storageMiddleware, configMiddleware),
+      }).concat(storageMiddleware, configMiddleware, audioMiddleware),
     preloadedState,
   });
 };

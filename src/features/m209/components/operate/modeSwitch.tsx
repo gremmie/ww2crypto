@@ -2,6 +2,7 @@ import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
 import Typography from "@mui/material/Typography";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
+import { playClickSound } from "../../../common/actions.ts";
 import { selectMode, toggleMode } from "../../m209Slice.ts";
 
 export const ModeSwitch = () => {
@@ -11,6 +12,7 @@ export const ModeSwitch = () => {
 
   const handleChange = () => {
     dispatch(toggleMode());
+    dispatch(playClickSound());
   };
 
   return (
