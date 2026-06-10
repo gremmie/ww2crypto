@@ -1,5 +1,18 @@
+import type { Middleware } from "@reduxjs/toolkit";
 import { screen } from "@testing-library/react";
 import { beforeEach, describe, expect, type Mock, test, vi } from "vitest";
+vi.mock(
+  "../../../../../src/features/common/middleware/audioMiddleware.ts",
+  () => ({
+    audioMiddleware: (() => {
+      const middleware: Middleware<object, RootState> =
+        () => (next) => (action) =>
+          next(action);
+      return middleware;
+    })(),
+  }),
+);
+
 import {
   type RootState,
   setupStore,
@@ -28,6 +41,17 @@ describe("operateView", () => {
         letterCount: 42,
       }),
     } as never;
+
+    // Create a fake version of the Audio object
+    window.Audio = vi.fn().mockImplementation(() => ({
+      play: vi.fn().mockResolvedValue(undefined),
+      pause: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      currentTime: 0,
+      volume: 1,
+      loop: false,
+    }));
   });
 
   const setupTestStore = (preloadedState?: Partial<RootState>) => {
@@ -122,5 +146,44 @@ describe("operateView", () => {
     expect(store.getState().m209.wheelPositions).toEqual([0, 1, 2, 3, 4, 5]);
     expect(store.getState().m209.counter).toBe(42);
     expect(store.getState().m209.outputText).toBe("MYSTERY");
+  });
+
+  describe("can change key wheels", () => {
+    test("with rotation", async () => {
+      const store = setupTestStore();
+      const { user } = renderWithProviders(<OperateView />, { store });
+
+      const forwards = screen.getAllByRole("button", { name: "Forward" });
+      expect(forwards).toHaveLength(7);
+      for (let i = 0; i < 6; ++i) {
+        await user.click(forwards[i]!);
+      }
+      expect(store.getState().m209.wheelPositions).toEqual([1, 1, 1, 1, 1, 1]);
+
+      const backwards = screen.getAllByRole("button", { name: "Back" });
+      expect(backwards).toHaveLength(7);
+      for (let i = 0; i < 6; ++i) {
+        await user.click(backwards[i]!);
+        await user.click(backwards[i]!);
+      }
+      expect(store.getState().m209.wheelPositions).toEqual([
+        25, 24, 22, 20, 18, 16,
+      ]);
+    });
+
+    test("by typing", async () => {
+      const store = setupTestStore();
+      const { user } = renderWithProviders(<OperateView />, { store });
+
+      const inputs = screen.getAllByRole("textbox", {
+        name: /^Key wheel [0-5]$/,
+      });
+      expect(inputs).toHaveLength(6);
+      const aCode = "A".charCodeAt(0);
+      for (let i = 0; i < 6; ++i) {
+        await user.type(inputs[i]!, String.fromCharCode(aCode + i + 1));
+      }
+      expect(store.getState().m209.wheelPositions).toEqual([1, 2, 3, 4, 5, 6]);
+    });
   });
 });

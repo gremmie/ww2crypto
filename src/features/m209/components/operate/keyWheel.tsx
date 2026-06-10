@@ -5,6 +5,7 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { type ChangeEvent, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
+import { playClickSound } from "../../../common/actions.ts";
 import {
   selectWheelLetter,
   wheelAdvanced,
@@ -29,15 +30,18 @@ export const KeyWheel = ({ id }: KeyWheelProps) => {
       validLetters.includes(newValue.toUpperCase())
     ) {
       dispatch(wheelLetterChanged({ wheelId: id, letter: newValue }));
+      dispatch(playClickSound());
     }
   };
 
   const handleBack = () => {
     dispatch(wheelReversed(id));
+    dispatch(playClickSound());
   };
 
   const handleForward = () => {
     dispatch(wheelAdvanced(id));
+    dispatch(playClickSound());
   };
 
   const inputRef = useRef<HTMLInputElement>(null);
