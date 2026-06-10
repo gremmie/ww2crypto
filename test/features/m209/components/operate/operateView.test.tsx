@@ -69,7 +69,18 @@ describe("operateView", () => {
     const store = setupTestStore();
     const { user } = renderWithProviders(<OperateView />, { store });
 
+    // Initially counter is at 0000, so reset button is disabled.
     const resetButton = screen.getByRole("button", { name: "reset" });
+    expect(resetButton).toBeDisabled();
+
+    // Move main axle.
+    const backwards = screen.getAllByRole("button", { name: "Back" });
+    expect(backwards).toHaveLength(7);
+    const axleBackward = backwards[6]!;
+    await user.click(axleBackward);
+
+    // Reset should be enabled now.
+    expect(resetButton).toBeEnabled();
     await user.click(resetButton);
 
     expect(mockResetCounter).toHaveBeenCalled();
