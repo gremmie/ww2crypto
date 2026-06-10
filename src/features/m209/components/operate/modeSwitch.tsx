@@ -1,5 +1,6 @@
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import { playClickSound } from "../../../common/actions.ts";
@@ -24,11 +25,13 @@ export const ModeSwitch = () => {
       }}
     >
       <Typography color={isCipherMode ? "primary" : "secondary"}>C</Typography>
-      <Switch
-        checked={!isCipherMode}
-        onChange={handleChange}
-        slotProps={{ input: { "aria-label": "Cipher/Decipher" } }}
-      />
+      <Tooltip title="Cipher / Decipher Mode" arrow>
+        <Switch
+          checked={!isCipherMode}
+          onChange={handleChange}
+          slotProps={{ input: { "aria-label": "Cipher/Decipher" } }}
+        />
+      </Tooltip>
       <Typography color={!isCipherMode ? "primary" : "secondary"}>D</Typography>
     </Stack>
   );
