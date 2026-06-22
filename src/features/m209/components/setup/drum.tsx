@@ -9,7 +9,7 @@ import Rollers from "./rollers.tsx";
 
 export default function Drum() {
   const [bottomBar, setBottomBar] = useState<number>(0);
-  const numVisibleBars = 4;
+  const numVisibleBars = 5;
   const visibleBars = Array.from(
     { length: numVisibleBars },
     (_, i) => modulo(bottomBar + numVisibleBars - 1 - i, numBars) + 1,

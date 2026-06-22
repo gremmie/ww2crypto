@@ -24,7 +24,7 @@ export const WheelPins = () => {
   const wheelPosition = useAppSelector(selectSelectedWheelPosition);
   if (!wheelLetters) return null;
 
-  const numVisiblePins = 5;
+  const numVisiblePins = 6;
 
   const visiblePins = Array.from({ length: numVisiblePins }, (_, i) => {
     const n = modulo(wheelPosition + 2 - i, numPins);

@@ -1,6 +1,7 @@
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TabPanel from "@mui/lab/TabPanel";
+import { Divider } from "@mui/material";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { Outlet, useLocation } from "@tanstack/react-router";
@@ -84,10 +85,11 @@ export default function SimSetupTab(props: SimSetupTabProps) {
                 <Outlet />
               </Box>
             </Box>
+            <Divider variant="middle" sx={{ pt: 2 }} />
             <Stack
               direction="row"
               spacing={2}
-              sx={{ pt: 4, justifyContent: "space-evenly" }}
+              sx={{ pt: 2, justifyContent: "space-evenly" }}
             >
               <LoadConfigDialog machineType={props.machineType} />
               <SaveConfigDialog machineType={props.machineType} />

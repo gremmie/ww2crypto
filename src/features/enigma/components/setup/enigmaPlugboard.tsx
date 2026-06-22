@@ -24,7 +24,7 @@ export default function EnigmaPlugboard() {
   };
 
   return (
-    <Stack spacing={2} sx={{ alignItems: "center" }}>
+    <Stack spacing={2} sx={{ alignItems: "center", pb: 3 }}>
       <Typography
         variant="h6"
         sx={{ display: "flex", alignItems: "center", gap: 0.5 }}

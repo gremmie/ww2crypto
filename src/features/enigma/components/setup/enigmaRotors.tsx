@@ -32,7 +32,7 @@ export default function EnigmaRotors() {
   );
 
   return (
-    <Stack spacing={4} sx={{ alignItems: "center" }}>
+    <Stack spacing={4} sx={{ alignItems: "center", pb: 4 }}>
       <Typography
         variant="h6"
         sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
