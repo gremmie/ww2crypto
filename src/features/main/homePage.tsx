@@ -56,6 +56,13 @@ export function HomePage() {
         </Typography>
         <ul>
           <Typography variant="body1" component="li" gutterBottom>
+            <b>June 22, 2026</b> - The M-209 simulation is now live! I'd love to
+            hear any feedback, see the{" "}
+            <RouterLink to="/about">About page</RouterLink> for how to contact
+            me. Next I'll be doing some cleanup on the Enigma simulation and
+            then move on to a PURPLE simulation.
+          </Typography>
+          <Typography variant="body1" component="li" gutterBottom>
             <b>May 11, 2026</b> - Work is proceeding on the M-209 simulation!
             I've posted some screenshots of the setup screens at{" "}
             <ExternalLink

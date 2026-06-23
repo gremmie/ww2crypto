@@ -603,10 +603,11 @@ export const M209About = () => {
               Clear both the input and output text fields.
             </Typography>
             <Typography gutterBottom component="li">
-              Now type or paste in the actual message into the input field. You
-              can omit the spaces between the 5-letter groups, or just use the
-              "Format" button to remove them all when you are finished. The text
-              in the input field should now be:{" "}
+              Now type or paste in the actual message (without the leading and
+              trailing message indicator) into the input field. You can omit the
+              spaces between the 5-letter groups, or just use the "Format"
+              button to remove them all when you are finished. The text in the
+              input field should now be:{" "}
               <CodeFont component="span">
                 JBJLMVPXIBTJBNZROXBIZHEFAOMFMAGACBHTBSKIRAXXX
               </CodeFont>
