@@ -12,7 +12,7 @@ test("Enigma M4 test", async ({ page }) => {
 
   await page.getByRole("radio", { name: "Four Rotor (Navy M4)" }).check();
 
-  await page.getByRole("link", { name: "Reflector & Rotors" }).click();
+  await page.getByRole("tab", { name: "Reflector & Rotors" }).click();
   await page.getByRole("combobox", { name: "Reflector" }).click();
   await page.getByRole("option", { name: "B-Thin" }).click();
   await page.getByRole("combobox", { name: "Rotor 1" }).click();
@@ -24,7 +24,7 @@ test("Enigma M4 test", async ({ page }) => {
   await page.getByRole("combobox", { name: "Rotor 4" }).click();
   await page.getByRole("option", { name: "I", exact: true }).click();
 
-  await page.getByRole("link", { name: "Ring Settings" }).click();
+  await page.getByRole("tab", { name: "Ring Settings" }).click();
   await page.getByRole("combobox", { name: "Rotor 1" }).click();
   await page.getByRole("option", { name: "A" }).click();
   await page.getByRole("combobox", { name: "Rotor 2" }).click();
@@ -34,7 +34,7 @@ test("Enigma M4 test", async ({ page }) => {
   await page.getByRole("combobox", { name: "Rotor 4" }).click();
   await page.getByRole("option", { name: "V" }).click();
 
-  await page.getByRole("link", { name: "Plugboard" }).click();
+  await page.getByRole("tab", { name: "Plugboard" }).click();
   await page.getByRole("radio", { name: "Letters" }).click();
   await page
     .getByRole("textbox", { name: "Connection String" })
