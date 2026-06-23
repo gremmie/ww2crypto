@@ -84,16 +84,16 @@ describe("DrumSetup", () => {
         ).toBeInTheDocument();
       }
     };
-    expectBars([1, 2, 3, 4]);
+    expectBars([1, 2, 3, 4, 5]);
 
     const topBackButton = rollBackButtons[0];
     if (!topBackButton) {
       expect.fail("Missing top back button");
     }
     await user.click(topBackButton);
-    expectBars([27, 1, 2, 3]);
+    expectBars([27, 1, 2, 3, 4]);
     await user.click(topBackButton);
-    expectBars([26, 27, 1, 2]);
+    expectBars([26, 27, 1, 2, 3]);
 
     const topForwardButton = rollForwardButtons[0];
     if (!topForwardButton) {
@@ -101,27 +101,27 @@ describe("DrumSetup", () => {
     }
 
     await user.click(topForwardButton);
-    expectBars([27, 1, 2, 3]);
+    expectBars([27, 1, 2, 3, 4]);
     await user.click(topForwardButton);
-    expectBars([1, 2, 3, 4]);
+    expectBars([1, 2, 3, 4, 5]);
 
     const bottomForwardButton = rollForwardButtons[1];
     if (!bottomForwardButton) {
       expect.fail("Missing bottom forward button");
     }
     await user.click(bottomForwardButton);
-    expectBars([2, 3, 4, 5]);
+    expectBars([2, 3, 4, 5, 6]);
     await user.click(bottomForwardButton);
-    expectBars([3, 4, 5, 6]);
+    expectBars([3, 4, 5, 6, 7]);
 
     const bottomBackButton = rollBackButtons[1];
     if (!bottomBackButton) {
       expect.fail("Missing bottom back button");
     }
     await user.click(bottomBackButton);
-    expectBars([2, 3, 4, 5]);
+    expectBars([2, 3, 4, 5, 6]);
     await user.click(bottomBackButton);
-    expectBars([1, 2, 3, 4]);
+    expectBars([1, 2, 3, 4, 5]);
   });
 
   test("Changing lug sliders updates state", async () => {

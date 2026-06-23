@@ -45,7 +45,7 @@ describe("WheelSetup", () => {
     const rollBackButton = screen.getByLabelText("roll wheel back");
     expect(rollBackButton).toBeEnabled();
 
-    expectPins("YZABC");
+    expectPins("XYZABC");
 
     const rollForwardButton = screen.getByLabelText("roll wheel forward");
     expect(rollForwardButton).toBeEnabled();
@@ -58,22 +58,22 @@ describe("WheelSetup", () => {
     const rollBackButton = screen.getByLabelText("roll wheel back");
     expect(rollBackButton).toBeEnabled();
 
-    expectPins("YZABC");
+    expectPins("XYZABC");
 
     const rollForwardButton = screen.getByLabelText("roll wheel forward");
     expect(rollForwardButton).toBeEnabled();
 
     await user.click(rollBackButton);
-    expectPins("XYZAB");
+    expectPins("WXYZAB");
     await user.click(rollBackButton);
-    expectPins("WXYZA");
+    expectPins("VWXYZA");
 
     await user.click(rollForwardButton);
-    expectPins("XYZAB");
+    expectPins("WXYZAB");
     await user.click(rollForwardButton);
-    expectPins("YZABC");
+    expectPins("XYZABC");
     await user.click(rollForwardButton);
-    expectPins("ZABCD");
+    expectPins("YZABCD");
   });
 
   test("Wheel 2 can be rolled", async () => {
@@ -86,19 +86,19 @@ describe("WheelSetup", () => {
     const rollBackButton = screen.getByLabelText("roll wheel back");
     const rollForwardButton = screen.getByLabelText("roll wheel forward");
 
-    expectPins("YZABC");
+    expectPins("XYZABC");
 
     await user.click(rollBackButton);
-    expectPins("XYZAB");
+    expectPins("VXYZAB");
     await user.click(rollBackButton);
-    expectPins("VXYZA");
+    expectPins("UVXYZA");
 
     await user.click(rollForwardButton);
-    expectPins("XYZAB");
+    expectPins("VXYZAB");
     await user.click(rollForwardButton);
-    expectPins("YZABC");
+    expectPins("XYZABC");
     await user.click(rollForwardButton);
-    expectPins("ZABCD");
+    expectPins("YZABCD");
   });
 
   test("Wheel 3 can be rolled", async () => {
@@ -111,19 +111,19 @@ describe("WheelSetup", () => {
     const rollBackButton = screen.getByLabelText("roll wheel back");
     const rollForwardButton = screen.getByLabelText("roll wheel forward");
 
-    expectPins("VXABC");
+    expectPins("UVXABC");
 
     await user.click(rollBackButton);
-    expectPins("UVXAB");
+    expectPins("TUVXAB");
     await user.click(rollBackButton);
-    expectPins("TUVXA");
+    expectPins("STUVXA");
 
     await user.click(rollForwardButton);
-    expectPins("UVXAB");
+    expectPins("TUVXAB");
     await user.click(rollForwardButton);
-    expectPins("VXABC");
+    expectPins("UVXABC");
     await user.click(rollForwardButton);
-    expectPins("XABCD");
+    expectPins("VXABCD");
   });
 
   test("Wheel 4 can be rolled", async () => {
@@ -136,19 +136,19 @@ describe("WheelSetup", () => {
     const rollBackButton = screen.getByLabelText("roll wheel back");
     const rollForwardButton = screen.getByLabelText("roll wheel forward");
 
-    expectPins("TUABC");
+    expectPins("STUABC");
 
     await user.click(rollBackButton);
-    expectPins("STUAB");
+    expectPins("RSTUAB");
     await user.click(rollBackButton);
-    expectPins("RSTUA");
+    expectPins("QRSTUA");
 
     await user.click(rollForwardButton);
-    expectPins("STUAB");
+    expectPins("RSTUAB");
     await user.click(rollForwardButton);
-    expectPins("TUABC");
+    expectPins("STUABC");
     await user.click(rollForwardButton);
-    expectPins("UABCD");
+    expectPins("TUABCD");
   });
 
   test("Wheel 5 can be rolled", async () => {
@@ -161,19 +161,19 @@ describe("WheelSetup", () => {
     const rollBackButton = screen.getByLabelText("roll wheel back");
     const rollForwardButton = screen.getByLabelText("roll wheel forward");
 
-    expectPins("RSABC");
+    expectPins("QRSABC");
 
     await user.click(rollBackButton);
-    expectPins("QRSAB");
+    expectPins("PQRSAB");
     await user.click(rollBackButton);
-    expectPins("PQRSA");
+    expectPins("OPQRSA");
 
     await user.click(rollForwardButton);
-    expectPins("QRSAB");
+    expectPins("PQRSAB");
     await user.click(rollForwardButton);
-    expectPins("RSABC");
+    expectPins("QRSABC");
     await user.click(rollForwardButton);
-    expectPins("SABCD");
+    expectPins("RSABCD");
   });
 
   test("Wheel 6 can be rolled", async () => {
@@ -186,19 +186,19 @@ describe("WheelSetup", () => {
     const rollBackButton = screen.getByLabelText("roll wheel back");
     const rollForwardButton = screen.getByLabelText("roll wheel forward");
 
-    expectPins("PQABC");
+    expectPins("OPQABC");
 
     await user.click(rollBackButton);
-    expectPins("OPQAB");
+    expectPins("NOPQAB");
     await user.click(rollBackButton);
-    expectPins("NOPQA");
+    expectPins("MNOPQA");
 
     await user.click(rollForwardButton);
-    expectPins("OPQAB");
+    expectPins("NOPQAB");
     await user.click(rollForwardButton);
-    expectPins("PQABC");
+    expectPins("OPQABC");
     await user.click(rollForwardButton);
-    expectPins("QABCD");
+    expectPins("PQABCD");
   });
 
   for (let i = 0; i < 6; ++i) {
