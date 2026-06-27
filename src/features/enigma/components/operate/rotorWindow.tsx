@@ -5,6 +5,7 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import React, { useRef } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
+import { playClickSound } from "../../../common/actions.ts";
 import { modulo } from "../../../common/utils.ts";
 import { rotorDisplayChanged, selectRotorWindow } from "../../enigmaSlice.ts";
 import { aCode } from "../../utils.ts";
@@ -22,6 +23,7 @@ export default function RotorWindow(props: RotorWindowProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value as string;
     if (validValuePattern.test(newValue)) {
+      dispatch(playClickSound());
       dispatch(
         rotorDisplayChanged({ index: index, value: newValue.toUpperCase() }),
       );
@@ -35,10 +37,12 @@ export default function RotorWindow(props: RotorWindowProps) {
   };
 
   const handleBack = () => {
+    dispatch(playClickSound());
     dispatch(rotorDisplayChanged({ index: index, value: stepValue(-1) }));
   };
 
   const handleForward = () => {
+    dispatch(playClickSound());
     dispatch(rotorDisplayChanged({ index: index, value: stepValue(1) }));
   };
 

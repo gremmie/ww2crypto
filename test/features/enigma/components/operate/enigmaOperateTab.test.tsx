@@ -12,6 +12,7 @@ import {
   type RotorTypeChangedPayload,
   selectIsSetupComplete,
 } from "../../../../../src/features/enigma/enigmaSlice.ts";
+import { EnigmaMachine } from "../../../../../src/features/enigma/machine/enigmaMachine.ts";
 import { aCode } from "../../../../../src/features/enigma/utils.ts";
 import {
   renderWithProviders,
@@ -28,7 +29,7 @@ describe("Enigma Operate Tab", () => {
   }
 
   test("Smoke testing basic operation of setup machine", async () => {
-    const store = setupTestStore();
+    const store = setupTestStore({ EnigmaMachine });
     store.dispatch(modelChanged(3));
     store.dispatch(reflectorChanged("B"));
     for (const [index, rotor] of ["III", "VI", "VIII"].entries()) {

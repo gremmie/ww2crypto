@@ -8,7 +8,7 @@ export class EnigmaMachineError extends Error {
   }
 }
 
-export default class EnigmaMachine {
+export class EnigmaMachine {
   private static validKeyPattern = /^[A-Z]$/;
   private readonly reflector: Rotor;
   private readonly rotors: Rotor[];

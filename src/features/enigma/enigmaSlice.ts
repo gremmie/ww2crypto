@@ -1,18 +1,11 @@
 import {
-  createAsyncThunk,
   createSelector,
   createSlice,
   type PayloadAction,
-  type WritableDraft,
 } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/setupStore.ts";
 import type { KeyboardType } from "./components/operate/keyboardType.ts";
 import type { EnigmaConfig } from "./config/enigmaConfig.ts";
-import EnigmaMachine from "./machine/enigmaMachine.ts";
-import Plugboard from "./machine/plugboard.ts";
-import reflectorFactory from "./machine/reflectorFactory.ts";
-import Rotor from "./machine/rotor.ts";
-import rotorFactory from "./machine/rotorFactory.ts";
 import { isValidPlugboardString, normalizePlugboardString } from "./utils.ts";
 
 export type ReflectorType = "B" | "C" | "B-Thin" | "C-Thin" | null;
@@ -74,6 +67,12 @@ export type RotorDisplayChangedPayload = {
   index: number;
   value: string;
 };
+
+export interface MachineUpdatePayload {
+  input: string;
+  output: string;
+  display: string;
+}
 
 export const enigmaSlice = createSlice({
   name: "enigma",
@@ -213,35 +212,8 @@ export const enigmaSlice = createSlice({
       }
       state.rotorDisplays[action.payload.index] = action.payload.value;
     },
-    operatorKeyPressed: (state, action: PayloadAction<string>) => {
-      if (!/^[A-Z]$/.test(action.payload)) return;
-      const machine = createMachine(state);
-      if (machine === null) return;
-
-      state.inputText += action.payload;
-      const output = machine.keyPress(action.payload);
-      state.outputText += output;
-      state.activeLamp = output;
-
-      const newRotorDisplay = machine.getDisplay();
-      for (let i = 0; i < newRotorDisplay.length; ++i) {
-        state.rotorDisplays[i] = newRotorDisplay[i]!;
-      }
-    },
     operatorKeyReleased: (state) => {
       state.activeLamp = "";
-    },
-    operatorSentBulkTextInternal: (state, action: PayloadAction<string>) => {
-      const machine = createMachine(state);
-      if (machine === null) return;
-
-      state.inputText += action.payload;
-      state.outputText += machine.processText(action.payload);
-
-      const newRotorDisplay = machine.getDisplay();
-      for (let i = 0; i < newRotorDisplay.length; ++i) {
-        state.rotorDisplays[i] = newRotorDisplay[i]!;
-      }
     },
     operatorClearedInput: (state) => {
       state.inputText = "";
@@ -277,29 +249,17 @@ export const enigmaSlice = createSlice({
     keyboardTypeChanged: (state, action: PayloadAction<KeyboardType>) => {
       state.keyboardType = action.payload;
     },
+    machineUpdate: (state, action: PayloadAction<MachineUpdatePayload>) => {
+      const update = action.payload;
+      state.inputText += update.input;
+      state.outputText += update.output;
+      state.activeLamp = update.output;
+
+      for (let i = 0; i < update.display.length; ++i) {
+        state.rotorDisplays[i] = update.display[i]!;
+      }
+    },
   },
-});
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-export const operatorSentBulkText = createAsyncThunk<
-  void,
-  string,
-  { state: RootState }
->("enigma/operatorSentBulkText", async (text: string, thunkAPI) => {
-  const dispatch = thunkAPI.dispatch;
-  const isLampPanelOpen = thunkAPI.getState().enigma.isLampPanelOpen;
-
-  if (!isLampPanelOpen) {
-    dispatch(operatorSentBulkTextInternal(text));
-    return;
-  }
-  for (const c of text) {
-    await sleep(100);
-    dispatch(operatorKeyPressed(c));
-    await sleep(250);
-    dispatch(operatorKeyReleased());
-  }
 });
 
 // Actions
@@ -315,7 +275,6 @@ export const {
   plugboardNotationChanged,
   plugboardCableCountChanged,
   rotorDisplayChanged,
-  operatorKeyPressed,
   operatorKeyReleased,
   operatorClearedInput,
   operatorClearedOutput,
@@ -325,10 +284,8 @@ export const {
   outputGroupSwitchChanged,
   bufferedTextChanged,
   keyboardTypeChanged,
+  machineUpdate,
 } = enigmaSlice.actions;
-
-// Internal actions
-export const { operatorSentBulkTextInternal } = enigmaSlice.actions;
 
 // Selectors
 
@@ -454,20 +411,3 @@ const fourRotorChoices = [
   ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"],
   ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"],
 ];
-
-function createMachine(state: WritableDraft<EnigmaState>) {
-  if (state.reflector === null) return null;
-  if (!state.rotorTypes.every((type) => type !== null)) return null;
-  if (!state.ringSettings.every((n) => n !== null)) return null;
-
-  const plugboard = new Plugboard(state.plugboard);
-  const reflector = reflectorFactory(state.reflector)!;
-
-  const rotors: Rotor[] = [];
-  for (let i = 0; i < state.numberOfRotors; ++i) {
-    rotors.push(rotorFactory(state.rotorTypes[i]!, state.ringSettings[i])!);
-  }
-  const machine = new EnigmaMachine(reflector, rotors, plugboard);
-  machine.setDisplay(state.rotorDisplays.join(""));
-  return machine;
-}

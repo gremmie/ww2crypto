@@ -8,10 +8,11 @@ import { setupStore } from "./app/setupStore.ts";
 import { applicationStarted } from "./features/common/actions.ts";
 import "@fontsource-variable/roboto/index.css";
 import "@fontsource/special-elite/latin.css";
+import { EnigmaMachine } from "./features/enigma/machine/enigmaMachine.ts";
 import { M209 } from "./features/m209/machine/m209.ts";
 import { routeTree } from "./routeTree.gen";
 
-const store = setupStore({ M209 });
+const store = setupStore({ EnigmaMachine, M209 });
 store.dispatch(applicationStarted());
 
 export const router = createRouter({ routeTree });

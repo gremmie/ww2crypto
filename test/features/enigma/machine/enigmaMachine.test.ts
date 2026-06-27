@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test } from "vitest";
-import EnigmaMachine from "../../../../src/features/enigma/machine/enigmaMachine.ts";
+import { EnigmaMachine } from "../../../../src/features/enigma/machine/enigmaMachine.ts";
 import Plugboard from "../../../../src/features/enigma/machine/plugboard.ts";
 import reflectorFactory from "../../../../src/features/enigma/machine/reflectorFactory.ts";
 import rotorFactory from "../../../../src/features/enigma/machine/rotorFactory.ts";

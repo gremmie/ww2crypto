@@ -9,14 +9,16 @@ import {
   bufferedTextChanged,
   inputGroupSwitchChanged,
   operatorClearedInput,
-  operatorKeyPressed,
   operatorKeyReleased,
-  operatorSentBulkText,
   selectBufferedText,
   selectInputText,
   selectIsInputGrouped,
   selectKeyboardType,
 } from "../../enigmaSlice.ts";
+import {
+  operatorKeyPressed,
+  operatorSentBulkText,
+} from "../../enigmaThunks.ts";
 import { groupText } from "../../utils.ts";
 import GroupTextSwitch from "./groupTextSwitch.tsx";
 import { KeyboardTypeToggle } from "./keyboardTypeToggle.tsx";

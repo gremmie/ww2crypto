@@ -56,6 +56,7 @@ describe("operateView", () => {
 
   const setupTestStore = (preloadedState?: Partial<RootState>) => {
     const deps: StoreDependencies = {
+      EnigmaMachine: class {} as unknown as StoreDependencies["EnigmaMachine"],
       M209: mockM209,
     };
     return setupStore(deps, preloadedState);
