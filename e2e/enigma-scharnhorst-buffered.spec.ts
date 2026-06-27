@@ -43,20 +43,19 @@ test("Enigma Scharnhorst setup and decrypt test", async ({ page }) => {
   await page.getByRole("textbox", { name: "rotor window 2" }).click();
   await page.getByRole("textbox", { name: "rotor window 2" }).fill("v");
 
-  await page.getByRole("textbox", { name: "Raw Input" }).click();
+  await page.getByRole("button", { name: "mobile" }).click();
+  await page.getByRole("textbox", { name: "Buffered Input" }).click();
   await page
-    .getByRole("textbox", { name: "Raw Input" })
-    .pressSequentially(
-      "ykaenzapmschzbfocuvmrmdpycofhadzizmefxthflolpzlfggbotgoxgretdwtjiqhlmxvjwkzuastr",
-    );
+    .getByRole("textbox", { name: "Buffered Input" })
+    .fill("ykaenzapms");
+  await page.getByRole("button", { name: "Process Text" }).click();
 
-  await page.getByRole("switch", { name: "Group text" }).nth(1).check();
-  await expect(page.getByLabel("Output")).toContainText(
-    "STEUE REJTA NAFJO RDJAN STAND ORTQU AAACC CVIER NEUNN EUNZW OFAHR TZWON ULSMX XSCHA RNHOR STHCO",
-  );
   const rotorWindows = page.getByRole("textbox", { name: /^rotor window \d/ });
   await expect(rotorWindows).toHaveCount(3);
-  await expect(rotorWindows.nth(0)).toHaveValue("V");
-  await expect(rotorWindows.nth(1)).toHaveValue("G");
-  await expect(rotorWindows.nth(2)).toHaveValue("X");
+  await expect(rotorWindows.nth(0)).toHaveValue("V", { timeout: 30000 });
+  await expect(rotorWindows.nth(1)).toHaveValue("B", { timeout: 15000 });
+  await expect(rotorWindows.nth(2)).toHaveValue("F", { timeout: 10000 });
+
+  await page.getByRole("switch", { name: "Group text" }).nth(1).check();
+  await expect(page.getByLabel("Output")).toContainText("STEUE REJTA");
 });

@@ -43,12 +43,16 @@ test("Enigma Scharnhorst setup and decrypt test", async ({ page }) => {
   await page.getByRole("textbox", { name: "rotor window 2" }).click();
   await page.getByRole("textbox", { name: "rotor window 2" }).fill("v");
 
-  await page.getByRole("textbox", { name: "Raw Input" }).click();
+  await page.getByRole("button", { name: "mobile" }).click();
+  await page.getByRole("textbox", { name: "Buffered Input" }).click();
   await page
-    .getByRole("textbox", { name: "Raw Input" })
-    .pressSequentially(
+    .getByRole("textbox", { name: "Buffered Input" })
+    .fill(
       "ykaenzapmschzbfocuvmrmdpycofhadzizmefxthflolpzlfggbotgoxgretdwtjiqhlmxvjwkzuastr",
     );
+  await page.getByText("Lamp Panel").click();
+
+  await page.getByRole("button", { name: "Process Text" }).click();
 
   await page.getByRole("switch", { name: "Group text" }).nth(1).check();
   await expect(page.getByLabel("Output")).toContainText(
