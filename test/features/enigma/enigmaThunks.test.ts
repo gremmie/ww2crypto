@@ -1,15 +1,14 @@
-import type { Middleware } from "@reduxjs/toolkit";
-import { afterEach, beforeEach, describe, expect, type Mock, test, vi } from "vitest";
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  type Mock,
+  test,
+  vi,
+} from "vitest";
 
-vi.mock("../../../src/features/common/middleware/audioMiddleware.ts", () => ({
-  audioMiddleware: (() => {
-    const middleware: Middleware<object, RootState> =
-      () => (next) => (action) => next(action);
-    return middleware;
-  })(),
-}));
-
-import { type RootState, setupStore } from "../../../src/app/setupStore.ts";
+import { setupStore } from "../../../src/app/setupStore.ts";
 import type { StoreDependencies } from "../../../src/app/storeDependencies.ts";
 import {
   lampPanelOpenStatusChanged,

@@ -1,17 +1,5 @@
-import type { Middleware } from "@reduxjs/toolkit";
 import { screen } from "@testing-library/react";
 import { beforeEach, describe, expect, type Mock, test, vi } from "vitest";
-vi.mock(
-  "../../../../../src/features/common/middleware/audioMiddleware.ts",
-  () => ({
-    audioMiddleware: (() => {
-      const middleware: Middleware<object, RootState> =
-        () => (next) => (action) =>
-          next(action);
-      return middleware;
-    })(),
-  }),
-);
 
 import {
   type RootState,
@@ -41,17 +29,6 @@ describe("operateView", () => {
         letterCount: 42,
       }),
     } as never;
-
-    // Create a fake version of the Audio object
-    window.Audio = vi.fn().mockImplementation(() => ({
-      play: vi.fn().mockResolvedValue(undefined),
-      pause: vi.fn(),
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      currentTime: 0,
-      volume: 1,
-      loop: false,
-    }));
   });
 
   const setupTestStore = (preloadedState?: Partial<RootState>) => {
