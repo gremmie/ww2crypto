@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures.ts";
 
 test("Enigma M4 test", async ({ page }) => {
   // Webkit struggles on this one.

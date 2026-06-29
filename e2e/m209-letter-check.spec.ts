@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures.ts";
 
 test("M-209 letter check", async ({ page }) => {
   const expectKeyWheel = async (n: number, letter: string): Promise<void> => {
