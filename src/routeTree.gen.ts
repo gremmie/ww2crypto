@@ -9,18 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as PurpleRouteImport } from './routes/purple'
 import { Route as LinksRouteImport } from './routes/links'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as PurpleRouteRouteImport } from './routes/purple/route'
 import { Route as M209RouteRouteImport } from './routes/m209/route'
 import { Route as EnigmaRouteRouteImport } from './routes/enigma/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PurpleOperateRouteImport } from './routes/purple/operate'
+import { Route as PurpleAboutRouteImport } from './routes/purple/about'
 import { Route as M209OperateRouteImport } from './routes/m209/operate'
 import { Route as M209AboutRouteImport } from './routes/m209/about'
 import { Route as EnigmaOperateRouteImport } from './routes/enigma/operate'
 import { Route as EnigmaAboutRouteImport } from './routes/enigma/about'
+import { Route as PurpleSetupRouteRouteImport } from './routes/purple/setup/route'
 import { Route as M209SetupRouteRouteImport } from './routes/m209/setup/route'
 import { Route as EnigmaSetupRouteRouteImport } from './routes/enigma/setup/route'
+import { Route as PurpleSetupSwitchesRouteImport } from './routes/purple/setup/switches'
+import { Route as PurpleSetupPlugboardRouteImport } from './routes/purple/setup/plugboard'
 import { Route as M209SetupWheelsRouteImport } from './routes/m209/setup/wheels'
 import { Route as M209SetupDrumRouteImport } from './routes/m209/setup/drum'
 import { Route as EnigmaSetupRotorsRouteImport } from './routes/enigma/setup/rotors'
@@ -28,11 +33,6 @@ import { Route as EnigmaSetupRingsRouteImport } from './routes/enigma/setup/ring
 import { Route as EnigmaSetupPlugboardRouteImport } from './routes/enigma/setup/plugboard'
 import { Route as EnigmaSetupModelRouteImport } from './routes/enigma/setup/model'
 
-const PurpleRoute = PurpleRouteImport.update({
-  id: '/purple',
-  path: '/purple',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LinksRoute = LinksRouteImport.update({
   id: '/links',
   path: '/links',
@@ -41,6 +41,11 @@ const LinksRoute = LinksRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PurpleRouteRoute = PurpleRouteRouteImport.update({
+  id: '/purple',
+  path: '/purple',
   getParentRoute: () => rootRouteImport,
 } as any)
 const M209RouteRoute = M209RouteRouteImport.update({
@@ -57,6 +62,16 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const PurpleOperateRoute = PurpleOperateRouteImport.update({
+  id: '/operate',
+  path: '/operate',
+  getParentRoute: () => PurpleRouteRoute,
+} as any)
+const PurpleAboutRoute = PurpleAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => PurpleRouteRoute,
 } as any)
 const M209OperateRoute = M209OperateRouteImport.update({
   id: '/operate',
@@ -78,6 +93,11 @@ const EnigmaAboutRoute = EnigmaAboutRouteImport.update({
   path: '/about',
   getParentRoute: () => EnigmaRouteRoute,
 } as any)
+const PurpleSetupRouteRoute = PurpleSetupRouteRouteImport.update({
+  id: '/setup',
+  path: '/setup',
+  getParentRoute: () => PurpleRouteRoute,
+} as any)
 const M209SetupRouteRoute = M209SetupRouteRouteImport.update({
   id: '/setup',
   path: '/setup',
@@ -87,6 +107,16 @@ const EnigmaSetupRouteRoute = EnigmaSetupRouteRouteImport.update({
   id: '/setup',
   path: '/setup',
   getParentRoute: () => EnigmaRouteRoute,
+} as any)
+const PurpleSetupSwitchesRoute = PurpleSetupSwitchesRouteImport.update({
+  id: '/switches',
+  path: '/switches',
+  getParentRoute: () => PurpleSetupRouteRoute,
+} as any)
+const PurpleSetupPlugboardRoute = PurpleSetupPlugboardRouteImport.update({
+  id: '/plugboard',
+  path: '/plugboard',
+  getParentRoute: () => PurpleSetupRouteRoute,
 } as any)
 const M209SetupWheelsRoute = M209SetupWheelsRouteImport.update({
   id: '/wheels',
@@ -123,62 +153,77 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/enigma': typeof EnigmaRouteRouteWithChildren
   '/m209': typeof M209RouteRouteWithChildren
+  '/purple': typeof PurpleRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/links': typeof LinksRoute
-  '/purple': typeof PurpleRoute
   '/enigma/setup': typeof EnigmaSetupRouteRouteWithChildren
   '/m209/setup': typeof M209SetupRouteRouteWithChildren
+  '/purple/setup': typeof PurpleSetupRouteRouteWithChildren
   '/enigma/about': typeof EnigmaAboutRoute
   '/enigma/operate': typeof EnigmaOperateRoute
   '/m209/about': typeof M209AboutRoute
   '/m209/operate': typeof M209OperateRoute
+  '/purple/about': typeof PurpleAboutRoute
+  '/purple/operate': typeof PurpleOperateRoute
   '/enigma/setup/model': typeof EnigmaSetupModelRoute
   '/enigma/setup/plugboard': typeof EnigmaSetupPlugboardRoute
   '/enigma/setup/rings': typeof EnigmaSetupRingsRoute
   '/enigma/setup/rotors': typeof EnigmaSetupRotorsRoute
   '/m209/setup/drum': typeof M209SetupDrumRoute
   '/m209/setup/wheels': typeof M209SetupWheelsRoute
+  '/purple/setup/plugboard': typeof PurpleSetupPlugboardRoute
+  '/purple/setup/switches': typeof PurpleSetupSwitchesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/enigma': typeof EnigmaRouteRouteWithChildren
   '/m209': typeof M209RouteRouteWithChildren
+  '/purple': typeof PurpleRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/links': typeof LinksRoute
-  '/purple': typeof PurpleRoute
   '/enigma/setup': typeof EnigmaSetupRouteRouteWithChildren
   '/m209/setup': typeof M209SetupRouteRouteWithChildren
+  '/purple/setup': typeof PurpleSetupRouteRouteWithChildren
   '/enigma/about': typeof EnigmaAboutRoute
   '/enigma/operate': typeof EnigmaOperateRoute
   '/m209/about': typeof M209AboutRoute
   '/m209/operate': typeof M209OperateRoute
+  '/purple/about': typeof PurpleAboutRoute
+  '/purple/operate': typeof PurpleOperateRoute
   '/enigma/setup/model': typeof EnigmaSetupModelRoute
   '/enigma/setup/plugboard': typeof EnigmaSetupPlugboardRoute
   '/enigma/setup/rings': typeof EnigmaSetupRingsRoute
   '/enigma/setup/rotors': typeof EnigmaSetupRotorsRoute
   '/m209/setup/drum': typeof M209SetupDrumRoute
   '/m209/setup/wheels': typeof M209SetupWheelsRoute
+  '/purple/setup/plugboard': typeof PurpleSetupPlugboardRoute
+  '/purple/setup/switches': typeof PurpleSetupSwitchesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/enigma': typeof EnigmaRouteRouteWithChildren
   '/m209': typeof M209RouteRouteWithChildren
+  '/purple': typeof PurpleRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/links': typeof LinksRoute
-  '/purple': typeof PurpleRoute
   '/enigma/setup': typeof EnigmaSetupRouteRouteWithChildren
   '/m209/setup': typeof M209SetupRouteRouteWithChildren
+  '/purple/setup': typeof PurpleSetupRouteRouteWithChildren
   '/enigma/about': typeof EnigmaAboutRoute
   '/enigma/operate': typeof EnigmaOperateRoute
   '/m209/about': typeof M209AboutRoute
   '/m209/operate': typeof M209OperateRoute
+  '/purple/about': typeof PurpleAboutRoute
+  '/purple/operate': typeof PurpleOperateRoute
   '/enigma/setup/model': typeof EnigmaSetupModelRoute
   '/enigma/setup/plugboard': typeof EnigmaSetupPlugboardRoute
   '/enigma/setup/rings': typeof EnigmaSetupRingsRoute
   '/enigma/setup/rotors': typeof EnigmaSetupRotorsRoute
   '/m209/setup/drum': typeof M209SetupDrumRoute
   '/m209/setup/wheels': typeof M209SetupWheelsRoute
+  '/purple/setup/plugboard': typeof PurpleSetupPlugboardRoute
+  '/purple/setup/switches': typeof PurpleSetupSwitchesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -186,81 +231,89 @@ export interface FileRouteTypes {
     | '/'
     | '/enigma'
     | '/m209'
+    | '/purple'
     | '/about'
     | '/links'
-    | '/purple'
     | '/enigma/setup'
     | '/m209/setup'
+    | '/purple/setup'
     | '/enigma/about'
     | '/enigma/operate'
     | '/m209/about'
     | '/m209/operate'
+    | '/purple/about'
+    | '/purple/operate'
     | '/enigma/setup/model'
     | '/enigma/setup/plugboard'
     | '/enigma/setup/rings'
     | '/enigma/setup/rotors'
     | '/m209/setup/drum'
     | '/m209/setup/wheels'
+    | '/purple/setup/plugboard'
+    | '/purple/setup/switches'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/enigma'
     | '/m209'
+    | '/purple'
     | '/about'
     | '/links'
-    | '/purple'
     | '/enigma/setup'
     | '/m209/setup'
+    | '/purple/setup'
     | '/enigma/about'
     | '/enigma/operate'
     | '/m209/about'
     | '/m209/operate'
+    | '/purple/about'
+    | '/purple/operate'
     | '/enigma/setup/model'
     | '/enigma/setup/plugboard'
     | '/enigma/setup/rings'
     | '/enigma/setup/rotors'
     | '/m209/setup/drum'
     | '/m209/setup/wheels'
+    | '/purple/setup/plugboard'
+    | '/purple/setup/switches'
   id:
     | '__root__'
     | '/'
     | '/enigma'
     | '/m209'
+    | '/purple'
     | '/about'
     | '/links'
-    | '/purple'
     | '/enigma/setup'
     | '/m209/setup'
+    | '/purple/setup'
     | '/enigma/about'
     | '/enigma/operate'
     | '/m209/about'
     | '/m209/operate'
+    | '/purple/about'
+    | '/purple/operate'
     | '/enigma/setup/model'
     | '/enigma/setup/plugboard'
     | '/enigma/setup/rings'
     | '/enigma/setup/rotors'
     | '/m209/setup/drum'
     | '/m209/setup/wheels'
+    | '/purple/setup/plugboard'
+    | '/purple/setup/switches'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   EnigmaRouteRoute: typeof EnigmaRouteRouteWithChildren
   M209RouteRoute: typeof M209RouteRouteWithChildren
+  PurpleRouteRoute: typeof PurpleRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   LinksRoute: typeof LinksRoute
-  PurpleRoute: typeof PurpleRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/purple': {
-      id: '/purple'
-      path: '/purple'
-      fullPath: '/purple'
-      preLoaderRoute: typeof PurpleRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/links': {
       id: '/links'
       path: '/links'
@@ -273,6 +326,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/purple': {
+      id: '/purple'
+      path: '/purple'
+      fullPath: '/purple'
+      preLoaderRoute: typeof PurpleRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/m209': {
@@ -295,6 +355,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/purple/operate': {
+      id: '/purple/operate'
+      path: '/operate'
+      fullPath: '/purple/operate'
+      preLoaderRoute: typeof PurpleOperateRouteImport
+      parentRoute: typeof PurpleRouteRoute
+    }
+    '/purple/about': {
+      id: '/purple/about'
+      path: '/about'
+      fullPath: '/purple/about'
+      preLoaderRoute: typeof PurpleAboutRouteImport
+      parentRoute: typeof PurpleRouteRoute
     }
     '/m209/operate': {
       id: '/m209/operate'
@@ -324,6 +398,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnigmaAboutRouteImport
       parentRoute: typeof EnigmaRouteRoute
     }
+    '/purple/setup': {
+      id: '/purple/setup'
+      path: '/setup'
+      fullPath: '/purple/setup'
+      preLoaderRoute: typeof PurpleSetupRouteRouteImport
+      parentRoute: typeof PurpleRouteRoute
+    }
     '/m209/setup': {
       id: '/m209/setup'
       path: '/setup'
@@ -337,6 +418,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/enigma/setup'
       preLoaderRoute: typeof EnigmaSetupRouteRouteImport
       parentRoute: typeof EnigmaRouteRoute
+    }
+    '/purple/setup/switches': {
+      id: '/purple/setup/switches'
+      path: '/switches'
+      fullPath: '/purple/setup/switches'
+      preLoaderRoute: typeof PurpleSetupSwitchesRouteImport
+      parentRoute: typeof PurpleSetupRouteRoute
+    }
+    '/purple/setup/plugboard': {
+      id: '/purple/setup/plugboard'
+      path: '/plugboard'
+      fullPath: '/purple/setup/plugboard'
+      preLoaderRoute: typeof PurpleSetupPlugboardRouteImport
+      parentRoute: typeof PurpleSetupRouteRoute
     }
     '/m209/setup/wheels': {
       id: '/m209/setup/wheels'
@@ -446,13 +541,42 @@ const M209RouteRouteWithChildren = M209RouteRoute._addFileChildren(
   M209RouteRouteChildren,
 )
 
+interface PurpleSetupRouteRouteChildren {
+  PurpleSetupPlugboardRoute: typeof PurpleSetupPlugboardRoute
+  PurpleSetupSwitchesRoute: typeof PurpleSetupSwitchesRoute
+}
+
+const PurpleSetupRouteRouteChildren: PurpleSetupRouteRouteChildren = {
+  PurpleSetupPlugboardRoute: PurpleSetupPlugboardRoute,
+  PurpleSetupSwitchesRoute: PurpleSetupSwitchesRoute,
+}
+
+const PurpleSetupRouteRouteWithChildren =
+  PurpleSetupRouteRoute._addFileChildren(PurpleSetupRouteRouteChildren)
+
+interface PurpleRouteRouteChildren {
+  PurpleSetupRouteRoute: typeof PurpleSetupRouteRouteWithChildren
+  PurpleAboutRoute: typeof PurpleAboutRoute
+  PurpleOperateRoute: typeof PurpleOperateRoute
+}
+
+const PurpleRouteRouteChildren: PurpleRouteRouteChildren = {
+  PurpleSetupRouteRoute: PurpleSetupRouteRouteWithChildren,
+  PurpleAboutRoute: PurpleAboutRoute,
+  PurpleOperateRoute: PurpleOperateRoute,
+}
+
+const PurpleRouteRouteWithChildren = PurpleRouteRoute._addFileChildren(
+  PurpleRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   EnigmaRouteRoute: EnigmaRouteRouteWithChildren,
   M209RouteRoute: M209RouteRouteWithChildren,
+  PurpleRouteRoute: PurpleRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   LinksRoute: LinksRoute,
-  PurpleRoute: PurpleRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

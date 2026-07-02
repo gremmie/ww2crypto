@@ -7,7 +7,7 @@ interface ComingSoonProps {
   pageTitle: string;
 }
 
-export default function ComingSoon(props: ComingSoonProps) {
+export default function ComingSoon({ pageTitle }: ComingSoonProps) {
   return (
     <>
       <Typography
@@ -20,7 +20,7 @@ export default function ComingSoon(props: ComingSoonProps) {
         }}
         gutterBottom
       >
-        {props.pageTitle}
+        {pageTitle}
       </Typography>
       <Box
         sx={{

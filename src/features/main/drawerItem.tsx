@@ -27,7 +27,7 @@ const pathsByPage: Map<string, TRoutes> = new Map([
   ["home", "/"],
   ["enigma", "/enigma/about"],
   ["m209", "/m209/about"],
-  ["purple", "/purple"],
+  ["purple", "/purple/about"],
   ["links", "/links"],
   ["about", "/about"],
 ]);
