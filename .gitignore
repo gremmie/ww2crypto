@@ -40,3 +40,4 @@ dist-ssr
 # Agent stuff
 .agents
 AGENTS.md
+CLAUDE.md
