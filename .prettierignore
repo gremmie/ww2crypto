@@ -2,3 +2,6 @@
 build
 coverage
 src/routeTree.gen.ts
+
+# Machine-generated lockfile
+pnpm-lock.yaml
