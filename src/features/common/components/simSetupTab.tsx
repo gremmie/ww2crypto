@@ -10,7 +10,8 @@ import type { TRoutes } from "../../../routeTypes.ts";
 import LoadConfigDialog from "../../config/components/loadConfigDialog.tsx";
 import SaveConfigDialog from "../../config/components/saveConfigDialog.tsx";
 import { SetupStepper as EnigmaSetupStepper } from "../../enigma/components/setup/setupStepper.tsx";
-import { SetupStepper as M209SetupStepper } from "../../m209/components/setup/setupStepper.tsx";
+import { M209SetupStepper } from "../../m209/components/setup/m209SetupStepper.tsx";
+import { PurpleSetupStepper } from "../../purple/components/setup/purpleSetupStepper.tsx";
 import type { MachineType } from "../config/machineType.ts";
 import SetupCompleteAlert from "./setupCompleteAlert.tsx";
 import SetupName from "./setupName.tsx";
@@ -62,6 +63,7 @@ export default function SimSetupTab(props: SimSetupTabProps) {
           </Box>
           {props.machineType === "enigma" && <EnigmaSetupStepper />}
           {props.machineType === "m209" && <M209SetupStepper />}
+          {props.machineType === "purple" && <PurpleSetupStepper />}
           <Box
             sx={{
               height: {

@@ -1,13 +1,15 @@
 import Stepper from "@mui/material/Stepper";
 import { useLocation } from "@tanstack/react-router";
+import type { TRoutes } from "../../../routeTypes.ts";
 
-//import { useAppSelector } from "../../../../app/hooks.ts";
-import type { TRoutes } from "../../../../routeTypes.ts";
-import { SetupStepperStep } from "../../../common/components/setupStepperStep.tsx";
-//import { selectStepCompletionStatus } from "../../enigmaSlice.ts";
+import type { SetupStepData } from "../models/setupStepData.ts";
+import { SetupStepperStep } from "./setupStepperStep.tsx";
 
-export const SetupStepper = () => {
-  const status = [false, false]; //useAppSelector(selectStepCompletionStatus);
+interface SetupStepperProps {
+  stepData: readonly SetupStepData[];
+}
+
+export const SetupStepper = ({ stepData }: SetupStepperProps) => {
   const location = useLocation();
   const currentPath = location.pathname as TRoutes;
   const activeStep = stepData.findIndex((value) => value.path === currentPath);
@@ -19,7 +21,7 @@ export const SetupStepper = () => {
           <SetupStepperStep
             key={index}
             label={step.label}
-            isComplete={status[index]!}
+            isComplete={false}
             routePath={step.path}
           />
         );
@@ -27,8 +29,3 @@ export const SetupStepper = () => {
     </Stepper>
   );
 };
-
-const stepData = [
-  { label: "Drum Lugs", path: "/m209/setup/drum" },
-  { label: "Wheel Pins", path: "/m209/setup/wheels" },
-] as const;
