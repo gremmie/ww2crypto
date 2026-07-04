@@ -14,7 +14,7 @@ import { SpecialFont } from "../../../common/components/specialFont.tsx";
 import { plugboardSet, selectPlugboard } from "../../purpleSlice.ts";
 import { isValidPlugboardStr } from "../../utils.ts";
 
-export const Plugboard = () => {
+export const PlugboardSetup = () => {
   const dispatch = useAppDispatch();
   const [newValue, setNewValue] = useState("");
   const plugboardValue = useAppSelector(selectPlugboard);

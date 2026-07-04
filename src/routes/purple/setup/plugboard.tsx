@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Plugboard } from "../../../features/purple/components/setup/plugboard.tsx";
+import { PlugboardSetup } from "../../../features/purple/components/setup/plugboardSetup.tsx";
 
 export const Route = createFileRoute("/purple/setup/plugboard")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  return <Plugboard />;
+  return <PlugboardSetup />;
 }
