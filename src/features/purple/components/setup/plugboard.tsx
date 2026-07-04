@@ -1,3 +1,4 @@
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import FilledInput from "@mui/material/FilledInput";
 import FormControl from "@mui/material/FormControl";
@@ -37,49 +38,47 @@ export const Plugboard = () => {
   };
 
   return (
-    <Stack direction="column" spacing={2} sx={{ alignItems: "center" }}>
-      <Typography variant="h6" component="div">
-        Plugboard Wiring
-      </Typography>
-      <Stack direction="row" spacing={1} sx={{ alignItems: "center", pb: 2 }}>
+    <Stack direction="column" spacing={2} sx={{ alignItems: "center", pb: 2 }}>
+      <Stack direction="row" spacing={2}>
+        <Typography variant="h6" sx={{ pt: 0.6 }}>
+          Plugboard Wiring
+        </Typography>
+        <CopyButton textToCopy={plugboardValue} />
+      </Stack>
+      <Box>
         <SpecialFont
           variant="h6"
-          component="div"
+          component="span"
           sx={{ color: "primary.main", pt: 0.6 }}
         >
           {sixes}
         </SpecialFont>
-        <SpecialFont variant="h6" component="div" sx={{ pt: 0.6 }}>
+        <SpecialFont variant="h6" component="span" sx={{ pt: 0.6 }}>
           {twenties}
         </SpecialFont>
-        <CopyButton textToCopy={plugboardValue} />
-      </Stack>
-      <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
-        <FormControl fullWidth variant="filled">
-          <InputLabel htmlFor="set-plugboard-input">
-            Plugboard Wiring
-          </InputLabel>
-          <FilledInput
-            id="set-plugboard-input"
-            type="text"
-            value={newValue}
-            onChange={handlePlugboardTextChange}
-            sx={{ width: "40ch" }}
-            endAdornment={
-              <InputAdornment position="end">
-                <PasteButton processPaste={handlePaste} />
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-        <Button
-          variant="outlined"
-          disabled={!isValidPlugboardStr(newValue)}
-          onClick={handleSet}
-        >
-          Set
-        </Button>
-      </Stack>
+      </Box>
+      <FormControl fullWidth variant="filled">
+        <InputLabel htmlFor="set-plugboard-input">Plugboard Wiring</InputLabel>
+        <FilledInput
+          id="set-plugboard-input"
+          type="text"
+          value={newValue}
+          onChange={handlePlugboardTextChange}
+          sx={{ width: "40ch" }}
+          endAdornment={
+            <InputAdornment position="end">
+              <PasteButton processPaste={handlePaste} />
+            </InputAdornment>
+          }
+        />
+      </FormControl>
+      <Button
+        variant="outlined"
+        disabled={!isValidPlugboardStr(newValue)}
+        onClick={handleSet}
+      >
+        Set
+      </Button>
     </Stack>
   );
 };
