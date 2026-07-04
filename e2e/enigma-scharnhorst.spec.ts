@@ -1,4 +1,5 @@
-import { expect, Page, test } from "./fixtures.ts";
+import { expect, test } from "./fixtures.ts";
+import type { Page } from "./fixtures.ts";
 
 test.describe("Enigma Scharnhorst decrypt", () => {
   test.beforeEach(async ({ page }) => {
