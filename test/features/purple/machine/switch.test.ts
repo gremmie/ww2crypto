@@ -38,6 +38,27 @@ describe("Switch", () => {
     });
   });
 
+  describe("getPos", () => {
+    test("returns the position set at construction", () => {
+      expect(new Switch(dec3, enc3, 0).getPos()).toBe(0);
+      expect(new Switch(dec3, enc3, 1).getPos()).toBe(1);
+    });
+
+    test("reflects a position set via setPos", () => {
+      const s = new Switch(dec3, enc3, 0);
+      s.setPos(1);
+      expect(s.getPos()).toBe(1);
+    });
+
+    test("reflects stepping", () => {
+      const s = new Switch(dec3, enc3, 0);
+      s.step();
+      expect(s.getPos()).toBe(1);
+      s.step(); // wraps, numPositions === 2
+      expect(s.getPos()).toBe(0);
+    });
+  });
+
   describe("step", () => {
     test("advances by one and returns the new position", () => {
       const s = new Switch(dec3, enc3, 0);
@@ -49,12 +70,11 @@ describe("Switch", () => {
       expect(s.step()).toBe(0);
     });
 
-    test("a full cycle of steps returns to the starting mapping", () => {
+    test("a full cycle of steps returns to the starting position", () => {
       const s = new Switch(dec3, enc3, 0);
-      const before = s.decrypt(0);
       s.step();
       s.step(); // numPositions === 2
-      expect(s.decrypt(0)).toBe(before);
+      expect(s.getPos()).toBe(0);
     });
   });
 

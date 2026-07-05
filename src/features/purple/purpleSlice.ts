@@ -1,16 +1,20 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/setupStore.ts";
 import type { SwitchOrder } from "./models/switchOrder.ts";
-import { isValidPlugboardStr } from "./utils.ts";
+import { isValidHumanPlugboardStr } from "./utils.ts";
 
 export interface PurpleState {
   plugboard: string;
   switchOrder: SwitchOrder;
+  switchPositions: number[];
+  isEncryptMode: boolean;
 }
 
 const initialState: PurpleState = {
   plugboard: "AEIOUYBCDFGHJKLMNPQRSTVWXZ",
   switchOrder: "1-2-3",
+  switchPositions: [0, 0, 0, 0],
+  isEncryptMode: true,
 };
 
 export const purpleSlice = createSlice({
@@ -18,7 +22,7 @@ export const purpleSlice = createSlice({
   initialState: initialState,
   reducers: {
     plugboardSet: (state, action: PayloadAction<string>) => {
-      if (isValidPlugboardStr(action.payload)) {
+      if (isValidHumanPlugboardStr(action.payload)) {
         state.plugboard = action.payload.replaceAll(" ", "").toUpperCase();
       }
     },

@@ -12,7 +12,7 @@ import { CopyButton } from "../../../common/components/copyButton.tsx";
 import { PasteButton } from "../../../common/components/pasteButton.tsx";
 import { SpecialFont } from "../../../common/components/specialFont.tsx";
 import { plugboardSet, selectPlugboard } from "../../purpleSlice.ts";
-import { isValidPlugboardStr } from "../../utils.ts";
+import { isValidHumanPlugboardStr } from "../../utils.ts";
 
 export const PlugboardSetup = () => {
   const dispatch = useAppDispatch();
@@ -74,7 +74,7 @@ export const PlugboardSetup = () => {
       </FormControl>
       <Button
         variant="outlined"
-        disabled={!isValidPlugboardStr(newValue)}
+        disabled={!isValidHumanPlugboardStr(newValue)}
         onClick={handleSet}
       >
         Set

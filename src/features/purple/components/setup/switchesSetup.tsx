@@ -20,7 +20,7 @@ export const SwitchesSetup = () => {
   const switchOrder = useAppSelector(selectSwitchOrder);
 
   const makeChip = (label: string, index: number) => {
-    const speed = index === 0 ? "Fast" : index === 1 ? "Medium" : "Slow";
+    const speed = index === 0 ? "Fast" : index === 1 ? "Middle" : "Slow";
     const color = index === 0 ? "success" : index === 1 ? "warning" : "error";
     const chipLabel = `${speed}: ${label}`;
     return (

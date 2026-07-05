@@ -56,6 +56,13 @@ export class Switch {
   }
 
   /**
+   * Returns the current switch position.
+   */
+  getPos(): number {
+    return this.pos;
+  }
+
+  /**
    * Advance the stepping switch position.
    * @returns the new 0-based switch position.
    */

@@ -12,7 +12,7 @@ describe("SwitchesSetup", () => {
     const { user } = renderWithProviders(<SwitchesSetup />, { store });
 
     expect(screen.getByText("Fast: 1")).toBeInTheDocument();
-    expect(screen.getByText("Medium: 2")).toBeInTheDocument();
+    expect(screen.getByText("Middle: 2")).toBeInTheDocument();
     expect(screen.getByText("Slow: 3")).toBeInTheDocument();
 
     const switchOrder = screen.getByRole("combobox", { name: "Switch Order" });
@@ -32,7 +32,7 @@ describe("SwitchesSetup", () => {
 
     await user.click(choices[3]!);
     expect(screen.getByText("Fast: 2")).toBeInTheDocument();
-    expect(screen.getByText("Medium: 3")).toBeInTheDocument();
+    expect(screen.getByText("Middle: 3")).toBeInTheDocument();
     expect(screen.getByText("Slow: 1")).toBeInTheDocument();
   });
 });
