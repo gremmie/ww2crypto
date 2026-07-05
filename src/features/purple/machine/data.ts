@@ -4,7 +4,7 @@
  * This data is taken from the paper "PURPLE Revealed: Simulation and
  * Computer-aided Cryptanalysis of Angooki Taipu B", by Wes Freeman, Geoff
  * Sullivan, and Frode Weierud. This paper was published in Cryptologia, Volume 27,
- * Issue 1, January, 2003, pp. 1-43. The paper is also available here:
+ * Issue 1, January 2003, pp. 1-43. The paper is also available here:
  * https://cryptocellar.org/simula/purple/index.html
  *
  * To aid in verifying the data matches the source paper, we have
