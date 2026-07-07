@@ -29,12 +29,30 @@ export const purpleSlice = createSlice({
     switchOrderSet: (state, action: PayloadAction<SwitchOrder>) => {
       state.switchOrder = action.payload;
     },
+    switchPositionUpdated: (
+      state,
+      action: PayloadAction<{ newPos: number; index: number }>,
+    ): void => {
+      const { newPos, index } = action.payload;
+      if (newPos >= 0 && newPos < 25 && index >= 0 && index < 4) {
+        state.switchPositions[index] = newPos;
+      }
+    },
   },
 });
 
-export const { plugboardSet, switchOrderSet } = purpleSlice.actions;
+export const { plugboardSet, switchOrderSet, switchPositionUpdated } =
+  purpleSlice.actions;
 
 export default purpleSlice.reducer;
 
 export const selectPlugboard = (state: RootState) => state.purple.plugboard;
 export const selectSwitchOrder = (state: RootState) => state.purple.switchOrder;
+export const selectSwitchPosition = (state: RootState, switchId: number) => {
+  if (switchId < 0 || switchId > 3) {
+    throw new RangeError(
+      `Invalid switchId: ${switchId}. Must be 0, 1, 2, or 3.`,
+    );
+  }
+  return state.purple.switchPositions[switchId]!;
+};
