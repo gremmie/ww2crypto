@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/setupStore.ts";
+import type { Mode } from "./machine/mode.ts";
 import type { SwitchOrder } from "./models/switchOrder.ts";
 import { isValidHumanPlugboardStr } from "./utils.ts";
 
@@ -8,6 +9,7 @@ export interface PurpleState {
   switchOrder: SwitchOrder;
   switchPositions: number[];
   isEncryptMode: boolean;
+  mode: Mode;
 }
 
 const initialState: PurpleState = {
@@ -15,6 +17,7 @@ const initialState: PurpleState = {
   switchOrder: "1-2-3",
   switchPositions: [0, 0, 0, 0],
   isEncryptMode: true,
+  mode: "encrypt",
 };
 
 export const purpleSlice = createSlice({
@@ -38,16 +41,32 @@ export const purpleSlice = createSlice({
         state.switchPositions[index] = newPos;
       }
     },
+    modeToggled: (state) => {
+      state.mode = state.mode === "encrypt" ? "decrypt" : "encrypt";
+    },
+    switchesReset: (state) => {
+      state.switchPositions.fill(0);
+    },
   },
 });
 
-export const { plugboardSet, switchOrderSet, switchPositionUpdated } =
-  purpleSlice.actions;
+export const {
+  plugboardSet,
+  switchOrderSet,
+  switchPositionUpdated,
+  modeToggled,
+  switchesReset,
+} = purpleSlice.actions;
 
 export default purpleSlice.reducer;
 
 export const selectPlugboard = (state: RootState) => state.purple.plugboard;
+
 export const selectSwitchOrder = (state: RootState) => state.purple.switchOrder;
+
+export const selectSwitchPositions = (state: RootState) =>
+  state.purple.switchPositions;
+
 export const selectSwitchPosition = (state: RootState, switchId: number) => {
   if (switchId < 0 || switchId > 3) {
     throw new RangeError(
@@ -56,3 +75,5 @@ export const selectSwitchPosition = (state: RootState, switchId: number) => {
   }
   return state.purple.switchPositions[switchId]!;
 };
+
+export const selectMode = (state: RootState) => state.purple.mode;

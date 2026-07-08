@@ -1,18 +1,17 @@
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
-import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import { playClickSound } from "../../../common/actions.ts";
-import { selectMode, toggleMode } from "../../m209Slice.ts";
+import { modeToggled, selectMode } from "../../purpleSlice.ts";
 
 export const ModeSwitch = () => {
   const dispatch = useAppDispatch();
   const mode = useAppSelector(selectMode);
-  const isCipherMode = mode === "cipher";
+  const isEncrypt = mode === "encrypt";
 
   const handleChange = () => {
-    dispatch(toggleMode());
+    dispatch(modeToggled());
     dispatch(playClickSound());
   };
 
@@ -24,18 +23,16 @@ export const ModeSwitch = () => {
         alignItems: "center",
       }}
     >
-      <Typography color={isCipherMode ? "primary" : "textSecondary"}>
-        C
+      <Typography color={isEncrypt ? "primary" : "textSecondary"}>
+        Encrypt
       </Typography>
-      <Tooltip title="Cipher / Decipher Mode" arrow>
-        <Switch
-          checked={!isCipherMode}
-          onChange={handleChange}
-          slotProps={{ input: { "aria-label": "Cipher/Decipher" } }}
-        />
-      </Tooltip>
-      <Typography color={!isCipherMode ? "primary" : "textSecondary"}>
-        D
+      <Switch
+        checked={!isEncrypt}
+        onChange={handleChange}
+        slotProps={{ input: { "aria-label": "Encrypt/Decrypt" } }}
+      />
+      <Typography color={!isEncrypt ? "primary" : "textSecondary"}>
+        Decrypt
       </Typography>
     </Stack>
   );

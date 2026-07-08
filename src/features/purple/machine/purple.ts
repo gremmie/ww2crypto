@@ -1,9 +1,8 @@
 import type { SwitchOrder } from "../models/switchOrder.ts";
 import { SwitchType } from "../models/switchType.ts";
 import { isValidPlugboardStr } from "../utils.ts";
+import type { Mode } from "./mode.ts";
 import { Switch } from "./switch.ts";
-
-type Mode = "encrypt" | "decrypt";
 
 interface PurpleOptions {
   switchPositions?: number[];

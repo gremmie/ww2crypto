@@ -1,6 +1,5 @@
 import Slider from "@mui/material/Slider";
-import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../../../app/hooks.ts";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
 import { drumBarChanged, selectDrumBarState } from "../../m209Slice.ts";
 
 interface DrumBarProps {
@@ -8,7 +7,7 @@ interface DrumBarProps {
 }
 
 export default function DrumBar(props: DrumBarProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const lugState = useAppSelector((s) => selectDrumBarState(s, props.id));
   if (!lugState) return null;
 
