@@ -1,6 +1,8 @@
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { ModeSwitch } from "./modeSwitch.tsx";
+import { OperatorInput } from "./operatorInput.tsx";
+import { OperatorOutput } from "./operatorOutput.tsx";
 import { ResetSwitches } from "./resetSwitches.tsx";
 import { SwitchDisplay } from "./switchDisplay.tsx";
 
@@ -29,7 +31,15 @@ export const PurpleOperateView = () => {
           <ModeSwitch />
           <ResetSwitches />
         </Stack>
-        <div>Input & Output Windows</div>
+        <Stack
+          spacing={{ xs: 2, md: 4 }}
+          direction={{ xs: "column", md: "row" }}
+          useFlexGap
+          sx={{ flexWrap: "wrap" }}
+        >
+          <OperatorInput />
+          <OperatorOutput />
+        </Stack>
       </Stack>
     </Box>
   );

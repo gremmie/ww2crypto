@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/setupStore.ts";
+import { digitToWord } from "../common/digitToWord.ts";
 import type { Mode } from "./machine/mode.ts";
 import type { SwitchOrder } from "./models/switchOrder.ts";
 import { isValidHumanPlugboardStr } from "./utils.ts";
@@ -10,6 +11,9 @@ export interface PurpleState {
   switchPositions: number[];
   isEncryptMode: boolean;
   mode: Mode;
+  inputText: string;
+  outputText: string;
+  animateFlag: boolean;
 }
 
 const initialState: PurpleState = {
@@ -18,6 +22,9 @@ const initialState: PurpleState = {
   switchPositions: [0, 0, 0, 0],
   isEncryptMode: true,
   mode: "encrypt",
+  inputText: "",
+  outputText: "",
+  animateFlag: true,
 };
 
 export const purpleSlice = createSlice({
@@ -47,6 +54,25 @@ export const purpleSlice = createSlice({
     switchesReset: (state) => {
       state.switchPositions.fill(0);
     },
+    inputTextChanged: (state, action: PayloadAction<string>) => {
+      state.inputText = action.payload;
+    },
+    outputTextCleared: (state) => {
+      state.outputText = "";
+    },
+    formatInputText: (state) => {
+      const uppercase = state.inputText.toUpperCase();
+      let s = uppercase.replaceAll(/\s/g, "");
+      if (state.mode === "encrypt") {
+        for (const [digit, word] of digitToWord) {
+          s = s.replaceAll(digit, word);
+        }
+      }
+      state.inputText = s.replaceAll(/[^A-Z]/g, "");
+    },
+    toggleAnimateFlag: (state) => {
+      state.animateFlag = !state.animateFlag;
+    },
   },
 });
 
@@ -56,6 +82,10 @@ export const {
   switchPositionUpdated,
   modeToggled,
   switchesReset,
+  inputTextChanged,
+  outputTextCleared,
+  formatInputText,
+  toggleAnimateFlag,
 } = purpleSlice.actions;
 
 export default purpleSlice.reducer;
@@ -77,3 +107,9 @@ export const selectSwitchPosition = (state: RootState, switchId: number) => {
 };
 
 export const selectMode = (state: RootState) => state.purple.mode;
+
+export const selectInputText = (state: RootState) => state.purple.inputText;
+
+export const selectOutputText = (state: RootState) => state.purple.outputText;
+
+export const selectAnimateFlag = (state: RootState) => state.purple.animateFlag;

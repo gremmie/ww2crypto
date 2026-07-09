@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/setupStore.ts";
+import { digitToWord } from "../common/digitToWord.ts";
 import { modulo } from "../common/utils.ts";
 import type { M209Config } from "./config/m209Config.ts";
 import {
@@ -266,16 +267,3 @@ export const selectAnimateFlag = (state: RootState) => {
 };
 
 export default m209Slice.reducer;
-
-const digitToWord: [string, string][] = [
-  ["0", "ZERO"],
-  ["1", "ONE"],
-  ["2", "TWO"],
-  ["3", "THREE"],
-  ["4", "FOUR"],
-  ["5", "FIVE"],
-  ["6", "SIX"],
-  ["7", "SEVEN"],
-  ["8", "EIGHT"],
-  ["9", "NINE"],
-] as const;
