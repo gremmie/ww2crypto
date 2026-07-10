@@ -46,6 +46,7 @@ describe("enigmaThunks", () => {
       EnigmaMachine:
         MockEnigmaMachine as unknown as StoreDependencies["EnigmaMachine"],
       M209: class {} as unknown as StoreDependencies["M209"],
+      Purple: class {} as unknown as StoreDependencies["Purple"],
     });
 
   // Dispatches the minimum setup needed for buildEnigmaFromState to succeed.

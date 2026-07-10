@@ -19,6 +19,7 @@ import {
   selectMode,
   toggleAnimateFlag,
 } from "../../purpleSlice.ts";
+import { processInputText } from "../../purpleThunks.ts";
 
 const encryptOptions = ["Encrypt", "Fast Encrypt"] as const;
 const decryptOptions = ["Decrypt", "Fast Decrypt"] as const;
@@ -40,11 +41,11 @@ export const ConvertButton = () => {
       : validInputDecryptRegex.test(inputText);
 
   const handleClick = () => {
-    // if (showAnimation) {
-    //   dispatch(convertInputTextWithAnimation());
-    // } else {
-    //   dispatch(convertInputText());
-    // }
+    if (showAnimation) {
+      // dispatch(convertInputTextWithAnimation());
+    } else {
+      dispatch(processInputText());
+    }
   };
 
   const handleMenuItemClick = (index: number) => {

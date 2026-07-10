@@ -41,6 +41,7 @@ describe("m209Thunks", () => {
     setupStore({
       EnigmaMachine: class {} as unknown as StoreDependencies["EnigmaMachine"],
       M209: { factory: mockFactory } as unknown as StoreDependencies["M209"],
+      Purple: class {} as unknown as StoreDependencies["Purple"],
     });
 
   describe("mainAxleRotated", () => {

@@ -239,4 +239,33 @@ describe("Purple Machine tests", () => {
       expect(new Set(output).size).toBeGreaterThan(1);
     });
   });
+
+  describe("switchPositions", () => {
+    test("defaults to all zeros", () => {
+      expect(new Purple({}).switchPositions()).toEqual([0, 0, 0, 0]);
+    });
+
+    test("reports the initial positions as [sixes, twenties 1, 2, 3]", () => {
+      const purple = new Purple({ switchPositions: [8, 0, 23, 5] });
+      expect(purple.switchPositions()).toEqual([8, 0, 23, 5]);
+    });
+
+    test("reports twenties in 1-2-3 order regardless of switchOrder", () => {
+      // switchOrder only sets which switch is fast/middle/slow when stepping;
+      // the reported order always follows twenties 1, 2, 3.
+      const purple = new Purple({
+        switchPositions: [8, 0, 23, 5],
+        switchOrder: "2-3-1",
+      });
+      expect(purple.switchPositions()).toEqual([8, 0, 23, 5]);
+    });
+
+    test("advances as text is processed (sixes steps every letter)", () => {
+      // Default switchOrder "1-2-3" makes twenties 1 the fast switch, so after
+      // one letter the sixes and the fast switch each step once.
+      const purple = new Purple({ mode: "encrypt" });
+      purple.processText("A");
+      expect(purple.switchPositions()).toEqual([1, 1, 0, 0]);
+    });
+  });
 });

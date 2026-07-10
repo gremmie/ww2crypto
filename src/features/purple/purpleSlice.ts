@@ -3,6 +3,7 @@ import type { RootState } from "../../app/setupStore.ts";
 import { digitToWord } from "../common/digitToWord.ts";
 import type { Mode } from "./machine/mode.ts";
 import type { SwitchOrder } from "./models/switchOrder.ts";
+import { processInputText } from "./purpleThunks.ts";
 import { isValidHumanPlugboardStr } from "./utils.ts";
 
 export interface PurpleState {
@@ -73,6 +74,12 @@ export const purpleSlice = createSlice({
     toggleAnimateFlag: (state) => {
       state.animateFlag = !state.animateFlag;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(processInputText.fulfilled, (state, action) => {
+      state.switchPositions = action.payload.switchPositions;
+      state.outputText = action.payload.outputText;
+    });
   },
 });
 

@@ -187,4 +187,18 @@ export class Purple {
       this.fastSwitch.step();
     }
   }
+
+  /**
+   * Returns the current switch positions as an array of numbers.
+   * The first element is the sixes position, elements 1 - 3 are the
+   * twenties positions, in order (twenties 1, 2, 3).
+   */
+  switchPositions(): number[] {
+    return [
+      this.sixes.getPos(),
+      this.twenties[0]!.getPos(),
+      this.twenties[1]!.getPos(),
+      this.twenties[2]!.getPos(),
+    ];
+  }
 }

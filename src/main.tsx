@@ -10,9 +10,10 @@ import "@fontsource-variable/roboto/index.css";
 import "@fontsource/special-elite/latin.css";
 import { EnigmaMachine } from "./features/enigma/machine/enigmaMachine.ts";
 import { M209 } from "./features/m209/machine/m209.ts";
+import { Purple } from "./features/purple/machine/purple.ts";
 import { routeTree } from "./routeTree.gen";
 
-const store = setupStore({ EnigmaMachine, M209 });
+const store = setupStore({ EnigmaMachine, M209, Purple });
 store.dispatch(applicationStarted());
 
 export const router = createRouter({ routeTree });

@@ -39,6 +39,7 @@ export const setupTestStore = (opts?: {
       EnigmaMachine ??
       (class {} as unknown as StoreDependencies["EnigmaMachine"]),
     M209: mockM209,
+    Purple: class {} as unknown as StoreDependencies["Purple"],
   };
   return setupStore(deps, preloadedState);
 };
