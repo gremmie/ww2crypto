@@ -4,7 +4,7 @@ import { digitToWord } from "../common/digitToWord.ts";
 import type { PurpleConfig } from "./config/purpleConfig.ts";
 import type { Mode } from "./machine/mode.ts";
 import type { SwitchOrder } from "./models/switchOrder.ts";
-import { processInputText } from "./purpleThunks.ts";
+import { machineUpdate, processInputText } from "./purpleThunks.ts";
 import { isValidHumanPlugboardStr } from "./utils.ts";
 
 export interface PurpleState {
@@ -83,7 +83,11 @@ export const purpleSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(processInputText.fulfilled, (state, action) => {
       state.switchPositions = action.payload.switchPositions;
-      state.outputText = action.payload.outputText;
+      state.outputText += action.payload.outputText;
+    });
+    builder.addCase(machineUpdate, (state, action) => {
+      state.switchPositions = action.payload.switchPositions;
+      state.outputText += action.payload.outputText;
     });
   },
 });
