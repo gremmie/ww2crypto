@@ -25,6 +25,13 @@ export const ConfigSummary = (props: ConfigSummaryProps) => {
       </Typography>
     );
   }
+  if (props.config.type === "purple") {
+    return (
+      <Typography variant="body1" sx={{ color: "text.secondary" }}>
+        {`${props.config.plugboard} : ${props.config.switchOrder}`}
+      </Typography>
+    );
+  }
 
   // M209 case.
   return (

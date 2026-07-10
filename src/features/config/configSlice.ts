@@ -150,8 +150,8 @@ export const selectIsSetupCompleteForType = (
       return selectIsSetupComplete(state);
     case "m209":
       return true;
-    default:
-      return false;
+    case "purple":
+      return true;
   }
 };
 
@@ -192,7 +192,7 @@ export const selectIsActiveConfigModified = (
     if (
       !m209State.drumState.every((pins, n) => {
         const active = activeConfig.drumState[n];
-        if (!active) return false;
+        if (active === undefined) return false;
         return pins[0] === active[0] && pins[1] === active[1];
       })
     ) {
@@ -200,9 +200,15 @@ export const selectIsActiveConfigModified = (
     }
     return !m209State.wheelState.every((pins, n) => {
       const active = activeConfig.wheelState[n];
-      if (!active) return false;
+      if (active === undefined) return false;
       return pins === active;
     });
+  } else if (activeConfig.type === "purple") {
+    const purpleState = state.purple;
+    return (
+      activeConfig.plugboard !== purpleState.plugboard ||
+      activeConfig.switchOrder !== purpleState.switchOrder
+    );
   }
 
   return false;

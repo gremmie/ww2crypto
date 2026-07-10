@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/setupStore.ts";
 import { digitToWord } from "../common/digitToWord.ts";
+import type { PurpleConfig } from "./config/purpleConfig.ts";
 import type { Mode } from "./machine/mode.ts";
 import type { SwitchOrder } from "./models/switchOrder.ts";
 import { processInputText } from "./purpleThunks.ts";
@@ -74,6 +75,10 @@ export const purpleSlice = createSlice({
     toggleAnimateFlag: (state) => {
       state.animateFlag = !state.animateFlag;
     },
+    configLoaded: (state, action: PayloadAction<PurpleConfig>) => {
+      state.plugboard = action.payload.plugboard;
+      state.switchOrder = action.payload.switchOrder;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(processInputText.fulfilled, (state, action) => {
@@ -93,6 +98,7 @@ export const {
   outputTextCleared,
   formatInputText,
   toggleAnimateFlag,
+  configLoaded,
 } = purpleSlice.actions;
 
 export default purpleSlice.reducer;
