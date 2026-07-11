@@ -56,6 +56,12 @@ export function HomePage() {
         </Typography>
         <ul>
           <Typography variant="body1" component="li" gutterBottom>
+            <b>July 11, 2026</b> - The PURPLE simulation is now up and running!
+            As before I'd love to hear any feedback, see the{" "}
+            <RouterLink to="/about">About page</RouterLink> for how to contact
+            me.
+          </Typography>
+          <Typography variant="body1" component="li" gutterBottom>
             <b>June 22, 2026</b> - The M-209 simulation is now live! I'd love to
             hear any feedback, see the{" "}
             <RouterLink to="/about">About page</RouterLink> for how to contact
