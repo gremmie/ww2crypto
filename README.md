@@ -1,6 +1,6 @@
 # ww2crypto
 
-A web application for exploring several World War II era cipher machines
+A web application for exploring several World War II-era cipher machines
 in your browser.
 
 I created this project to teach myself Typescript and to get more experience
@@ -12,4 +12,6 @@ The cipher machine simulations are based on the Python versions I created a whil
 - [m209](https://github.com/gremmie/m209) - M-209 (USA)
 - [Purple](https://github.com/gremmie/purple) - PURPLE (Japan)
 
-More to come as the project develops!
+As of July 2026, the above simulations are now available in this web application.
+
+Visit [ww2crypto.online](https://ww2crypto.online) to try it out!
