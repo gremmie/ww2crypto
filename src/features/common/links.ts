@@ -67,15 +67,6 @@ export const links: LinkInfo[] = [
     tags: ["m209", "misc", "all"],
   },
   {
-    id: "purple",
-    name: "PURPLE",
-    url: "https://github.com/gremmie/purple",
-    description:
-      "A historically accurate PURPLE library written in Python 3. " +
-      "Contains library code and a command-line application. Created by the author of this site.",
-    tags: ["misc", "all"],
-  },
-  {
     id: "pallocks-enigma",
     name: "Enigma simulation in Javascript/HTML",
     url: "https://people.physik.hu-berlin.de/~palloks/js/enigma/index_en.html",
@@ -258,5 +249,53 @@ export const links: LinkInfo[] = [
     description:
       "Interesting article on the M-209 on Christo T's Military and Intelligence blog.",
     tags: ["m209", "all"],
+  },
+  {
+    id: "crypto-cellar-purple",
+    name: "Frode Weirud's CryptoCellar: The PURPLE Machine",
+    url: "https://cryptocellar.org/simula/purple/index.html",
+    description:
+      "Frode Weirud's resource page for the PURPLE Machine. Contains links to the 2003 " +
+      "Cryptologia article, a block diagram of the machine's operation, a walk through for decrypting " +
+      "an actual message, and a Windows based graphical simulator.",
+    tags: ["purple", "all"],
+  },
+  {
+    id: "cryptologia-purple",
+    name: "PURPLE Revealed: Simulation and Computer-aided Cryptanalysis of Angooki Taipu B",
+    url: "https://cryptocellar.org/pubs/purple-revealed.pdf",
+    description:
+      "A paper by Wes Freeman, Geoff Sullivan, and Frode Weierud. This paper was published in Cryptologia, " +
+      "Volume 27, Issue 1, January, 2003, pp. 1-43. " +
+      "Covers the machine's structure, wiring, keying procedures, and message abbreviations — " +
+      "and supplements it with declassified historical documents (machine instructions, language statistics, " +
+      "and operational rules).",
+    tags: ["purple", "all"],
+  },
+  {
+    id: "wikipedia-purple",
+    name: "Type B Cipher Machine - Wikipedia",
+    url: "https://en.wikipedia.org/wiki/Type_B_Cipher_Machine",
+    description: "Wikipedia article on the PURPLE cipher machine.",
+    tags: ["purple", "all"],
+  },
+  {
+    id: "nsa-museum",
+    name: "National Cryptologic Museum",
+    url: "https://www.nsa.gov/museum/",
+    description:
+      "Website for the National Cryptologic Museum. Search their exhibits for information on " +
+      "the Enigma, M-209, and PURPLE machines. Has some of the actual PURPLE analog machines and " +
+      "pieces of actual PURPLE machines on display.",
+    tags: ["enigma", "m209", "purple", "all"],
+  },
+  {
+    id: "purple",
+    name: "PURPLE",
+    url: "https://github.com/gremmie/purple",
+    description:
+      "A historically accurate PURPLE library written in Python 3. " +
+      "Contains library code and a command-line application. Created by the author of this site.",
+    tags: ["purple", "all"],
   },
 ];
